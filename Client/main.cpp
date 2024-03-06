@@ -13,6 +13,7 @@ HINSTANCE hInst;                                // current instance
 WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 
+
 // Forward declarations of functions included in this code module:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
@@ -34,6 +35,7 @@ int winHeight = 500;
 int winWidth = 500;
 POINT objectPos = { winHeight / 2, winWidth / 2 };
 POINT objectScale = { 100, 100 };
+HWND g_hWnd;
 
 // _In_ : SAL 주석언어
 int APIENTRY wWinMain
@@ -61,28 +63,52 @@ _In_ int       nCmdShow)
 
     MSG msg;
 
+    DWORD prevCount = GetTickCount();
+
     // Main message loop:
     // GetMessage : 메시지큐에서 메세지 확인할 때까지 대기
     // msg.message == WM_QUIT => return false
-    while (GetMessage(&msg, nullptr, 0, 0))
+    // GetMessage -> PeekMessage(변경) -> 항상 반환한다.
+
+    DWORD accCount = GetTickCount();
+
+    while (1)
     {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+            DWORD time = GetTickCount();
+            if (WM_QUIT == msg.message) break;
+            if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+            {
+                TranslateMessage(&msg);
+                DispatchMessage(&msg);
+            }
+
+            accCount += GetTickCount() - time;
+        }
+        else
+        {
+            DWORD curCount = GetTickCount();
+            if (curCount - prevCount > 1000)
+            {
+                float ratio = (float)accCount / 1000.f;
+                wchar_t buffer[50] = {};
+                swprintf_s(buffer, L"Ratio : %f", ratio);
+                SetWindowText(g_hWnd, buffer);
+            }
+
+            prevCount = curCount;
+            accCount = 0;
+
+            // game code 수행
+            // design pattern
+            
         }
     }
 
     return (int) msg.wParam;
 }
 
-
-
-//
-//  FUNCTION: MyRegisterClass()
-//
-//  PURPOSE: Registers the window class.
-//
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
     WNDCLASSEXW wcex;
@@ -110,6 +136,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, winHeight, winWidth, nullptr, nullptr, hInstance, nullptr);
+
+   g_hWnd = hWnd;
 
    if (!hWnd)
    {
