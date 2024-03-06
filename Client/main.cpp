@@ -3,6 +3,8 @@
 
 #include "framework.h"
 #include "Client.h"
+#include <vector>
+using std::vector;
 
 #define MAX_LOADSTRING 100
 
@@ -17,12 +19,21 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
+struct ObjectInfo
+{
+    POINT _objPos;
+    POINT _objScale;
+};
+
+vector<ObjectInfo> objects;
+
+
 int g_x;
 int g_y;
 int winHeight = 500;
 int winWidth = 500;
 POINT objectPos = { winHeight / 2, winWidth / 2 };
-POINT objectScale = {100, 100};
+POINT objectScale = { 100, 100 };
 
 // _In_ : SAL 주석언어
 int APIENTRY wWinMain
@@ -111,6 +122,10 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    return TRUE;
 }
 
+POINT leftTop;
+POINT rightBottom;
+bool trigger = false;
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
@@ -154,12 +169,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             HPEN dpen = (HPEN)SelectObject(hdc, pen);
             HBRUSH dbrush = (HBRUSH)SelectObject(hdc, brush);
 
-            // 변경된 펜으로 사각형을 그림
-            Rectangle(hdc,
-                objectPos.x - objectScale.x / 2, 
-                objectPos.y - objectScale.y / 2, 
-                objectPos.x + objectScale.x / 2,
-                objectPos.y + objectScale.y / 2);
+            if (trigger)
+            {
+                // 변경된 펜으로 사각형을 그림
+                Rectangle(hdc,
+                    leftTop.x,
+                    leftTop.y,
+                    rightBottom.x,
+                    rightBottom.y);
+            }
+
+            for (auto obj : objects)
+            {
+                Rectangle(hdc,
+                    obj._objPos.x - obj._objScale.x / 2,
+                    obj._objPos.y - obj._objScale.y / 2,
+                    obj._objPos.x + obj._objScale.x / 2,
+                    obj._objPos.y + obj._objScale.y / 2);
+            }
 
             // dc의 펜을 원래 펜으로 되돌림 (브러쉬 또한)
             SelectObject(hdc, dpen);
@@ -213,10 +240,29 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_LBUTTONDOWN:
     {
         auto pos = lParam;
-
+        trigger = true;
         // 비트 연산으로 밀어버림
-        g_x = LOWORD(pos); // x
-        g_y = HIWORD(pos); // y
+        leftTop.x = LOWORD(pos); // x
+        leftTop.y = HIWORD(pos); // y
+    }
+    break;
+    case WM_MOUSEMOVE:
+        rightBottom.x = LOWORD(lParam);
+        rightBottom.y = HIWORD(lParam);
+        InvalidateRect(hWnd, nullptr, true);
+
+        break;
+
+    case WM_LBUTTONUP:
+    {
+        ObjectInfo info;
+        info._objPos = { (leftTop.x + rightBottom.x) / 2, (leftTop.y + rightBottom.y) / 2};
+        info._objScale.x = abs(rightBottom.x - leftTop.x);
+        info._objScale.y = abs(rightBottom.y - leftTop.y);
+
+        objects.push_back(info);
+        trigger = false;
+        InvalidateRect(hWnd, nullptr, true);
     }
     break;
     default:
