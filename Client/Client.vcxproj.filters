@@ -1,49 +1,103 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
+    <Filter Include="Engine">
+      <UniqueIdentifier>{b193ee47-09db-45b7-9d22-5bf8325904d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Default">
+      <UniqueIdentifier>{09103bb5-d97f-4769-8abc-143fb9178134}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Default\Andromeda">
+      <UniqueIdentifier>{b415ae23-506a-40ed-803b-22fd558d9ef9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Default\Source Files">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
+    <Filter Include="Default\Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Engine\01.Header">
+      <UniqueIdentifier>{4c30c50a-d579-4e42-8dc2-29a6b50e0636}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\02.Core">
+      <UniqueIdentifier>{3f8e043b-9392-4bde-886d-6d00c30563f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03.Manager">
+      <UniqueIdentifier>{4798d788-2eda-4f7e-9dc8-73b7b37f1521}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03.Manager\Key">
+      <UniqueIdentifier>{42cfc32e-98f3-4205-890b-f6c76959ec36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object">
+      <UniqueIdentifier>{62631832-b672-48bc-9578-dd8bba0454ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03.Manager\Time">
+      <UniqueIdentifier>{fa2fd548-d469-4893-af64-0323fea5beb3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="framework.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Client.h">
+      <Filter>Default\Andromeda</Filter>
     </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="framework.h">
+      <Filter>Default\Andromeda</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
-      <Filter>Header Files</Filter>
+      <Filter>Default\Andromeda</Filter>
     </ClInclude>
-    <ClInclude Include="Client.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="targetver.h">
+      <Filter>Default\Andromeda</Filter>
+    </ClInclude>
+    <ClInclude Include="Core.h">
+      <Filter>Engine\02.Core</Filter>
+    </ClInclude>
+    <ClInclude Include="define.h">
+      <Filter>Engine\01.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyManager.h">
+      <Filter>Engine\03.Manager\Key</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Object.h">
+      <Filter>Engine\04.Object</Filter>
+    </ClInclude>
+    <ClInclude Include="struct.h">
+      <Filter>Engine\01.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>Engine\03.Manager\Time</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Default\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Core.cpp">
+      <Filter>Engine\02.Core</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyManager.cpp">
+      <Filter>Engine\03.Manager\Key</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Engine\04.Object</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>Engine\03.Manager\Time</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
-      <Filter>Resource Files</Filter>
+      <Filter>Default\Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
-      <Filter>Resource Files</Filter>
+      <Filter>Default\Resource Files</Filter>
     </Image>
     <Image Include="Client.ico">
-      <Filter>Resource Files</Filter>
+      <Filter>Default\Resource Files</Filter>
     </Image>
   </ItemGroup>
 </Project>

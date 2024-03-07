@@ -4,6 +4,8 @@
 #include "framework.h"
 #include "Client.h"
 #include <vector>
+#include "pch.h"
+
 using std::vector;
 
 #define MAX_LOADSTRING 100
@@ -37,6 +39,8 @@ POINT objectPos = { winHeight / 2, winWidth / 2 };
 POINT objectScale = { 100, 100 };
 HWND g_hWnd;
 
+class Core;
+
 // _In_ : SAL 주석언어
 int APIENTRY wWinMain
 (
@@ -58,51 +62,36 @@ _In_ int       nCmdShow)
         return FALSE;
     }
 
+    // Core Init
+    if (FAILED(GET_SINGLE(Core)->Init(g_hWnd, POINT{ 600, 600 })))
+    {
+        MessageBox(nullptr, L"Core intialize Fail", L"ERROR", MB_OK);
+        return FALSE;
+    }
+
     // 단축키 테이블 정보 로딩
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CLIENT));
 
     MSG msg;
 
-    DWORD prevCount = GetTickCount();
-
     // Main message loop:
     // GetMessage : 메시지큐에서 메세지 확인할 때까지 대기
     // msg.message == WM_QUIT => return false
     // GetMessage -> PeekMessage(변경) -> 항상 반환한다.
-
-    DWORD accCount = GetTickCount();
-
     while (1)
     {
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
-            DWORD time = GetTickCount();
             if (WM_QUIT == msg.message) break;
             if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
             {
                 TranslateMessage(&msg);
                 DispatchMessage(&msg);
             }
-
-            accCount += GetTickCount() - time;
         }
         else
         {
-            DWORD curCount = GetTickCount();
-            if (curCount - prevCount > 1000)
-            {
-                float ratio = (float)accCount / 1000.f;
-                wchar_t buffer[50] = {};
-                swprintf_s(buffer, L"Ratio : %f", ratio);
-                SetWindowText(g_hWnd, buffer);
-            }
-
-            prevCount = curCount;
-            accCount = 0;
-
-            // game code 수행
-            // design pattern
-            
+            GET_SINGLE(Core)->Progress();
         }
     }
 
@@ -132,8 +121,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-   hInst = hInstance; // Store instance handle in our global variable
-
+   hInst = hInstance;
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, winHeight, winWidth, nullptr, nullptr, hInstance, nullptr);
 
@@ -150,10 +138,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    return TRUE;
 }
 
-POINT leftTop;
-POINT rightBottom;
-bool trigger = false;
-
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
@@ -161,7 +145,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
-            // Parse the menu selections:
             switch (wmId)
             {
             case IDM_ABOUT:
@@ -185,121 +168,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // dc의 목적지는 hWnd
             HDC hdc = BeginPaint(hWnd, &ps); // device context
 
-            const COLORREF rgbRed = 0x000000FF;
+            // Rectangle(hdc, 0, 0, 600, 600);
 
-            // 직접 펜을 만들어서 DC에 지급
-            HPEN pen = CreatePen(PS_SOLID, 2, rgbRed);
-
-            // 자주 쓰는 오브젝트 -> StockObject (prev 생성)
-            HBRUSH brush = CreateSolidBrush(0x00FF0000);
-
-            // 기본 pen id값을 받아 둠
-            HPEN dpen = (HPEN)SelectObject(hdc, pen);
-            HBRUSH dbrush = (HBRUSH)SelectObject(hdc, brush);
-
-            if (trigger)
-            {
-                // 변경된 펜으로 사각형을 그림
-                Rectangle(hdc,
-                    leftTop.x,
-                    leftTop.y,
-                    rightBottom.x,
-                    rightBottom.y);
-            }
-
-            for (auto obj : objects)
-            {
-                Rectangle(hdc,
-                    obj._objPos.x - obj._objScale.x / 2,
-                    obj._objPos.y - obj._objScale.y / 2,
-                    obj._objPos.x + obj._objScale.x / 2,
-                    obj._objPos.y + obj._objScale.y / 2);
-            }
-
-            // dc의 펜을 원래 펜으로 되돌림 (브러쉬 또한)
-            SelectObject(hdc, dpen);
-            SelectObject(hdc, dbrush);
-
-            // 다쓴 red pen 삭제
-            DeleteObject(pen);
-
-            // end
             EndPaint(hWnd, &ps);
         }
         break;
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
-    case WM_KEYDOWN:
-    {
-        switch (wParam)
-        {
-            case 'W':
-            {
-                objectPos.y -= 5;
-
-                // 마지막 인자 false일경우 clear하지 않는다.
-                // InvalidateRect(hWnd, nullptr, false);
-                InvalidateRect(hWnd, nullptr, true);
-            }
-            break;
-            case 'S':
-            {
-                objectPos.y += 5;
-                InvalidateRect(hWnd, nullptr, true);
-            }
-            break;
-            case 'A':
-            {
-                objectPos.x -= 5;
-                InvalidateRect(hWnd, nullptr, true);
-            }
-            break;
-            case 'D':
-            {
-                objectPos.x += 5;
-                InvalidateRect(hWnd, nullptr, true);
-            }
-            break;
-            default:
-                break;
-        }
-    }
-    case WM_LBUTTONDOWN:
-    {
-        auto pos = lParam;
-        trigger = true;
-        // 비트 연산으로 밀어버림
-        leftTop.x = LOWORD(pos); // x
-        leftTop.y = HIWORD(pos); // y
-    }
-    break;
-    case WM_MOUSEMOVE:
-        rightBottom.x = LOWORD(lParam);
-        rightBottom.y = HIWORD(lParam);
-        InvalidateRect(hWnd, nullptr, true);
-
-        break;
-
-    case WM_LBUTTONUP:
-    {
-        ObjectInfo info;
-        info._objPos = { (leftTop.x + rightBottom.x) / 2, (leftTop.y + rightBottom.y) / 2};
-        info._objScale.x = abs(rightBottom.x - leftTop.x);
-        info._objScale.y = abs(rightBottom.y - leftTop.y);
-
-        objects.push_back(info);
-        trigger = false;
-        InvalidateRect(hWnd, nullptr, true);
-    }
-    break;
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
     }
     return 0;
 }
 
-// Message handler for about box.
 INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
     UNREFERENCED_PARAMETER(lParam);
