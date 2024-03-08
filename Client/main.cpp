@@ -22,15 +22,6 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
-struct ObjectInfo
-{
-    POINT _objPos;
-    POINT _objScale;
-};
-
-vector<ObjectInfo> objects;
-
-
 int g_x;
 int g_y;
 int winHeight = 500;

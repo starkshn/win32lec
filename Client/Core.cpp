@@ -11,7 +11,7 @@ Core::Core()
 
 Core::~Core()
 {
-	// Release...
+	// Release Objects
 	ReleaseDC(_hwnd, _hdc);
 
 	DeleteDC(_memdc);
@@ -20,13 +20,14 @@ Core::~Core()
 
 int Core::Init(HWND hWnd, POINT resolution)
 {
-	_hwnd = hWnd;
-	_resolution = resolution;
-
+	// Init Window Handle && Set Resolution
+	InitMainWindowHandle(hWnd);
+	InitResolution(resolution);
 	InitWindow();
 	InitManager();
 	InitBitMap();
 
+	// temp
 	obj.SetScale(Vec2{ 100, 100 });
 	obj.SetPos(Vec2{ int(_resolution.x / 2), int(_resolution.x  / 2)});
 
@@ -35,25 +36,25 @@ int Core::Init(HWND hWnd, POINT resolution)
 
 void Core::Progress()
 {
-	UpdateManager();
-
-	// Core
 	Update();
 	Render();
 }
 
 void Core::Update()
 {
+	UpdateManager();
+
+	// temp obj
 	auto pos = obj.GetPos();
 
-	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
+	if (GET_KEY_STATE(KEY::LEFT) == KEY_STATE::HOLD)
 	{
-		pos._x -= 100.f * DT;
+		pos._x -= 200.f * DT;
 	}
 
-	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
+	if (GET_KEY_STATE(KEY::RIGHT) == KEY_STATE::HOLD)
 	{
-		pos._x += 100.f * DT;
+		pos._x += 200.f * DT;
 	}
 
 	obj.SetPos(pos);
@@ -97,6 +98,16 @@ void Core::RenderEnd()
 	);
 }
 
+void Core::InitMainWindowHandle(HWND hwnd)
+{
+	_hwnd = hwnd;
+}
+
+void Core::InitResolution(POINT resol)
+{
+	_resolution = resol;
+}
+
 void Core::InitWindow()
 {
 	// Window Size Calculate
@@ -107,6 +118,7 @@ void Core::InitWindow()
 	int cy = rc.bottom - rc.top;
 	SetWindowPos(_hwnd, nullptr, 300, 100, cx, cy, 0);
 
+	// get device context
 	_hdc = GetDC(_hwnd);
 }
 

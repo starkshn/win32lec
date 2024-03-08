@@ -26,6 +26,8 @@ private:
 	void RenderEnd();
 	
 private:
+	void InitMainWindowHandle(HWND hwnd);
+	void InitResolution(POINT resol);
 	void InitWindow();
 	void InitManager();
 	void InitBitMap();

@@ -39,7 +39,7 @@ void TimeManager::Update()
 	if (_accTime >= 1.0)
 	{
 		wchar_t buffer[255] = {};
-		swprintf_s(buffer, L"FPS : %d, DeltaTime : %f", _fps, _deltaTime);
+		swprintf_s(buffer, L"FPS : %d, DeltaTime : %f", FPS, DT);
 		SetWindowText(GET_WINDOW_HANDLE(), buffer);
 
 		_fps = _callCount;

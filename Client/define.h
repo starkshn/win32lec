@@ -19,9 +19,16 @@ public:										\
 #define GET_WINDOW_HANDLE() GET_SINGLE(Core)->GetHwnd()
 
 // Time
+// delta time(double)
 #define DT		GET_SINGLE(TimeManager)->GetDeltaTime()
+// deltat time(float)
 #define DT_F	GET_SINGLE(TimeManager)->GetDeltaTimeFloat()
+// fps (UINT)
 #define FPS		GET_SINGLE(TimeManager)->GetFPS()
+
+// Key
+// get key state
+#define GET_KEY_STATE(k) GET_SINGLE(KeyManager)->GetKeyState(k)
 
 // std
 #include <memory>
