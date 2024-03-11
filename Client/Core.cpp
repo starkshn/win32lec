@@ -2,8 +2,6 @@
 #include "Core.h"
 #include "Object.h"
 
-Object obj;
-
 Core::Core()
 {
 
@@ -27,10 +25,6 @@ int Core::Init(HWND hWnd, POINT resolution)
 	InitManager();
 	InitBitMap();
 
-	// temp
-	obj.SetScale(Vec2{ 100, 100 });
-	obj.SetPos(Vec2{ int(_resolution.x / 2), int(_resolution.x  / 2)});
-
 	return S_OK;
 }
 
@@ -43,21 +37,6 @@ void Core::Progress()
 void Core::Update()
 {
 	UpdateManager();
-
-	// temp obj
-	auto pos = obj.GetPos();
-
-	if (GET_KEY_STATE(KEY::LEFT) == KEY_STATE::HOLD)
-	{
-		pos._x -= 200.f * DT;
-	}
-
-	if (GET_KEY_STATE(KEY::RIGHT) == KEY_STATE::HOLD)
-	{
-		pos._x += 200.f * DT;
-	}
-
-	obj.SetPos(pos);
 }
 
 void Core::Render()
@@ -72,30 +51,27 @@ void Core::UpdateManager()
 	// Manager Updates
 	GET_SINGLE(KeyManager)->Update();
 	GET_SINGLE(TimeManager)->Update();
+	GET_SINGLE(SceneManager)->Update();
 }
 
 void Core::RenderBegin()
 {
 	// clear bitmap
-	Rectangle
-	(_memdc, -1, -1, _resolution.x + 1, _resolution.y + 1);
+	Rectangle(_memdc, -1, -1, _resolution.x + 1, _resolution.y + 1);
 }
 
 void Core::Rendering()
 {
-	// render objects (draw objects)
-	Rectangle(_memdc, obj.GL, obj.GT, obj.GR, obj.GB);
+	// render objects
+	
+	// TODO
+	GET_SINGLE(SceneManager)->Render();
 }
 
 void Core::RenderEnd()
 {
 	// copy prev to main window
-	BitBlt
-	(
-		_hdc,
-		0, 0, _resolution.x, _resolution.y, 
-		_memdc, 0, 0, SRCCOPY
-	);
+	BitBlt(_hdc, 0, 0, _resolution.x, _resolution.y, _memdc, 0, 0, SRCCOPY);
 }
 
 void Core::InitMainWindowHandle(HWND hwnd)
@@ -126,6 +102,8 @@ void Core::InitManager()
 {
 	GET_SINGLE(KeyManager)->Init();
 	GET_SINGLE(TimeManager)->Init();
+	GET_SINGLE(SceneManager)->Init();
+	
 }
 
 void Core::InitBitMap()
@@ -138,3 +116,31 @@ void Core::InitBitMap()
 	HBITMAP prevBit = (HBITMAP)SelectObject(_memdc, _hbit);
 	DeleteObject(prevBit);
 }
+
+//void Core::UpdateObjPos()
+//{
+//	// temp obj
+//	auto pos = obj.GetPos();
+//
+//	if (GET_KEY_STATE(KEY::LEFT) == KEY_STATE::HOLD)
+//	{
+//		pos._x -= 200.f * DT;
+//	}
+//
+//	if (GET_KEY_STATE(KEY::RIGHT) == KEY_STATE::HOLD)
+//	{
+//		pos._x += 200.f * DT;
+//	}
+//
+//	if (GET_KEY_STATE(KEY::UP) == KEY_STATE::HOLD)
+//	{
+//		pos._y -= 200.f * DT;
+//	}
+//
+//	if (GET_KEY_STATE(KEY::DOWN) == KEY_STATE::HOLD)
+//	{
+//		pos._y += 200.f * DT;
+//	}
+//
+//	obj.SetPos(pos);
+//}

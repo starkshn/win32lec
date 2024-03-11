@@ -9,7 +9,11 @@ class Object
 {
 public:
 	Object();
-	~Object();
+	virtual ~Object();
+
+public:
+	void Update();
+	void Render();
 
 public:
 	void SetPos(Vec2 pos) { _pos = pos; }
@@ -17,12 +21,13 @@ public:
 
 	Vec2 GetPos() { return _pos; }
 	Vec2 GetScale() { return _scale; }
-
+	
 public:
-	int GetLeft() { return _pos._x - _scale._x / 2; };
-	int GetTop() { return _pos._y - _scale._y / 2; };
-	int GetRight() { return _pos._x + _scale._x / 2; };
-	int GetBottom() { return _pos._y + _scale._y / 2; };
+	// when OBJECT_TYPE is rectangle can use below functions
+	int GetLeft() { return _pos.x - _scale.x / 2; };
+	int GetTop() { return _pos.y - _scale.y / 2; };
+	int GetRight() { return _pos.x + _scale.x / 2; };
+	int GetBottom() { return _pos.y + _scale.y / 2; };
 
 private:
 	Vec2 _pos = {};

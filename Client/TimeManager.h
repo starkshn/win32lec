@@ -1,12 +1,12 @@
 #pragma once
 
-class TimeManager
+class TimeManager : public Manager
 {
 	DECLARE_SINGLE(TimeManager);
 
 public:
-	void	Init();
-	void	Update();
+	virtual void Init() override;
+	virtual void Update() override;
 
 	double	GetDeltaTime() { return _deltaTime; }
 	float	GetDeltaTimeFloat() { return (float)_deltaTime; }

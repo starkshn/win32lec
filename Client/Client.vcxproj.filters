@@ -36,6 +36,18 @@
     <Filter Include="Engine\03.Manager\Time">
       <UniqueIdentifier>{fa2fd548-d469-4893-af64-0323fea5beb3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\05.Scene">
+      <UniqueIdentifier>{d9dc82cf-7035-4715-9905-e8f7413c8ef3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03.Manager\Scene">
+      <UniqueIdentifier>{ba0a05be-8709-4c0a-af9d-4a2d14d4760a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\05.Scene\Scenes">
+      <UniqueIdentifier>{49e79447-399b-443d-9aa4-3c9f02a9d358}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\99.Utils">
+      <UniqueIdentifier>{82b2921c-45aa-4512-961e-bd52cfc4cf41}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -69,6 +81,27 @@
     <ClInclude Include="TimeManager.h">
       <Filter>Engine\03.Manager\Time</Filter>
     </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Engine\05.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Engine\03.Manager\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager.h">
+      <Filter>Engine\03.Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="StartScene.h">
+      <Filter>Engine\05.Scene\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuScene.h">
+      <Filter>Engine\05.Scene\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleMath.h">
+      <Filter>Engine\99.Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Types.h">
+      <Filter>Engine\01.Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -86,6 +119,24 @@
     <ClCompile Include="TimeManager.cpp">
       <Filter>Engine\03.Manager\Time</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Engine\05.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Engine\03.Manager\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager.cpp">
+      <Filter>Engine\03.Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="StartScene.cpp">
+      <Filter>Engine\05.Scene\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuScene.cpp">
+      <Filter>Engine\05.Scene\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleMath.cpp">
+      <Filter>Engine\99.Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -99,5 +150,10 @@
     <Image Include="Client.ico">
       <Filter>Default\Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SimpleMath.inl">
+      <Filter>Engine\99.Utils</Filter>
+    </None>
   </ItemGroup>
 </Project>

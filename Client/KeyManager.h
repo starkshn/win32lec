@@ -73,15 +73,16 @@ struct KeyInfo
 	bool		_prevPressedState;		// 이전 프레임에서 state
 };
 
+// for what?
 // 1. frame sync
 // 2. key mapping
-class KeyManager
+class KeyManager : public Manager
 {
 	DECLARE_SINGLE(KeyManager);
 
 public:
-	void Init();
-	void Update();
+	virtual void Init() override;
+	virtual void Update() override;
 
 public:
 	KEY_STATE GetKeyState(KEY key) { return _keys[int(key)]._keyState; }

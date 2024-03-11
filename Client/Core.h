@@ -1,18 +1,21 @@
 #pragma once
 
-#include <memory>
-#include "define.h"
-
 class Core
 {
 public:
+	// define 헤더들을 메크로 앞에 위치하면 링킹 에러나는데 왜 그런지...???
 	DECLARE_SINGLE(Core);
 
 public:
 	int		Init(HWND hWnd, POINT resolution);
 	void	Progress();
 
+public:
 	const HWND GetHwnd() { return _hwnd; }
+	const HDC GetMemDC() { return _memdc; }
+
+	// 아레 함수 왜 컴파일 에러가 발생하는지..??
+	// constexpr Vec2 GetResolution() { return Vec2((float)_resolution.x, (float)_resolution.y); }
 	
 private:
 	void Update();
