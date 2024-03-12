@@ -26,6 +26,18 @@ private:
 		SetCurrentScene(type);
 	}
 
+public:
+	const SCENE_TYPE GetCurrentSceneType()
+	{
+		return _curScene->GetOwnSceneType();
+	}
+
+	void ChangeScene(SCENE_TYPE type)
+	{
+		auto to = _scenes[(uint32)type];
+		_curScene.swap(to);
+	}
+
 private:
 	template <typename T>
 	void CreateScene(SCENE_TYPE type, const wstring& name)

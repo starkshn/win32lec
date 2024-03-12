@@ -79,6 +79,20 @@ void KeyManager::Update()
 				_keys[i]._prevPressedState = false;
 			}
 		}
+
+		// temp
+		// change scene
+		if (GET_KEY_STATE(KEY::UP) == KEY_STATE::HOLD)
+		{
+			if (GET_SINGLE(SceneManager)->GetCurrentSceneType() == SCENE_TYPE::MAIN_MENU) return;
+			GET_SINGLE(SceneManager)->ChangeScene(SCENE_TYPE::MAIN_MENU);
+		}
+		
+		if (GET_KEY_STATE(KEY::DOWN) == KEY_STATE::HOLD)
+		{
+			if (GET_SINGLE(SceneManager)->GetCurrentSceneType() == SCENE_TYPE::START) return;
+			GET_SINGLE(SceneManager)->ChangeScene(SCENE_TYPE::START);
+		}
 	}
 	else
 	{

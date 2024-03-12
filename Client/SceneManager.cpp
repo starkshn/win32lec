@@ -40,11 +40,11 @@ void SceneManager::Render()
 
 void SceneManager::InitScene()
 {
-	// Add scenes...
+	// Add scenes.
 	CreateScene<MainMenuScene>(SCENE_TYPE::MAIN_MENU, L"MainMenu");
 	CreateScene<StartScene>(SCENE_TYPE::START, L"StartScene");
 
-	// init -> create all objects...
+	// init -> create all objects.
 	for (const auto& scene : _scenes)
 	{
 		if (scene) scene->InitScene();

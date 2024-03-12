@@ -1,6 +1,6 @@
 #pragma once
 
-class Object;
+#include "Object.h"
 
 class Scene : public enable_shared_from_this<Scene>
 {
@@ -19,6 +19,7 @@ public:
 	void SetName(const wstring& name) { _sceneName = name; }
 	const wstring& GetName() const { return _sceneName; }
 	void SetSceneType(const SCENE_TYPE type) { _sceneType = type; }
+	const SCENE_TYPE GetOwnSceneType() { return _sceneType; }
 
 protected:
 	template <typename T>
@@ -29,10 +30,12 @@ protected:
 		_sceneObjects[(uint32)type].back()->SetPos(pos);
 		_sceneObjects[(uint32)type].back()->SetScale(scale);
 	}
+
 	shared_ptr<Object> GetSceneObject(OBJECT_TYPE type)
 	{
 		return _sceneObjects[(uint32)type].back();
 	}
+
 	void RemoveObject();
 	void FindObject();
 
