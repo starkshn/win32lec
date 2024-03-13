@@ -15,10 +15,6 @@ public:
 	virtual void Render() override;
 	virtual void EnterScene() override;
 	virtual void ExitScene() override;
-
-	/*void Test() 
-	{ 
-		cout << 123 << endl; 
-	};*/
+	
 };
 

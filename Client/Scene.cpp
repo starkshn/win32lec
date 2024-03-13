@@ -40,6 +40,7 @@ void Scene::Render()
 	}
 }
 
+
 void Scene::RemoveObject()
 {
 }

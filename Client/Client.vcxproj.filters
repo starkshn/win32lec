@@ -87,9 +87,6 @@
     <ClInclude Include="Object.h">
       <Filter>Engine\04.Object</Filter>
     </ClInclude>
-    <ClInclude Include="struct.h">
-      <Filter>Engine\01.Header</Filter>
-    </ClInclude>
     <ClInclude Include="TimeManager.h">
       <Filter>Engine\03.Manager\Time</Filter>
     </ClInclude>
@@ -125,6 +122,9 @@
     </ClInclude>
     <ClInclude Include="Brick.h">
       <Filter>Engine\04.Object\Rect\Brick</Filter>
+    </ClInclude>
+    <ClInclude Include="enums.h">
+      <Filter>Engine\01.Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -35,7 +35,7 @@ KeyManager::~KeyManager()
 
 void KeyManager::Init()
 {
-	for (int i = 0; i < (int)KEY::LAST; ++i)
+	for (int i = 0; i < (int)KEYES::LAST; ++i)
 	{
 		_keys.push_back(KeyInfo{KEY_STATE::NONE, false});
 	}
@@ -49,7 +49,7 @@ void KeyManager::Update()
 
 	if (hWnd != nullptr)
 	{
-		for (int i = 0; i < (int)KEY::LAST; ++i)
+		for (int i = 0; i < (int)KEYES::LAST; ++i)
 		{
 			// key check
 			if (GetAsyncKeyState(VK_Mapping[i]) & 0x8000)
@@ -82,13 +82,13 @@ void KeyManager::Update()
 
 		// temp
 		// change scene
-		if (GET_KEY_STATE(KEY::UP) == KEY_STATE::HOLD)
+		if (GET_KEY_STATE(KEYES::UP) == KEY_STATE::HOLD)
 		{
 			if (GET_SINGLE(SceneManager)->GetCurrentSceneType() == SCENE_TYPE::MAIN_MENU) return;
 			GET_SINGLE(SceneManager)->ChangeScene(SCENE_TYPE::MAIN_MENU);
 		}
 		
-		if (GET_KEY_STATE(KEY::DOWN) == KEY_STATE::HOLD)
+		if (GET_KEY_STATE(KEYES::DOWN) == KEY_STATE::HOLD)
 		{
 			if (GET_SINGLE(SceneManager)->GetCurrentSceneType() == SCENE_TYPE::START) return;
 			GET_SINGLE(SceneManager)->ChangeScene(SCENE_TYPE::START);
@@ -96,7 +96,7 @@ void KeyManager::Update()
 	}
 	else
 	{
-		for (int i = 0; i < (int)KEY::LAST; ++i)
+		for (int i = 0; i < (int)KEYES::LAST; ++i)
 		{
 			_keys[i]._prevPressedState = false;
 

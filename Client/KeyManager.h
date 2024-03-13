@@ -39,7 +39,7 @@ enum class KEY_STATE
 	RELEASED,
 };
 
-enum class KEY
+enum class KEYES
 {
 	LEFT,
 	DOWN,
@@ -85,10 +85,10 @@ public:
 	virtual void Update() override;
 
 public:
-	KEY_STATE GetKeyState(KEY key) { return _keys[int(key)]._keyState; }
+	KEY_STATE GetKeyState(KEYES key) { return _keys[int(key)]._keyState; }
 	
 private:
 	vector<KeyInfo> _keys;
-	int VK_Mapping[(int)KEY::LAST];
+	int VK_Mapping[(int)KEYES::LAST];
 };
 

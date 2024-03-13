@@ -5,22 +5,22 @@ void Player::Update()
 {
 	auto pos = GetPos();
 
-	if (GET_KEY_STATE(KEY::W) == KEY_STATE::HOLD)
+	if (GET_KEY_STATE(KEYES::W) == KEY_STATE::HOLD)
 	{
 		pos.y -= 100.f * DT;
 	}
 
-	if (GET_KEY_STATE(KEY::A) == KEY_STATE::HOLD)
+	if (GET_KEY_STATE(KEYES::A) == KEY_STATE::HOLD)
 	{
 		pos.x -= 100.f * DT;
 	}
 
-	if (GET_KEY_STATE(KEY::S) == KEY_STATE::HOLD)
+	if (GET_KEY_STATE(KEYES::S) == KEY_STATE::HOLD)
 	{
 		pos.y += 100.f * DT;
 	}
 
-	if (GET_KEY_STATE(KEY::D) == KEY_STATE::HOLD)
+	if (GET_KEY_STATE(KEYES::D) == KEY_STATE::HOLD)
 	{
 		pos.x += 100.f * DT;
 	}

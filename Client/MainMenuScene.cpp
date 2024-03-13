@@ -18,27 +18,27 @@ MainMenuScene::~MainMenuScene()
 
 void MainMenuScene::InitScene()
 {
-	AddObject<Player>(OBJECT_TYPE::PLAYER, Vec2{ 100.f, 100.f }, Vec2{ 300.f, 300.f} );
-
-	// AddObject<Brick>(OBJECT_TYPE::BRICK, Vec2{ 100.f, 100.f }, Vec2{ 100.f, 100.f });
-
 	auto res = GET_RESOLUTION();
-	Vec2 scale = Vec2(50.f, 50.f);
-	float patrolDist = 100.f;
-	int spawnCnt = 3;
 
+	CreatePlayer(Vec2(res.x / 2, 500), Vec2(70.f, 70.f));
+
+	Vec2 scale			= DEFAULT_SCALE;
+	float patrolDist	= DEFAULT_PATROL_DISTANCE;
+	int spawnCnt = 5;
+
+	//  Vec2{ (patrolDist + scale.x / 2) + term * i
 	float term = (res.x - (patrolDist + scale.x / 2) * 2) / (spawnCnt - 1);
 	for (int i = 0; i < spawnCnt; ++i)
 	{
-		AddObject<Monster>(OBJECT_TYPE::MONSTER, scale, Vec2{ (patrolDist + scale.x / 2) + term * i , 200.f });
-		auto obj = GetSceneObject(OBJECT_TYPE::MONSTER);
-
-		// init
-		obj->SetSpeed(50.f);
-		obj->SetPatrolCenterPos(obj->GetPos());
-		obj->SetPatrolDistance(patrolDist);
-		obj->SetDir(Vec2(1, 0));
+		SpawnDynamicObject<Monster>(OBJECT_TYPE::MONSTER, OBJECT_STATE::PATROL, Vec2((patrolDist + scale.x / 2) + term * i, 200.f), scale);
 	}
+
+	// spawn rotating brick
+	SpawnDynamicObject<Brick>(OBJECT_TYPE::BRICK, OBJECT_STATE::ROTATE, Vec2(res.x / 2, res.y / 2), Vec2(30.f, 30.f), 200.f);
+
+	SpawnDynamicObject<Brick>(OBJECT_TYPE::BRICK, OBJECT_STATE::ROTATE, Vec2(res.x / 2, res.y / 2), Vec2(30.f, 30.f), 200.f);
+
+	SpawnDynamicObject<Brick>(OBJECT_TYPE::BRICK, OBJECT_STATE::ROTATE, Vec2(res.x / 2, res.y / 2), Vec2(30.f, 30.f), 200.f);
 }
 
 void MainMenuScene::Update()
