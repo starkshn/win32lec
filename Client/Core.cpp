@@ -103,7 +103,6 @@ void Core::InitManager()
 	GET_SINGLE(KeyManager)->Init();
 	GET_SINGLE(TimeManager)->Init();
 	GET_SINGLE(SceneManager)->Init();
-	
 }
 
 void Core::InitBitMap()
@@ -116,31 +115,3 @@ void Core::InitBitMap()
 	HBITMAP prevBit = (HBITMAP)SelectObject(_memdc, _hbit);
 	DeleteObject(prevBit);
 }
-
-//void Core::UpdateObjPos()
-//{
-//	// temp obj
-//	auto pos = obj.GetPos();
-//
-//	if (GET_KEY_STATE(KEY::LEFT) == KEY_STATE::HOLD)
-//	{
-//		pos._x -= 200.f * DT;
-//	}
-//
-//	if (GET_KEY_STATE(KEY::RIGHT) == KEY_STATE::HOLD)
-//	{
-//		pos._x += 200.f * DT;
-//	}
-//
-//	if (GET_KEY_STATE(KEY::UP) == KEY_STATE::HOLD)
-//	{
-//		pos._y -= 200.f * DT;
-//	}
-//
-//	if (GET_KEY_STATE(KEY::DOWN) == KEY_STATE::HOLD)
-//	{
-//		pos._y += 200.f * DT;
-//	}
-//
-//	obj.SetPos(pos);
-//}

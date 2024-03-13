@@ -15,7 +15,7 @@ public:
 	const HDC GetMemDC() { return _memdc; }
 
 	// 아레 함수 왜 컴파일 에러가 발생하는지..??
-	// constexpr Vec2 GetResolution() { return Vec2((float)_resolution.x, (float)_resolution.y); }
+	const POINT GetResolution() { return _resolution; }
 	
 private:
 	void Update();

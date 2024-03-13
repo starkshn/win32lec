@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Object.h"
+#include "Player.h"
+#include "Rect.h"
 
 class Scene : public enable_shared_from_this<Scene>
 {
@@ -25,10 +27,14 @@ protected:
 	template <typename T>
 	void AddObject(OBJECT_TYPE type, Vec2 scale, Vec2 pos)
 	{
+		static_assert(std::is_base_of<Object, T>::value, "T type is not Object Type!");
+
 		auto obj = static_pointer_cast<Object>(make_shared<T>());
+
 		_sceneObjects[(uint32)type].push_back(obj);
-		_sceneObjects[(uint32)type].back()->SetPos(pos);
 		_sceneObjects[(uint32)type].back()->SetScale(scale);
+		_sceneObjects[(uint32)type].back()->SetPos(pos);
+		_sceneObjects[(uint32)type].back()->Init();
 	}
 
 	shared_ptr<Object> GetSceneObject(OBJECT_TYPE type)

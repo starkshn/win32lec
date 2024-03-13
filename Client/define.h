@@ -18,6 +18,7 @@ public:										\
 // Core
 #define GET_WINDOW_HANDLE() GET_SINGLE(Core)->GetHwnd()
 #define GET_MEMDC() GET_SINGLE(Core)->GetMemDC()
+#define GET_RESOLUTION() GET_SINGLE(Core)->GetResolution()
 
 // Time
 // delta time(double)
@@ -38,9 +39,17 @@ enum class OBJECT_TYPE
 	PLAYER,
 	MONSTER,
 	PROJECTILE,
+	BRICK,
 
 	LAST = 100,
 	END = 101,
+};
+
+enum class OBJECT_PROPERTY
+{
+	NONE,
+	STATIC,
+	DYNAMIC,
 };
 
 enum class SCENE_TYPE
@@ -76,7 +85,7 @@ using namespace std;
 // user's
 #include "Core.h"
 #include "struct.h"
-#include "Types.h"
+#include "types.h"
 
 // Manager
 #include "Manager.h"

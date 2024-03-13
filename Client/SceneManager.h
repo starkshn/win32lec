@@ -32,6 +32,7 @@ public:
 		return _curScene->GetOwnSceneType();
 	}
 
+	// temp
 	void ChangeScene(SCENE_TYPE type)
 	{
 		auto to = _scenes[(uint32)type];

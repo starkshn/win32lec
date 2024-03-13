@@ -48,6 +48,18 @@
     <Filter Include="Engine\99.Utils">
       <UniqueIdentifier>{82b2921c-45aa-4512-961e-bd52cfc4cf41}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04.Object\Player">
+      <UniqueIdentifier>{6d701a18-122c-43b2-a471-f1404499f4f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\Rect">
+      <UniqueIdentifier>{db40a4e5-666c-40d7-8d1c-538f67d08d8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\Monster">
+      <UniqueIdentifier>{bfffd152-c4f7-4fb8-b8e1-492826975bf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\Rect\Brick">
+      <UniqueIdentifier>{0621947d-6977-41f6-947d-e2a3bd401c60}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -99,8 +111,20 @@
     <ClInclude Include="SimpleMath.h">
       <Filter>Engine\99.Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Types.h">
+    <ClInclude Include="types.h">
       <Filter>Engine\01.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Engine\04.Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>Engine\04.Object\Rect</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Engine\04.Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h">
+      <Filter>Engine\04.Object\Rect\Brick</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +160,18 @@
     </ClCompile>
     <ClCompile Include="SimpleMath.cpp">
       <Filter>Engine\99.Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Engine\04.Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Rect.cpp">
+      <Filter>Engine\04.Object\Rect</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Engine\04.Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>Engine\04.Object\Rect\Brick</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

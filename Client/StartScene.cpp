@@ -28,8 +28,10 @@ void StartScene::Render()
 
 void StartScene::EnterScene()
 {
+
 }
 
 void StartScene::ExitScene()
 {
+
 }
