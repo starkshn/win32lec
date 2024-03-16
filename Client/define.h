@@ -37,6 +37,11 @@ public:										\
 
 // Key Manager
 #define GET_KEY_STATE(k) KEY->GetKeyState(k) // get key state
+#define KEY_CMP(key, state) GET_KEY_STATE(key) == state
+#define KEY_HOLD(key) KEY_CMP(key, KEY_STATE::HOLD)
+#define KEY_PRESSED(key) KEY_CMP(key, KEY_STATE::PRESSED)
+#define KEY_RELEASED(key) KEY_CMP(key, KEY_STATE::RELEASED)
+
 
 // Object
 #define DEFAULT_X_SCALE 50.f
@@ -50,6 +55,27 @@ public:										\
 #define DEFAULT_SPEED 50.f
 #define DEFAULT_PATROL_DISTANCE 100.f
 #define DEFAULT_DIR Vec2(1, 0)
+#define GET_PLAYER() SCENE->GetPlayer()
+
+	// Render
+#define DRAW_RECT() Rectangle(GET_MEMDC(), this->GetLeft(), this->GetTop(), this->GetRight(), this->GetBottom());
+#define DRAW_CIRCLE() Ellipse(GET_MEMDC(), this->GetLeft(), this->GetTop(), this->GetRight(), this->GetBottom());
+// #define DRAW_LINE(start, end) LineTo(GET_MEMDC(), start, end) 
+
+	// projectile
+#define DEFAULT_PROJ_SCALE Vec2(30.f, 30.f)
+#define DEFAULT_PROJ_SPEED 300.f
+#define OBJ_PROJECTILE OBJECT_TYPE::PROJECTILE
+#define DEFAULT_PROJECTILE_POS Vec2(this->GetPos().x, this->GetPos().y - this->GetScale().y / 2 - DEFAULT_PROJ_SCALE.y / 2)
+
+	// angle
+#define CHECK_SIN_ANGLE(angle)							\
+if(angle > 360.f)									\
+{													\
+	this->SetAngle(angle - 360.f);					\
+	this->SetAngle(0.f);							\
+}													\
+
 
 // math
 #define PI 3.141592

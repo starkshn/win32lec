@@ -1,5 +1,7 @@
 #pragma once
 
+class Scene;
+
 class Object
 {
 public:
@@ -7,9 +9,17 @@ public:
 	virtual ~Object();
 
 public:
-	virtual void Update() {};
-	virtual void Render() {};
+	virtual void Update() 
+	{
+		
+	};
+	virtual void Render() 
+	{
+		Rectangle(GET_MEMDC(), GetLeft(), GetTop(), GetRight(), GetBottom());
+	};
 	virtual void Init() {};
+	virtual void Begin() {};
+	virtual void End() {};
 
 public:
 	void SetPos(Vec2 pos) { _pos = pos; }
@@ -43,28 +53,48 @@ public:
 	void SetRotateType(const ROTATE_TYPE type) { _rotateType = type; }
 
 public:
-	const double GetAngle() { return _angle; }
-	void SetAngle(double angle) { _angle = angle; }
+	const float GetAngle() { return _angle; }
+	void SetAngle(float angle) { _angle = angle; }
 	
-	const double GetRadian() { return _radian; }
-	void SetRadian(double rad) { _radian = rad; }
+	const float GetRadian() { return _radian; }
+	void SetRadian(float rad) { _radian = rad; }
 
 public:
-	void Rotate(double radius);
+	void Rotate(float radius);
 	void Patrol_Vetical_Horizaon_Sin();
+
+public:
+	void SetOuterScene(weak_ptr<Scene> scene) { _outerScene = scene; }
+	const shared_ptr<Scene> GetOuterScene() { return _outerScene.lock();  }
+
+	void SetOuterSceneType(SCENE_TYPE type) { _outerSceneType = type; }
+	const SCENE_TYPE GetOuterSceneType() { return _outerSceneType; }
+
+	void SetRotateSpeed(float speed) { _rotateSpeed = speed; }
+	const float GetRotateSpeed() { return _rotateSpeed; }
+
+	void SetCenterPos(Vec2 centerPos) { _centerPos = centerPos; }
+	const Vec2 GetCenterPos() { return _centerPos; }
+
+	const float GetAmplitude() { return _amplitude; }
+	void SetAmplitude(float amplitude) { _amplitude = amplitude; }
+
+	const float GetAmplitudeSpeed() { return _amplitudeSpeed;}
+	void SetAmplitudeSpeed(float speed) { _amplitudeSpeed = speed; }
 	
 public:
 	// when OBJECT_TYPE is rectangle can use below functions
-	int GetLeft() { return _pos.x - _scale.x / 2; };
-	int GetTop() { return _pos.y - _scale.y / 2; };
-	int GetRight() { return _pos.x + _scale.x / 2; };
-	int GetBottom() { return _pos.y + _scale.y / 2; };
+	int GetLeft() { return int(_pos.x - _scale.x / 2); };
+	int GetTop() { return int(_pos.y - _scale.y / 2); };
+	int GetRight() { return int(_pos.x + _scale.x / 2); };
+	int GetBottom() { return int(_pos.y + _scale.y / 2); };
 
 private:
-	Vec2 _pos				= { GET_RESOLUTION().x / 2, GET_RESOLUTION().y / 2 };
+	Vec2 _pos				= { float(GET_RESOLUTION().x / 2), float(GET_RESOLUTION().y / 2) };
 	Vec2 _scale				= { DEFAULT_X_SCALE, DEFAULT_Y_SCALE };
-	Vec2 _patrolCenterPos	= { GET_RESOLUTION().x / 2, GET_RESOLUTION().y / 2 };
+	Vec2 _patrolCenterPos	= { float(GET_RESOLUTION().x / 2), float(GET_RESOLUTION().y / 2) };
 	Vec2 _dir				= DEFAULT_DIR;
+	Vec2 _centerPos;
 
 	OBJECT_TYPE _type			= DEFAULT_OBJECT_TYPE;
 	OBJECT_STATE _state			= DEFAULT_OBJECT_STATE;
@@ -75,8 +105,15 @@ private:
 	float _patrolDistace		= DEFAULT_PATROL_DISTANCE;
 
 private:
-	double _angle = 0;
-	double _radian = 0;
+	float _angle = 0.f;
+	float _radian = 0.f;
+	float _rotateSpeed = 0.f;
+	float _amplitude = 0.f;
+	float _amplitudeSpeed = 0.f;
 
+
+private:
+	weak_ptr<Scene> _outerScene;
+	SCENE_TYPE _outerSceneType;
 };
 

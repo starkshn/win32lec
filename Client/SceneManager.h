@@ -3,6 +3,7 @@
 #include "Scene.h"
 #include "MainMenuScene.h"
 #include "StartScene.h"
+#include "Player.h"
 
 class SceneManager : public Manager
 {
@@ -32,11 +33,23 @@ public:
 		return _curScene->GetOwnSceneType();
 	}
 
+	const shared_ptr<Scene> GetCurrentScene()
+	{
+		return _curScene;
+	}
+
 	// temp
 	void ChangeScene(SCENE_TYPE type)
 	{
 		auto to = _scenes[(uint32)type];
+		to->EndScene();
 		_curScene.swap(to);
+		_curScene->BeginScene();
+	}
+
+	const shared_ptr<Player> GetPlayer()
+	{
+		return GetCurrentScene()->GetPlayer();
 	}
 
 private:

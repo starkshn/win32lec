@@ -11,18 +11,15 @@ Object::~Object()
 
 }
 
-void Object::Rotate(double radius)
+void Object::Rotate(float radius)
 {
 	auto pos = GetPos();
-	SetAngle(GetAngle() + GetSpeed() * DT);
-	if (GetAngle() > 360)
-	{
-		SetAngle(GetAngle() - 360);
-		SetAngle(0);
-	}
+	SetAngle(GetAngle() + GetSpeed() * DT_F);
 
-	double cosVal = cos(RAD(GetAngle())) * radius;
-	double sinVal = sin(RAD(GetAngle())) * radius;
+	CHECK_SIN_ANGLE(GetAngle());
+
+	float cosVal = float(cos(RAD(GetAngle())) * radius);
+	float sinVal = float(sin(RAD(GetAngle())) * radius);
 	
 	pos.x = GetPatrolCenterPos().x + cosVal;
 	pos.y = GetPatrolCenterPos().y + sinVal;
@@ -30,18 +27,18 @@ void Object::Rotate(double radius)
 	SetPos(pos);
 }
 
-const double _amp = 150; // 진폭
-const double _sp = 300; // 스피드
+const float _amp = 150.f; // 진폭
+const float _sp = 300.f; // 스피드
 
 void Object::Patrol_Vetical_Horizaon_Sin()
 {
 	auto pos = GetPos();
-	pos.x += GetSpeed() * GetDir().x * DT;
+	pos.x += float(GetSpeed() * GetDir().x * DT_F);
 	float dis = abs(GetPatrolCenterPos().x - pos.x) - GetPatrolDistance();
 
 	// y axis -> sin
-	SetAngle(GetAngle() + DT * _sp);
-	pos.y = (-1 * sin(RAD(GetAngle())) * _amp) + GetPatrolCenterPos().y;
+	SetAngle(GetAngle() + DT_F * _sp);
+	pos.y = (-1 * float(sin(RAD(GetAngle()))) * _amp) + GetPatrolCenterPos().y;
 
 	// x축 방향전환시
 	if (0.f < dis)

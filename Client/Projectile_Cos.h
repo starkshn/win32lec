@@ -1,13 +1,12 @@
 #pragma once
-#include "Object.h"
-class Monster : public Object
+#include "Projectile.h"
+
+class Projectile_Cos : public Projectile
 {
-
 public:
-	Monster();
-	~Monster() override;
+	Projectile_Cos();
+	~Projectile_Cos();
 
-public:
 public:
 	virtual void Update() override;
 	virtual void Render() override;

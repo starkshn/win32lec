@@ -14,6 +14,8 @@ Monster::~Monster()
 
 void Monster::Update()
 {
+	Object::Update();
+
 	if (GetProperty() != OBJECT_PROPERTY::STATIC)
 	{
 		Patrol_Vetical_Horizaon_Sin();
@@ -28,4 +30,12 @@ void Monster::Render()
 void Monster::Init()
 {
 	
+}
+
+void Monster::Begin()
+{
+}
+
+void Monster::End()
+{
 }

@@ -15,8 +15,8 @@ public:
 	virtual void InitScene() abstract;
 	virtual void Update();
 	virtual void Render();
-	virtual void EnterScene() abstract;
-	virtual void ExitScene() abstract;
+	virtual void BeginScene() abstract;
+	virtual void EndScene() abstract;
 
 public:
 	void SetName(const wstring& name) { _sceneName = name; }
@@ -35,6 +35,8 @@ protected:
 		_sceneObjects[(uint32)type].push_back(obj);
 		_sceneObjects[(uint32)type].back()->SetPos(pos);
 		_sceneObjects[(uint32)type].back()->SetScale(scale);
+		_sceneObjects[(uint32)type].back()->SetOuterScene(this->weak_from_this());
+		_sceneObjects[(uint32)type].back()->SetOuterSceneType(this->GetOwnSceneType());
 
 		return static_pointer_cast<T>(obj);
 	}
@@ -45,6 +47,7 @@ protected:
 		return _sceneObjects[(uint32)type].back();
 	}
 
+public:
 	template <typename T>
 	shared_ptr<T> SpawnStaticObject(OBJECT_TYPE type = OBJECT_TYPE::RECTANGLE, OBJECT_STATE state = OBJECT_STATE::DEFAULT, Vec2 pos = Vec2(250.f, 250.f), Vec2 scale = Vec2(50.f, 50.f), float speed = 0.f)
 	{
@@ -80,7 +83,6 @@ protected:
 			}
 		}
 
-		obj->Init();
 		return obj;
 	}
 
@@ -96,16 +98,33 @@ protected:
 		return shared_ptr<T>();
 	}
 
-	void CreatePlayer(Vec2 startPos, Vec2 scale)
+	void CreatePlayer(Vec2 scale, Vec2 pos)
 	{
-		AddObject<Player>(OBJECT_TYPE::PLAYER, startPos, scale);
+		AddObject<Player>(OBJECT_TYPE::PLAYER, pos, scale);
 	}
+
+public:
+	void InitObjects()
+	{
+		for (int i = 0; i < (uint32)OBJECT_TYPE::END; ++i)
+		{
+			for (auto obj : _sceneObjects[i])
+			{
+				if (obj)
+				{
+					obj->Init();
+				}
+			}
+		}
+	}
+
+	shared_ptr<Player> GetPlayer() { return static_pointer_cast<Player>(_sceneObjects[(uint32)OBJECT_TYPE::PLAYER].back()); }
 
 protected:
 	void RemoveObject();
 	void FindObject();
 
-private:
+protected:
 	vector<shared_ptr<Object>> _sceneObjects[MAX_LENGH];
 	wstring		_sceneName;
 	SCENE_TYPE	_sceneType;

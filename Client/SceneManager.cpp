@@ -25,7 +25,7 @@ void SceneManager::Init()
 
 	// TODO
 	// enter scene
-	_curScene->EnterScene();
+	_curScene->BeginScene();
 }
 
 void SceneManager::Update()

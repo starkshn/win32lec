@@ -7,6 +7,7 @@ enum class OBJECT_TYPE
 	PLAYER,
 	MONSTER,
 	PROJECTILE,
+	PROJECTILE_LINE,
 	BRICK,
 
 	LAST = 100,
@@ -52,3 +53,4 @@ enum class SCENE_TYPE
 	LAST = 100,
 	END = 101,
 };
+

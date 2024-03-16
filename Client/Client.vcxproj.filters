@@ -60,6 +60,18 @@
     <Filter Include="Engine\04.Object\Rect\Brick">
       <UniqueIdentifier>{0621947d-6977-41f6-947d-e2a3bd401c60}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04.Object\Player\ProjectileLine">
+      <UniqueIdentifier>{e6cd871d-1d6c-45c8-be79-4b76483fcf9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\Projectile">
+      <UniqueIdentifier>{dae72f3a-3760-447a-875f-264d5a584efd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\Projectile\Projectile_Sin">
+      <UniqueIdentifier>{9ac14e2b-aa4f-425c-ab7c-60405d1fca6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\Projectile\Projectile_Cos">
+      <UniqueIdentifier>{c75f852c-cac6-4663-b36b-6e482a8e2bcc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -126,6 +138,18 @@
     <ClInclude Include="enums.h">
       <Filter>Engine\01.Header</Filter>
     </ClInclude>
+    <ClInclude Include="ProjectileLine.h">
+      <Filter>Engine\04.Object\Player\ProjectileLine</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Engine\04.Object\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile_Sin.h">
+      <Filter>Engine\04.Object\Projectile\Projectile_Sin</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile_Cos.h">
+      <Filter>Engine\04.Object\Projectile\Projectile_Cos</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -172,6 +196,18 @@
     </ClCompile>
     <ClCompile Include="Brick.cpp">
       <Filter>Engine\04.Object\Rect\Brick</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectileLine.cpp">
+      <Filter>Engine\04.Object\Player\ProjectileLine</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Engine\04.Object\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile_Sin.cpp">
+      <Filter>Engine\04.Object\Projectile\Projectile_Sin</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile_Cos.cpp">
+      <Filter>Engine\04.Object\Projectile\Projectile_Cos</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
