@@ -49,8 +49,8 @@ void ProjectileLine::Update()
 
 void ProjectileLine::Render()
 {
-	MoveToEx(GET_MEMDC(), GetCenterPos().x, GetCenterPos().y, NULL);
-	LineTo(GET_MEMDC(), GetEndPos().x, GetEndPos().y);
+	MoveToEx(GET_MEMDC(), (int)GetCenterPos().x, (int)GetCenterPos().y, NULL);
+	LineTo(GET_MEMDC(), (int)GetEndPos().x, (int)GetEndPos().y);
 }
 
 void ProjectileLine::Init()

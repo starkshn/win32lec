@@ -154,11 +154,14 @@
     <ClInclude Include="Projectile_Sin.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Resources.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SimpleMath.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="StartScene.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="types.h" />
   </ItemGroup>
@@ -177,10 +180,13 @@
     <ClCompile Include="Projectile_Cos.cpp" />
     <ClCompile Include="Projectile_Sin.cpp" />
     <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SimpleMath.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="StartScene.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TimeManager.cpp" />
   </ItemGroup>
   <ItemGroup>

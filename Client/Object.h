@@ -49,7 +49,7 @@ public:
 	{
 		float len = GetVectorLength(vec);
 
-		assert(len != 0.f, "zero division");
+		assert(len != 0.f);
 
 		vec.x /= len;
 		vec.y /= len;

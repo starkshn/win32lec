@@ -72,6 +72,15 @@
     <Filter Include="Engine\04.Object\Projectile\Projectile_Cos">
       <UniqueIdentifier>{c75f852c-cac6-4663-b36b-6e482a8e2bcc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\06.Resource">
+      <UniqueIdentifier>{0ebae5c2-ab8a-482c-8852-62de0b300b03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\06.Resource\Texture">
+      <UniqueIdentifier>{a7723c34-0688-4713-af0e-df09d4c7cd89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\06.Resource\Sound">
+      <UniqueIdentifier>{4e00d2d2-f408-4227-abef-c90eac219e25}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -150,6 +159,15 @@
     <ClInclude Include="Projectile_Cos.h">
       <Filter>Engine\04.Object\Projectile\Projectile_Cos</Filter>
     </ClInclude>
+    <ClInclude Include="Resources.h">
+      <Filter>Engine\06.Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Engine\06.Resource\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Engine\06.Resource\Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -208,6 +226,15 @@
     </ClCompile>
     <ClCompile Include="Projectile_Cos.cpp">
       <Filter>Engine\04.Object\Projectile\Projectile_Cos</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources.cpp">
+      <Filter>Engine\06.Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Engine\06.Resource\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Engine\06.Resource\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -108,6 +108,7 @@ void Core::InitManager()
 void Core::InitBitMap()
 {
 	// double buffering
+	// _hdc는 현재 윈도우의 device context이다.
 	_hbit = CreateCompatibleBitmap(_hdc, _resolution.x, _resolution.y);
 	_memdc = CreateCompatibleDC(_hdc);
 
