@@ -76,7 +76,6 @@ if(angle > 360.f)									\
 	this->SetAngle(0.f);							\
 }													\
 
-
 // math
 #define PI 3.141592
 #define RAD(angle) angle * PI / 180

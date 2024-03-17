@@ -40,8 +40,32 @@ public:
 	void SetPatrolDistance(float dist) { _patrolDistace = dist; }
 	const float GetPatrolDistance() { return _patrolDistace; }
 
-	void SetDir(Vec2 dir) { _dir = dir; }
+	inline const float GetVectorLength(const Vec2& vec)
+	{
+		return sqrt(vec.x * vec.x + vec.y * vec.y);
+	}
+
+	inline Vec2 Normalize(Vec2 vec)
+	{
+		float len = GetVectorLength(vec);
+
+		assert(len != 0.f, "zero division");
+
+		vec.x /= len;
+		vec.y /= len;
+
+		return vec;
+	}
+
 	const Vec2 GetDir() { return _dir; }
+
+	void SetDir(Vec2 dir)
+	{
+		_dir = Normalize(dir);
+		_dir.y *= -1;
+	}
+	void SetTheta(float theta) { _theta = theta; }
+	const float GetTheta() { return _theta; }
 
 	const OBJECT_STATE GetObjectState() { return _state; }
 	void SetObjectState(OBJECT_STATE type) { _state = type; }
@@ -110,6 +134,7 @@ private:
 	float _rotateSpeed = 0.f;
 	float _amplitude = 0.f;
 	float _amplitudeSpeed = 0.f;
+	float _theta = 0.f;
 
 
 private:
