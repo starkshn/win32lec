@@ -25,12 +25,17 @@ void Projectile_Sin::Update()
 
 void Projectile_Sin::Render()
 {
-	DRAW_RECT();
+	Projectile::Render();
 }
 
 void Projectile_Sin::Init()
 {
 	Projectile::Init();
+
+	SetDir(DIR_DOWN);
+	SetAmplitude(100.f);
+	SetAmplitudeSpeed(700.f);
+	SetCenterPos(GetPos());
 }
 
 void Projectile_Sin::Begin()

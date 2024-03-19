@@ -5,6 +5,7 @@
 #include "Rect.h"
 #include "Brick.h"
 #include "Monster.h"
+#include "Texture.h"
 
 MainMenuScene::MainMenuScene()
 {
@@ -20,6 +21,7 @@ void MainMenuScene::InitScene()
 {
 	auto res = GET_RESOLUTION();
 
+	// Player
 	CreatePlayer(Vec2(50.f, 50.f), Vec2(res.x / 2.f, 500.f));
 
 	Vec2 scale			= DEFAULT_SCALE;

@@ -8,5 +8,6 @@ Texture::Texture()
 
 Texture::~Texture()
 {
-
+	DeleteDC(GetDC());
+	DeleteObject(GetBitMap());
 }

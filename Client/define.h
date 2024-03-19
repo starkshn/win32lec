@@ -11,6 +11,7 @@ public:										\
 		static classname s_instance;		\
 		return &s_instance;					\
 	}										\
+											\
 
 // Get single instance
 #define GET_SINGLE(classname)	classname::GetInstance()
@@ -19,13 +20,16 @@ public:										\
 #define MAX_LENGH (uint32)OBJECT_TYPE::END
 
 // Get Manager
-#define TIME	GET_SINGLE(TimeManager)
-#define KEY		GET_SINGLE(KeyManager)
-#define SCENE	GET_SINGLE(SceneManager)
-#define CORE	GET_SINGLE(Core)
-
+#define TIME		GET_SINGLE(TimeManager)
+#define KEY			GET_SINGLE(KeyManager)
+#define SCENE		GET_SINGLE(SceneManager)
+#define PATH		GET_SINGLE(PathManager)
+#define RESOURCE	GET_SINGLE(ResourceManager)
+#define CORE		GET_SINGLE(Core)
+#define GDI			GET_SINGLE(SelectGDI)
 
 // Core
+#define GET_MAIN_DC()		CORE->GetMainDC()
 #define GET_WINDOW_HANDLE() CORE->GetHwnd()
 #define GET_MEMDC()			CORE->GetMemDC()
 #define GET_RESOLUTION()	CORE->GetResolution()
@@ -61,6 +65,7 @@ public:										\
 #define DRAW_RECT() Rectangle(GET_MEMDC(), this->GetLeft(), this->GetTop(), this->GetRight(), this->GetBottom());
 #define DRAW_CIRCLE() Ellipse(GET_MEMDC(), this->GetLeft(), this->GetTop(), this->GetRight(), this->GetBottom());
 // #define DRAW_LINE(start, end) LineTo(GET_MEMDC(), start, end) 
+#define DRAW_RECT_COLLIDER(left, top, right, bottom) Rectangle(GET_MEMDC(), left, top, right, bottom);
 
 	// projectile
 #define DEFAULT_PROJ_SCALE Vec2(30.f, 30.f)
@@ -74,13 +79,24 @@ if(angle > 360.f)									\
 {													\
 	this->SetAngle(angle - 360.f);					\
 	this->SetAngle(0.f);							\
-}													\
+}												\
+
+// dir
+#define DIR_UP Vec2(0, 1)
+#define DIR_DOWN Vec2(0, -1)
+#define DIR_LEFT Vec2(-1, 0)
+#define DIR_RIGHT Vec2(1, 0)
+
+// res
+#define GET_C_PATH PATH->GetContentDirPath()
+
 
 // math
 #define PI 3.141592
 #define RAD(angle) angle * PI / 180
 #define ANGLE(rad) rad * 180 / PI
 
-
+// res
+#define RES RESOURCE_TYPE 
 
 

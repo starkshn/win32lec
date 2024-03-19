@@ -17,6 +17,8 @@ using namespace std;
 #include <windows.h>
 #include <assert.h>
 #include <optional>
+#include <tchar.h>
+
 
 // header
 #include "types.h"
@@ -29,10 +31,10 @@ using namespace std;
 #include "KeyManager.h"
 #include "TimeManager.h"
 #include "SceneManager.h"
+#include "PathManager.h"
+#include "ResourceManager.h"
+#include "SelectGDI.h"
 
 
-
-
-
-
-
+// lib
+#pragma comment(lib, "Msimg32.lib")

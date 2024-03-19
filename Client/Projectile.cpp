@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "Projectile.h"
+#include "Texture.h"
+#include "Collider.h"
 
 Projectile::Projectile()
 {
@@ -18,7 +20,7 @@ void Projectile::Update()
 	pos.y -= GetSpeed() * sinf(GetTheta()) * DT_F;*/
 
 	// 방향벡터로 이동
-	pos.x += (GetSpeed() * (GetDir().x) * DT_F);
+  	pos.x += (GetSpeed() * (GetDir().x) * DT_F);
 	pos.y += (GetSpeed() * (GetDir().y) * DT_F);
 
 	// 회전행렬
@@ -31,16 +33,44 @@ void Projectile::Update()
 
 void Projectile::Render()
 {
-	DRAW_CIRCLE();
+	uint32 h = (int)GetTexture()->GetTexHeight();
+	uint32 w = (int)GetTexture()->GetTexWidth();
+
+	Vec2 pos = GetPos();
+	int lx = int(pos.x - float(w / 2.f));
+	int ly = int(pos.y - float(h / 2.f));
+
+	TransparentBlt
+	(
+		GET_MEMDC(), int(lx), int(ly), w, h,
+		GetTexture()->GetDC(), 0, 0, w, h, RGB(255, 0, 255)
+	);
+
+	ComponentRender();
 }
 
 void Projectile::Init()
 {
-	SetDir(Vec2(1, 1));
-	SetSpeed(600.f);
-	SetAmplitude(100.f);
-	SetAmplitudeSpeed(700.f);
-	SetCenterPos(GetPos());
+	// set player texture
+	SetTexture(static_pointer_cast<Texture>(RESOURCE->LoadTexture(L"Missile", L"texture\\test_missile.bmp")));
+
+	CreateCollider();
+	auto col = GetCollider();
+	int th = GetTexture()->GetTexHeight();
+	int tw = GetTexture()->GetTexWidth();
+	col->SetColliderScale(Vec2(th, tw));
+	col->SetOffset(Vec2(0, 0));
+
+	Vec2 playerPos = GET_PLAYER()->GetPos();
+	Vec2 playerScale = GET_PLAYER()->GetScale();
+
+	SetPos(Vec2(playerPos.x, playerPos.y - playerScale.y / 2.f));
+	SetScale(Vec2(30.f, 30.f));
+
+	SetDir(DIR_UP);
+	SetSpeed(700.f);
+
+	// CreateCollider();
 }
 
 void Projectile::Begin()

@@ -54,3 +54,31 @@ enum class SCENE_TYPE
 	END = 101,
 };
 
+enum class RESOURCE_TYPE
+{
+	NONE,
+	TEXTURE,
+	SOUND,
+};
+
+enum class FILE_TYPE
+{
+	NONE,
+	BITMAP,
+	PNG,
+	JPG,
+};
+
+enum class BRUSH_TYPE
+{
+	HOLLOW,
+	END,
+};
+
+enum class PEN_TYPE
+{
+	RED,
+	GREEN,
+	BLUE,
+	END,
+};

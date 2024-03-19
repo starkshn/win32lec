@@ -13,6 +13,7 @@ public:
 public:
 	const HWND GetHwnd() { return _hwnd; }
 	const HDC GetMemDC() { return _memdc; }
+	const HDC GetMainDC() { return _hdc; }
 
 	// 아레 함수 왜 컴파일 에러가 발생하는지..??
 	const POINT GetResolution() { return _resolution; }
@@ -34,6 +35,14 @@ private:
 	void InitWindow();
 	void InitManager();
 	void InitBitMap();
+	void InitGDI();
+
+public:
+	const HBRUSH GetBrush(BRUSH_TYPE type) { return _brushes[(UINT)type]; }
+	const HPEN GetPen(PEN_TYPE type) { return _pens[(UINT)type]; }
+
+private:
+	void CreateBrushesAndPen();
 	
 private:
 	HWND	_hwnd = 0;
@@ -42,4 +51,9 @@ private:
 	
 	HBITMAP _hbit = 0;
 	HDC		_memdc = 0;
+
+private:
+	// brush, pen
+	HBRUSH _brushes[(UINT)BRUSH_TYPE::END];
+	HPEN _pens[(UINT)PEN_TYPE::END];
 };

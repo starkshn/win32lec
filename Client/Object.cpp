@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Object.h"
+#include "Collider.h"
 
 Object::Object()
 {
@@ -9,6 +10,31 @@ Object::Object()
 Object::~Object()
 {
 
+}
+
+void Object::FinalUpdate()
+{
+	auto col = GetCollider();
+	if (nullptr != col)
+	{
+		col->FinalUpdate();
+	}
+}
+
+void Object::Render()
+{
+	Rectangle(GET_MEMDC(), GetLeft(), GetTop(), GetRight(), GetBottom());
+
+	ComponentRender();
+}
+
+void Object::ComponentRender()
+{
+	auto col = GetCollider();
+	if (nullptr != col)
+	{
+		col->Render();
+	}
 }
 
 void Object::Rotate(float radius)
@@ -56,4 +82,10 @@ void Object::Patrol_Vetical_Horizaon_Sin()
 	}
 
 	SetPos(pos);
+}
+
+void Object::CreateCollider()
+{
+	_colliderComponent = make_shared<Collider>();
+	_colliderComponent->SetOuterObject(GetThisWeakPtr());
 }

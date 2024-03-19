@@ -2,8 +2,13 @@
 #include "Object.h"
 #include "ProjectileLine.h"
 
+class Texture;
+
 class Player : public Object
 {
+public:
+	Player();
+	~Player() override;
 
 public:
 	virtual void Update() override;
@@ -26,6 +31,6 @@ private:
 	SCENE_TYPE _curType;
 	shared_ptr<ProjectileLine> _projLine = nullptr;
 	Vec2 _projDir = {1, 0};
-	
+
 };
 

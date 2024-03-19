@@ -14,6 +14,7 @@ public:
 public:
 	virtual void InitScene() abstract;
 	virtual void Update();
+	virtual void FinalUpdate();
 	virtual void Render();
 	virtual void BeginScene() abstract;
 	virtual void EndScene() abstract;
@@ -31,10 +32,7 @@ protected:
 		static_assert(std::is_base_of<Object, T>::value, "T type is not Object Type!");
 
 		auto obj = static_pointer_cast<Object>(make_shared<T>());
-
 		_sceneObjects[(uint32)type].push_back(obj);
-		_sceneObjects[(uint32)type].back()->SetPos(pos);
-		_sceneObjects[(uint32)type].back()->SetScale(scale);
 		_sceneObjects[(uint32)type].back()->SetOuterScene(this->weak_from_this());
 		_sceneObjects[(uint32)type].back()->SetOuterSceneType(this->GetOwnSceneType());
 
@@ -55,7 +53,6 @@ public:
 
 		if (state != OBJECT_STATE::DEFAULT)
 		{
-			obj->SetSpeed(speed);
 			obj->SetProperty(OBJECT_PROPERTY::DYNAMIC);
 
 			switch (state)
@@ -68,9 +65,6 @@ public:
 			case OBJECT_STATE::PATROL:
 				{
 					obj->SetObjectState(OBJECT_STATE::PATROL);
-					obj->SetDir(Vec2(1, 0));
-					obj->SetPatrolCenterPos(obj->GetPos());
-					obj->SetPatrolDistance(DEFAULT_PATROL_DISTANCE);
 				}
 				break;
 			case OBJECT_STATE::ROTATE:
@@ -89,7 +83,9 @@ public:
 	template <typename T>
 	shared_ptr<T> SpawnDynamicObject(OBJECT_TYPE type = OBJECT_TYPE::RECTANGLE, OBJECT_STATE state = OBJECT_STATE::PATROL, Vec2 pos = Vec2(250.f, 250.f), Vec2 scale = Vec2(50.f, 50.f), float speed = 50.f)
 	{
-		return SpawnStaticObject<T>(type, state, pos, scale, speed);
+		auto obj = SpawnStaticObject<T>(type, state, pos, scale, speed);
+		obj->SetPos(pos);
+		return obj;
 	}
 
 	template <typename T>

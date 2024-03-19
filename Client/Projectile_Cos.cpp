@@ -31,6 +31,10 @@ void Projectile_Cos::Render()
 void Projectile_Cos::Init()
 {
 	Projectile::Init();
+
+	SetAmplitude(100.f);
+	SetAmplitudeSpeed(700.f);
+	SetCenterPos(GetPos());
 }
 
 void Projectile_Cos::Begin()

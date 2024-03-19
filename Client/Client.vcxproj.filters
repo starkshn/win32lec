@@ -81,6 +81,18 @@
     <Filter Include="Engine\06.Resource\Sound">
       <UniqueIdentifier>{4e00d2d2-f408-4227-abef-c90eac219e25}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03.Manager\PathManager">
+      <UniqueIdentifier>{fa4a32ac-2833-41c1-abdc-00840c2d5267}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03.Manager\ResourceManager">
+      <UniqueIdentifier>{9383cfa1-d0be-44f0-bee2-089b4bbccae6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\07.Collider">
+      <UniqueIdentifier>{469d7805-a4b0-465a-a9ea-226047dc586b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\99.Utils\SelectGDI">
+      <UniqueIdentifier>{be4c4a96-3eb8-417e-8c24-5061a9e12c60}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -168,6 +180,18 @@
     <ClInclude Include="Sound.h">
       <Filter>Engine\06.Resource\Sound</Filter>
     </ClInclude>
+    <ClInclude Include="PathManager.h">
+      <Filter>Engine\03.Manager\PathManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Engine\03.Manager\ResourceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Engine\07.Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectGDI.h">
+      <Filter>Engine\99.Utils\SelectGDI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -235,6 +259,18 @@
     </ClCompile>
     <ClCompile Include="Sound.cpp">
       <Filter>Engine\06.Resource\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="PathManager.cpp">
+      <Filter>Engine\03.Manager\PathManager</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Engine\03.Manager\ResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Engine\07.Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectGDI.cpp">
+      <Filter>Engine\99.Utils\SelectGDI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

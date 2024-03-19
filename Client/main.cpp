@@ -5,6 +5,7 @@
 #include "Client.h"
 #include <vector>
 #include "pch.h"
+#include <crtdbg.h>
 
 using std::vector;
 
@@ -40,6 +41,12 @@ _In_opt_ HINSTANCE hPrevInstance,
 _In_ LPWSTR    lpCmdLine,
 _In_ int       nCmdShow)
 {
+
+    // mem leak check
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+    // _CrtSetBreakAlloc(215);
+
+    
     // Initialize global strings
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_CLIENT, szWindowClass, MAX_LOADSTRING);
@@ -85,6 +92,8 @@ _In_ int       nCmdShow)
             GET_SINGLE(Core)->Progress();
         }
     }
+
+   
 
     return (int) msg.wParam;
 }

@@ -14,6 +14,16 @@ Core::~Core()
 
 	DeleteDC(_memdc);
 	DeleteObject(_hbit);
+
+	for (int i = 0; i < (UINT)BRUSH_TYPE::END; ++i)
+	{
+		DeleteObject(_brushes[(UINT)i]);
+	}
+
+	for (int i = 0; i < (UINT)PEN_TYPE::END; ++i)
+	{
+		DeleteObject(_pens[(UINT)i]);
+	}
 }
 
 int Core::Init(HWND hWnd, POINT resolution)
@@ -24,6 +34,7 @@ int Core::Init(HWND hWnd, POINT resolution)
 	InitWindow();
 	InitManager();
 	InitBitMap();
+	InitGDI();
 
 	return S_OK;
 }
@@ -49,9 +60,11 @@ void Core::Render()
 void Core::UpdateManager()
 {
 	// Manager Updates
-	GET_SINGLE(KeyManager)->Update();
-	GET_SINGLE(TimeManager)->Update();
-	GET_SINGLE(SceneManager)->Update();
+	KEY->Update();
+	TIME->Update();
+	SCENE->Update();
+	PATH->Update();
+	RESOURCE->Update();
 }
 
 void Core::RenderBegin()
@@ -100,9 +113,11 @@ void Core::InitWindow()
 
 void Core::InitManager()
 {
-	GET_SINGLE(KeyManager)->Init();
-	GET_SINGLE(TimeManager)->Init();
-	GET_SINGLE(SceneManager)->Init();
+	KEY->Init();
+	TIME->Init();
+	PATH->Init();
+	RESOURCE->Init();
+	SCENE->Init();
 }
 
 void Core::InitBitMap()
@@ -115,4 +130,20 @@ void Core::InitBitMap()
 	// 교체
 	HBITMAP prevBit = (HBITMAP)SelectObject(_memdc, _hbit);
 	DeleteObject(prevBit);
+}
+
+void Core::InitGDI()
+{
+	CreateBrushesAndPen();
+}
+
+void Core::CreateBrushesAndPen()
+{
+	// 삭제 안해도 된다.
+	_brushes[(UINT)BRUSH_TYPE::HOLLOW] = (HBRUSH)GetStockObject(HOLLOW_BRUSH);
+	
+	_pens[(UINT)PEN_TYPE::RED] = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
+	_pens[(UINT)PEN_TYPE::GREEN] = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
+	_pens[(UINT)PEN_TYPE::BLUE] = CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
+
 }

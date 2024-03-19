@@ -1,8 +1,11 @@
 #pragma once
 
 class Scene;
+class Collider;
 
-class Object
+class Texture;
+
+class Object : public enable_shared_from_this<Object>
 {
 public:
 	Object();
@@ -13,38 +16,130 @@ public:
 	{
 		
 	};
-	virtual void Render() 
-	{
-		Rectangle(GET_MEMDC(), GetLeft(), GetTop(), GetRight(), GetBottom());
-	};
+
+	virtual void FinalUpdate() final;
+	virtual void Render();
+	void ComponentRender();
 	virtual void Init() {};
 	virtual void Begin() {};
 	virtual void End() {};
 
 public:
+	shared_ptr<Object> GetThisSharedPtr()
+	{
+		return shared_from_this();
+	}
+
+	weak_ptr<Object> GetThisWeakPtr()
+	{
+		return weak_from_this();
+	}
+
+public:
+	// scene 현재 오브젝트 관리 주체
+	// TODO GetOuterScene 받는쪽에서 주의해야할 듯하다??
+	void SetOuterScene(weak_ptr<Scene> scene) { _outerScene = scene; }
+	const shared_ptr<Scene> GetOuterScene() { return _outerScene.lock(); }
+
+	// scene type
+	void SetOuterSceneType(SCENE_TYPE type) { _outerSceneType = type; }
+	const SCENE_TYPE GetOuterSceneType() { return _outerSceneType; }
+
+	// texture
+	shared_ptr<Texture> GetTexture() { return _texture; }
+	void SetTexture(shared_ptr<Texture> tex) { _texture = tex; }
+
+	// collider
+	void CreateCollider();
+	shared_ptr<Collider> GetCollider() { return _colliderComponent; }
+	void SetCollider(shared_ptr<Collider> collider)
+	{
+		_colliderComponent = collider;
+	}
+
+	// pos
+	const Vec2 GetPos() { return _pos; }
 	void SetPos(Vec2 pos) { _pos = pos; }
+
+	// scale
+	const Vec2 GetScale() { return _scale; }
 	void SetScale(Vec2 scale) { _scale = scale; }
 
-	const Vec2 GetPos() { return _pos; }
-	const Vec2 GetScale() { return _scale; }
+	// type
 	const OBJECT_TYPE GetType() { return _type; }
+	void SetType(OBJECT_TYPE type) { _type = type; }
 
+	// speed
 	const float GetSpeed() { return _speed; }
 	void SetSpeed(float speed) { _speed = speed; }
 
+	// 속성
 	const OBJECT_PROPERTY GetProperty() { return _property; }
 	void SetProperty(OBJECT_PROPERTY type) { _property = type; }
 
+	// obj state
+	const OBJECT_STATE GetObjectState() { return _state; }
+	void SetObjectState(OBJECT_STATE type) { _state = type; }
+
+	// 패트롤 타입
+	const PATROL_TYPE GetPatrolType() { return _patrolType; }
+	void SetPatrolType(const PATROL_TYPE type) { _patrolType = type; }
+
+	// 회전 타입
+	const ROTATE_TYPE GetRotateType() { return _rotateType; }
+	void SetRotateType(const ROTATE_TYPE type) { _rotateType = type; }
+
+	// 방향 
+	const Vec2 GetDir() { return _dir; }
+	void SetDir(Vec2 dir) 
+	{
+		_dir = Normalize(dir);
+		_dir.y *= -1;
+	}
+
+	// 세타
+	const float GetTheta() { return _theta; }
+	void SetTheta(float theta) { _theta = theta; }
+
+	// 60분법 각도
+	const float GetAngle() { return _angle; }
+	void SetAngle(float angle) { _angle = angle; }
+
+	// 라디안
+	const float GetRadian() { return _radian; }
+	void SetRadian(float rad) { _radian = rad; }
+
+	// 패트롤 중앙 위치
 	void SetPatrolCenterPos(Vec2 patrolCentorPos) { _patrolCenterPos = patrolCentorPos; }
 	const Vec2 GetPatrolCenterPos() { return _patrolCenterPos;}
+
+	// 패트롤 거리
 	void SetPatrolDistance(float dist) { _patrolDistace = dist; }
 	const float GetPatrolDistance() { return _patrolDistace; }
 
+	// 회전 속도
+	void SetRotateSpeed(float speed) { _rotateSpeed = speed; }
+	const float GetRotateSpeed() { return _rotateSpeed; }
+
+	// 오브젝트 중앙점
+	void SetCenterPos(Vec2 centerPos) { _centerPos = centerPos; }
+	const Vec2 GetCenterPos() { return _centerPos; }
+
+	// 진폭 값
+	const float GetAmplitude() { return _amplitude; }
+	void SetAmplitude(float amplitude) { _amplitude = amplitude; }
+
+	// 진폭 이동 속도
+	const float GetAmplitudeSpeed() { return _amplitudeSpeed; }
+	void SetAmplitudeSpeed(float speed) { _amplitudeSpeed = speed; }
+
+	// 벡터 길이
 	inline const float GetVectorLength(const Vec2& vec)
 	{
 		return sqrt(vec.x * vec.x + vec.y * vec.y);
 	}
 
+	// 벡터 정규화
 	inline Vec2 Normalize(Vec2 vec)
 	{
 		float len = GetVectorLength(vec);
@@ -57,54 +152,16 @@ public:
 		return vec;
 	}
 
-	const Vec2 GetDir() { return _dir; }
-
-	void SetDir(Vec2 dir)
-	{
-		_dir = Normalize(dir);
-		_dir.y *= -1;
-	}
-	void SetTheta(float theta) { _theta = theta; }
-	const float GetTheta() { return _theta; }
-
-	const OBJECT_STATE GetObjectState() { return _state; }
-	void SetObjectState(OBJECT_STATE type) { _state = type; }
-	
-	const PATROL_TYPE GetPatrolType() { return _patrolType; }
-	void SetPatrolType(const PATROL_TYPE type) { _patrolType = type; }
-
-	const ROTATE_TYPE GetRotateType() { return _rotateType; }
-	void SetRotateType(const ROTATE_TYPE type) { _rotateType = type; }
-
 public:
-	const float GetAngle() { return _angle; }
-	void SetAngle(float angle) { _angle = angle; }
-	
-	const float GetRadian() { return _radian; }
-	void SetRadian(float rad) { _radian = rad; }
-
-public:
+	// 오브젝트 회전
 	void Rotate(float radius);
+
+	// 오브젝트 sin그래프 따라 패트롤
 	void Patrol_Vetical_Horizaon_Sin();
 
+
 public:
-	void SetOuterScene(weak_ptr<Scene> scene) { _outerScene = scene; }
-	const shared_ptr<Scene> GetOuterScene() { return _outerScene.lock();  }
-
-	void SetOuterSceneType(SCENE_TYPE type) { _outerSceneType = type; }
-	const SCENE_TYPE GetOuterSceneType() { return _outerSceneType; }
-
-	void SetRotateSpeed(float speed) { _rotateSpeed = speed; }
-	const float GetRotateSpeed() { return _rotateSpeed; }
-
-	void SetCenterPos(Vec2 centerPos) { _centerPos = centerPos; }
-	const Vec2 GetCenterPos() { return _centerPos; }
-
-	const float GetAmplitude() { return _amplitude; }
-	void SetAmplitude(float amplitude) { _amplitude = amplitude; }
-
-	const float GetAmplitudeSpeed() { return _amplitudeSpeed;}
-	void SetAmplitudeSpeed(float speed) { _amplitudeSpeed = speed; }
+	
 	
 public:
 	// when OBJECT_TYPE is rectangle can use below functions
@@ -129,16 +186,24 @@ private:
 	float _patrolDistace		= DEFAULT_PATROL_DISTANCE;
 
 private:
-	float _angle = 0.f;
-	float _radian = 0.f;
-	float _rotateSpeed = 0.f;
-	float _amplitude = 0.f;
-	float _amplitudeSpeed = 0.f;
-	float _theta = 0.f;
+	float _angle				= 0.f;
+	float _radian				= 0.f;
+	float _rotateSpeed			= 0.f;
+	float _amplitude			= 0.f;
+	float _amplitudeSpeed		= 0.f;
+	float _theta				= 0.f;
 
+	// collider
+private:
+	// collider에서는 Object를 weak_ptr로 관리해준다.
+	shared_ptr<Collider> _colliderComponent;
 
 private:
-	weak_ptr<Scene> _outerScene;
+	weak_ptr<Scene>	_outerScene;
 	SCENE_TYPE _outerSceneType;
+
+private:
+	// 리소스 매니저로부터 관리하고 있는 리소스이지만, 리소스 매니저의 실제 객체는 Object를 가르킬 일이 없기 때문에 shared_ptr로 관리해준다.
+	shared_ptr<Texture>	_texture;
 };
 
