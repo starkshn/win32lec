@@ -32,14 +32,14 @@ void MainMenuScene::InitScene()
 	float term = (res.x - (patrolDist + scale.x / 2) * 2) / (spawnCnt - 1);
 	for (int i = 0; i < spawnCnt; ++i)
 	{
-		SpawnDynamicObject<Monster>(OBJECT_TYPE::MONSTER, OBJECT_STATE::PATROL, Vec2((patrolDist + scale.x / 2.f) + term * i, 200.f), scale);
+		auto obj = SpawnDynamicObject<Monster>(OBJECT_TYPE::MONSTER, OBJECT_STATE::PATROL, Vec2((patrolDist + scale.x / 2.f) + term * i, 200.f), scale);
+		obj->SetPatrolDistance(patrolDist);
+		obj->SetPatrolCenterPos(obj->GetPos());
 	}
 
 	// spawn rotating brick
 	SpawnDynamicObject<Brick>(OBJECT_TYPE::BRICK, OBJECT_STATE::ROTATE, Vec2(res.x / 2.f, res.y / 2.f), Vec2(30.f, 30.f), 200.f);
-
 	SpawnDynamicObject<Brick>(OBJECT_TYPE::BRICK, OBJECT_STATE::ROTATE, Vec2(res.x / 2.f, res.y / 2.f), Vec2(30.f, 30.f), 200.f);
-
 	SpawnDynamicObject<Brick>(OBJECT_TYPE::BRICK, OBJECT_STATE::ROTATE, Vec2(res.x / 2.f, res.y / 2.f), Vec2(30.f, 30.f), 200.f);
 
 	InitObjects();
