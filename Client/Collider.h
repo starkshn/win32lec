@@ -8,6 +8,18 @@ public:
 	Collider();
 	~Collider();
 
+	Collider(const Collider& other);
+
+private:
+	Collider& operator =	(Collider& origin) = delete;
+	Collider& operator ==	(Collider& origin) = delete;
+	/*Collider& operator >	(Collider& origin) = delete;
+	Collider& operator <	(Collider& origin) = delete;
+	Collider& operator ==	(Collider& origin) = delete;
+	Collider& operator &	(Collider& origin) = delete;
+	Collider& operator |	(Collider& origin) = delete;
+	Collider& operator ^	(Collider& origin) = delete;*/
+
 public:
 	static UINT g_nextID;
 
@@ -26,6 +38,8 @@ public:
 		_outerObject = obj;
 	}
 
+	const UINT GetID() { return _id; }
+
 	const Vec2 GetOffset() { return _offset; }
 	void SetOffset(Vec2 offset) { _offset = offset; }
 
@@ -35,12 +49,18 @@ public:
 	const Vec2 GetColliderScale() { return _colliderScale; }
 	void SetColliderScale(Vec2 scale) { _colliderScale = scale; }
 
-private:
-	weak_ptr<Object> _outerObject;
-	Vec2 _offset;	// 기준 위치로 부터 상대적인 거리값
-	Vec2 _finalPos;
-	Vec2 _colliderScale;
+	// 충돌중인 경우 호출되는 함수
+	void OnCollision(shared_ptr<Collider> other);
+	void OnCollisionEnter(shared_ptr<Collider> other);
+	void OnCollisionExit(shared_ptr<Collider> other);
 
-	UINT _id;
+private:
+	weak_ptr<Object>	_outerObject;
+	Vec2				_offset;
+	Vec2				_finalPos;
+	Vec2				_colliderScale;
+	UINT				_id;
+	INT					_isCollision = 0;
+	
 };
 

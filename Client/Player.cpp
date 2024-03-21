@@ -135,24 +135,23 @@ void Player::AngryMove()
 void Player::CreateProjectile()
 {
 
-	/*auto proj = GetOuterScene()->SpawnDynamicObject<Projectile>
+	auto proj = GetOuterScene()->SpawnDynamicObject<Projectile>
 		(
 			OBJ_PROJECTILE,
 			DEFAULT_OBJECT_STATE,
 			DEFAULT_PROJECTILE_POS,
 			DEFAULT_PROJ_SCALE,
 			DEFAULT_PROJ_SPEED
-		);*/
+		);
 
-
-	auto proj = GetOuterScene()->SpawnDynamicObject<Projectile_Sin>
+	/*auto proj = GetOuterScene()->SpawnDynamicObject<Projectile_Sin>
 		(
 			OBJ_PROJECTILE,
 			DEFAULT_OBJECT_STATE, 
 			DEFAULT_PROJECTILE_POS,
 			DEFAULT_PROJ_SCALE,
 			DEFAULT_PROJ_SPEED
-		);
+		);*/
 
 	/*GetOuterScene()->SpawnDynamicObject<Projectile_Cos>
 		(

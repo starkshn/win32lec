@@ -16,16 +16,37 @@ Collider::~Collider()
 
 }
 
+Collider::Collider(const Collider& origin)
+	:
+	_outerObject(),
+	_offset(origin._offset),
+	_finalPos(origin._finalPos),
+	_colliderScale(origin._colliderScale),
+	_id(g_nextID++)
+{
+	
+}
+
 void Collider::FinalUpdate()
 {
 	Vec2 objPos = GetOuterObject()->GetPos();
 	_finalPos = objPos + _offset;
+
+	assert(0 <= _isCollision);
 }
 
 void Collider::Render()
 {
-	GDI->SetBrush(GET_MEMDC(), BRUSH_TYPE::HOLLOW);
-	GDI->SetPen(GET_MEMDC(), PEN_TYPE::GREEN);
+	if (_isCollision > 0)
+	{
+		GDI->SetBrush(GET_MEMDC(), BRUSH_TYPE::HOLLOW);
+		GDI->SetPen(GET_MEMDC(), PEN_TYPE::RED);
+	}
+	else
+	{
+		GDI->SetBrush(GET_MEMDC(), BRUSH_TYPE::HOLLOW);
+		GDI->SetPen(GET_MEMDC(), PEN_TYPE::GREEN);
+	}
 
 	Vec2 scale = GetColliderScale();
 	Vec2 finalPos = GetFinalPos();
@@ -40,4 +61,19 @@ void Collider::Render()
 
 	GDI->ReleaseBrush();
 	GDI->ReleasePen();
+}
+
+void Collider::OnCollision(shared_ptr<Collider> other)
+{
+	
+}
+
+void Collider::OnCollisionEnter(shared_ptr<Collider> other)
+{
+	_isCollision++;
+}
+
+void Collider::OnCollisionExit(shared_ptr<Collider> other)
+{
+	_isCollision--;
 }

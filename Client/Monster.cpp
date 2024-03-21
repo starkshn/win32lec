@@ -52,8 +52,13 @@ void Monster::Init()
 	auto col = GetCollider();
 	int th = GetTexture()->GetTexHeight();
 	int tw = GetTexture()->GetTexWidth();
-	col->SetColliderScale(GetScale());
+	col->SetColliderScale(Vec2(GetScale().x - 10.f, GetScale().y - 10.f));
 	col->SetOffset(Vec2(0, 0));
+
+	if (GetObjectState() == OBJECT_STATE::DEFAULT)
+	{
+		// SetPos(Vec2(GetPos().x));
+	}
 }
 
 void Monster::Begin()

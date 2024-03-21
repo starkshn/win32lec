@@ -1,5 +1,17 @@
 #pragma once
 
+union COLLIDER_ID
+{
+	struct
+	{
+		UINT _leftID;
+		UINT _rightID;
+	};
+
+	ULONGLONG ID;
+};
+
+
 class Collider;
 
 class CollisionManager : public Manager
@@ -17,14 +29,14 @@ private:
 	void UpdateObjectsCollision(OBJECT_TYPE ltype, OBJECT_TYPE rtype);
 
 private:
-	bool IsEnterCollision(shared_ptr<Collider> left, shared_ptr<Collider> right);
+	bool IsCollision(shared_ptr<Collider> left, shared_ptr<Collider> right);
 	bool IsOverlapCollision(shared_ptr<Collider> left, shared_ptr<Collider> right);
 	bool IsEndCollision(shared_ptr<Collider> left, shared_ptr<Collider> right);
 
 private:
 	UINT _collisionCheck[UINT(OBJECT_TYPE::END)];
 	
-	// 충돌체간의 이전 프레임 정보
-	
+	// 이전 프레임 충돌 정보
+	map<ULONGLONG, bool> _collisionInfo;
 };
 

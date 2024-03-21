@@ -68,9 +68,7 @@ void Projectile::Init()
 	SetScale(Vec2(30.f, 30.f));
 
 	SetDir(DIR_UP);
-	SetSpeed(700.f);
-
-	// CreateCollider();
+	SetSpeed(500.f);
 }
 
 void Projectile::Begin()
