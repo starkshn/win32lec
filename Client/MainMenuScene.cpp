@@ -43,6 +43,10 @@ void MainMenuScene::InitScene()
 	SpawnDynamicObject<Brick>(OBJECT_TYPE::BRICK, OBJECT_STATE::ROTATE, Vec2(res.x / 2.f, res.y / 2.f), Vec2(30.f, 30.f), 200.f);
 
 	InitObjects();
+
+	// 충돌지정
+	// Player 그룹과 monster그룹간의 충돌 체크
+	COLLISION->SetObjectCollisionByType(OBJECT_TYPE::PLAYER, OBJECT_TYPE::MONSTER);
 }
 
 void MainMenuScene::Update()
@@ -57,10 +61,10 @@ void MainMenuScene::Render()
 
 void MainMenuScene::BeginScene()
 {
-	
+	COLLISION->SetObjectCollisionByType(OBJECT_TYPE::PLAYER, OBJECT_TYPE::MONSTER);
 }
 
 void MainMenuScene::EndScene()
 {
-
+	COLLISION->ResetObjectCollision();
 }

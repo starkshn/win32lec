@@ -10,8 +10,7 @@ enum class OBJECT_TYPE
 	PROJECTILE_LINE,
 	BRICK,
 
-	LAST = 100,
-	END = 101,
+	END = 32,
 };
 
 enum class OBJECT_STATE
@@ -19,6 +18,9 @@ enum class OBJECT_STATE
 	DEFAULT,
 	PATROL,
 	ROTATE,
+
+
+	END,
 };
 
 enum class PATROL_TYPE
@@ -26,6 +28,9 @@ enum class PATROL_TYPE
 	NONE,
 	VERTICAL = 1,
 	HORIZON  = 2,
+
+
+	END,
 };
 
 enum class ROTATE_TYPE
@@ -33,6 +38,8 @@ enum class ROTATE_TYPE
 	NONE,
 	CIRCLE,
 	
+
+	END,
 };
 
 enum class OBJECT_PROPERTY
@@ -40,6 +47,8 @@ enum class OBJECT_PROPERTY
 	NONE,
 	STATIC,
 	DYNAMIC,
+
+	END,
 };
 
 enum class SCENE_TYPE
@@ -49,9 +58,11 @@ enum class SCENE_TYPE
 	STAGE_01,
 	STAGE_02,
 
-	TOOL = 99,
-	LAST = 100,
-	END = 101,
+	TOOL = 31,
+
+
+
+	END = 32,
 };
 
 enum class RESOURCE_TYPE
@@ -59,6 +70,9 @@ enum class RESOURCE_TYPE
 	NONE,
 	TEXTURE,
 	SOUND,
+
+
+	END,
 };
 
 enum class FILE_TYPE
@@ -67,11 +81,16 @@ enum class FILE_TYPE
 	BITMAP,
 	PNG,
 	JPG,
+
+
+	END,
 };
 
 enum class BRUSH_TYPE
 {
 	HOLLOW,
+
+
 	END,
 };
 
@@ -80,5 +99,7 @@ enum class PEN_TYPE
 	RED,
 	GREEN,
 	BLUE,
+
+
 	END,
 };

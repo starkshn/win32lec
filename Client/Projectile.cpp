@@ -58,8 +58,8 @@ void Projectile::Init()
 	auto col = GetCollider();
 	int th = GetTexture()->GetTexHeight();
 	int tw = GetTexture()->GetTexWidth();
-	col->SetColliderScale(Vec2(th, tw));
-	col->SetOffset(Vec2(0, 0));
+	col->SetColliderScale(Vec2(float(th), float(tw)));
+	col->SetOffset(Vec2(float(0), float(0)));
 
 	Vec2 playerPos = GET_PLAYER()->GetPos();
 	Vec2 playerScale = GET_PLAYER()->GetScale();

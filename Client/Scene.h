@@ -25,6 +25,13 @@ public:
 	void SetSceneType(const SCENE_TYPE type) { _sceneType = type; }
 	const SCENE_TYPE GetOwnSceneType() { return _sceneType; }
 
+public:
+	// col
+	const vector<shared_ptr<Object>>& GetObjectsByType(OBJECT_TYPE type)
+	{
+		return _sceneObjects[(uint32)type];
+	}
+
 protected:
 	template <typename T>
 	shared_ptr<T> AddObject(OBJECT_TYPE type, Vec2 pos, Vec2 scale)
@@ -100,20 +107,8 @@ public:
 	}
 
 public:
-	void InitObjects()
-	{
-		for (int i = 0; i < (uint32)OBJECT_TYPE::END; ++i)
-		{
-			for (auto obj : _sceneObjects[i])
-			{
-				if (obj)
-				{
-					obj->Init();
-				}
-			}
-		}
-	}
-
+	void InitObjects();
+	
 	shared_ptr<Player> GetPlayer() { return static_pointer_cast<Player>(_sceneObjects[(uint32)OBJECT_TYPE::PLAYER].back()); }
 
 protected:

@@ -25,14 +25,21 @@ public:										\
 #define SCENE		GET_SINGLE(SceneManager)
 #define PATH		GET_SINGLE(PathManager)
 #define RESOURCE	GET_SINGLE(ResourceManager)
+#define COLLISION	GET_SINGLE(CollisionManager)
 #define CORE		GET_SINGLE(Core)
 #define GDI			GET_SINGLE(SelectGDI)
 
-// Core
+// Get Core
 #define GET_MAIN_DC()		CORE->GetMainDC()
 #define GET_WINDOW_HANDLE() CORE->GetHwnd()
 #define GET_MEMDC()			CORE->GetMemDC()
 #define GET_RESOLUTION()	CORE->GetResolution()
+
+// Get Scene
+#define GET_PLAYER()		SCENE->GetPlayer()
+
+// Get Key
+#define GET_KEY_STATE(k) KEY->GetKeyState(k)
 
 // Time Manager
 #define DT		TIME->GetDeltaTime() // delta time(double)
@@ -40,7 +47,6 @@ public:										\
 #define FPS		TIME->GetFPS() // fps (UINT)
 
 // Key Manager
-#define GET_KEY_STATE(k) KEY->GetKeyState(k) // get key state
 #define KEY_CMP(key, state) GET_KEY_STATE(key) == state
 #define KEY_HOLD(key) KEY_CMP(key, KEY_STATE::HOLD)
 #define KEY_PRESSED(key) KEY_CMP(key, KEY_STATE::PRESSED)
@@ -59,7 +65,6 @@ public:										\
 #define DEFAULT_SPEED 50.f
 #define DEFAULT_PATROL_DISTANCE 100.f
 #define DEFAULT_DIR Vec2(1, 0)
-#define GET_PLAYER() SCENE->GetPlayer()
 
 	// Render
 #define DRAW_RECT() Rectangle(GET_MEMDC(), this->GetLeft(), this->GetTop(), this->GetRight(), this->GetBottom());

@@ -60,9 +60,12 @@ void Core::Render()
 void Core::UpdateManager()
 {
 	// Manager Updates
-	KEY->Update();
 	TIME->Update();
+	KEY->Update();
 	SCENE->Update();
+	COLLISION->Update();
+
+	// 아래는 각 매니저에 구현 만되어 있고 사용하지 않는다.
 	PATH->Update();
 	RESOURCE->Update();
 }
@@ -118,6 +121,7 @@ void Core::InitManager()
 	PATH->Init();
 	RESOURCE->Init();
 	SCENE->Init();
+	COLLISION->Init();
 }
 
 void Core::InitBitMap()

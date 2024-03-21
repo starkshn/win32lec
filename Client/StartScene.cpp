@@ -20,6 +20,9 @@ void StartScene::InitScene()
 	auto projLine = SpawnDynamicObject<ProjectileLine>(OBJECT_TYPE::PROJECTILE_LINE, OBJECT_STATE::DEFAULT, Vec2(GetPlayer()->GetPos().x + 50.f, GetPlayer()->GetPos().y), Vec2(100.f, 5.f), 0.f);
 	
 	InitObjects();
+
+
+	COLLISION->SetObjectCollisionByType(OBJECT_TYPE::PLAYER, OBJECT_TYPE::MONSTER);
 }
 
 void StartScene::Update()
@@ -58,4 +61,6 @@ void StartScene::EndScene()
 			}
 		}
 	}
+
+	COLLISION->ResetObjectCollision();
 }

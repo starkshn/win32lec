@@ -2,9 +2,13 @@
 #include "Collider.h"
 #include "Object.h"
 
-Collider::Collider()
-{
+UINT Collider::g_nextID = 1;
 
+Collider::Collider()
+	:
+	_id(g_nextID++)
+{
+	
 }
 
 Collider::~Collider()

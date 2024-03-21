@@ -33,6 +33,7 @@ using namespace std;
 #include "SceneManager.h"
 #include "PathManager.h"
 #include "ResourceManager.h"
+#include "CollisionManager.h"
 #include "SelectGDI.h"
 
 

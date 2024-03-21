@@ -93,6 +93,9 @@
     <Filter Include="Engine\99.Utils\SelectGDI">
       <UniqueIdentifier>{be4c4a96-3eb8-417e-8c24-5061a9e12c60}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03.Manager\CollisionManager">
+      <UniqueIdentifier>{d9c5a962-bd3c-48ed-ad5b-dfb9a64cc542}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -192,6 +195,9 @@
     <ClInclude Include="SelectGDI.h">
       <Filter>Engine\99.Utils\SelectGDI</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>Engine\03.Manager\CollisionManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -271,6 +277,9 @@
     </ClCompile>
     <ClCompile Include="SelectGDI.cpp">
       <Filter>Engine\99.Utils\SelectGDI</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>Engine\03.Manager\CollisionManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

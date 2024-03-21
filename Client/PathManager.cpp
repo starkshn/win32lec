@@ -16,10 +16,10 @@ void PathManager::Init()
 	// 현재 경로 띄워준다.
 	GetCurrentDirectory(255, _contentDirPath);
 	
-	int len = wcslen(_contentDirPath);
+	size_t len = wcslen(_contentDirPath);
 
 #ifdef _DEBUG												
-	for (int i = len - 1; i >= 0; --i)	
+	for (size_t i = len - 1; i >= 0; --i)	
 	{
 		if (_contentDirPath[i] == '\\')					
 		{												
@@ -29,7 +29,7 @@ void PathManager::Init()
 	}													
 #else														
 	int cnt = 0;										
-	for (int i = len - 1; i >= 0; --i)					
+	for (size_t i = len - 1; i >= 0; --i)
 	{													
 		if (cnt == 0 && _contentDirPath[i] == '\\')		
 		{												

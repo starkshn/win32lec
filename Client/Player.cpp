@@ -59,7 +59,7 @@ void Player::Init()
 	auto col = GetCollider();
 	int th = GetTexture()->GetTexHeight();
 	int tw = GetTexture()->GetTexWidth();
-	col->SetColliderScale(Vec2(th - 30, tw - 30));
+	col->SetColliderScale(Vec2(float(th - 30), float(tw - 30)));
 	col->SetOffset(Vec2(0, 15));
 }
 
@@ -89,10 +89,6 @@ void Player::DisMovement()
 	case SCENE_TYPE::STAGE_02:
 		break;
 	case SCENE_TYPE::TOOL:
-		break;
-	case SCENE_TYPE::LAST:
-		break;
-	case SCENE_TYPE::END:
 		break;
 	default:
 		break;

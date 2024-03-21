@@ -9,6 +9,9 @@ public:
 	~Collider();
 
 public:
+	static UINT g_nextID;
+
+public:
 	// 오브젝트의 위치를 따라간다.
 	void FinalUpdate();
 	void Render();
@@ -37,5 +40,7 @@ private:
 	Vec2 _offset;	// 기준 위치로 부터 상대적인 거리값
 	Vec2 _finalPos;
 	Vec2 _colliderScale;
+
+	UINT _id;
 };
 

@@ -55,6 +55,20 @@ void Scene::Render()
 }
 
 
+void Scene::InitObjects()
+{
+	for (int i = 0; i < (uint32)OBJECT_TYPE::END; ++i)
+	{
+		for (auto obj : _sceneObjects[i])
+		{
+			if (obj)
+			{
+				obj->Init();
+			}
+		}
+	}
+}
+
 void Scene::RemoveObject()
 {
 }
