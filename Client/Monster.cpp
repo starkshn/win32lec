@@ -43,12 +43,13 @@ void Monster::Render()
 
 void Monster::Init()
 {
+	// name
 	SetObjectName(L"DefaultMonster");
 
-	// set player texture
+	// texture
 	SetTexture(static_cast<Texture*>(RESOURCE->LoadTexture(L"Player", L"texture\\test_airplane.bmp")));
 
-	// create collider
+	// collider
 	CreateCollider();
 	auto col = GetCollider();
 	int th = GetTexture()->GetTexHeight();

@@ -16,6 +16,7 @@ void Projectile_Sin::Update()
 
 	SetAngle(angle + GetAmplitudeSpeed() * DT_F);
 	CHECK_SIN_ANGLE(GetAngle());
+
 	float val = float(sin(RAD(GetAngle()))) * GetAmplitude();
 	pos.x = GetCenterPos().x + val;
 	pos.y += GetSpeed() * GetDir().y * DT_F * -1;
@@ -32,9 +33,10 @@ void Projectile_Sin::Init()
 {
 	Projectile::Init();
 
+	SetSpeed(400.f);
 	SetDir(DIR_DOWN);
-	SetAmplitude(100.f);
-	SetAmplitudeSpeed(700.f);
+	SetAmplitude(150.f);
+	SetAmplitudeSpeed(800.f);
 	SetCenterPos(GetPos());
 }
 

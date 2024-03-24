@@ -5,10 +5,12 @@
 
 Projectile::Projectile()
 {
+
 }
 
 Projectile::~Projectile()
 {
+
 }
 
 void Projectile::Update()
@@ -18,6 +20,8 @@ void Projectile::Update()
 	// theta 로 이동
 	/*pos.x += GetSpeed() * cosf(GetTheta()) * DT_F;
 	pos.y -= GetSpeed() * sinf(GetTheta()) * DT_F;*/
+
+	auto sp = GetSpeed();
 
 	// 방향벡터로 이동
   	pos.x += (GetSpeed() * (GetDir().x) * DT_F);
@@ -71,7 +75,7 @@ void Projectile::Init()
 	SetScale(Vec2(30.f, 30.f));
 
 	SetDir(DIR_UP);
-	SetSpeed(500.f);
+	SetSpeed(600.f);
 }
 
 void Projectile::Begin()

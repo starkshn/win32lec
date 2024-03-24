@@ -62,6 +62,8 @@ void MainMenuScene::Render()
 void MainMenuScene::BeginScene()
 {
 	COLLISION->SetObjectCollisionByType(OBJECT_TYPE::PLAYER, OBJECT_TYPE::MONSTER);
+
+	COLLISION->SetObjectCollisionByType(OBJECT_TYPE::PROJ_PLAYER, OBJECT_TYPE::MONSTER);
 }
 
 void MainMenuScene::EndScene()

@@ -68,6 +68,8 @@ void Core::UpdateManager()
 	// 아래는 각 매니저에 구현 만되어 있고 사용하지 않는다.
 	PATH->Update();
 	RESOURCE->Update();
+
+	// EventManager의 경우 RenderEnd에서 진행
 }
 
 void Core::RenderBegin()

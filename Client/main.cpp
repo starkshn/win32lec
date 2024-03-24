@@ -41,7 +41,6 @@ _In_opt_ HINSTANCE hPrevInstance,
 _In_ LPWSTR    lpCmdLine,
 _In_ int       nCmdShow)
 {
-
     // mem leak check
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
     // _CrtSetBreakAlloc(215);

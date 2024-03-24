@@ -46,15 +46,16 @@ void Player::Render()
 
 void Player::Init()
 {
+	// name
 	SetObjectName(L"Player");
 
-	auto res = GET_RESOLUTION;
+	// texture
+	SetTexture(static_cast<Texture*>(RESOURCE->LoadTexture(L"Player", L"texture\\test_airplane.bmp")));
 
+	// pos, scale
+	auto res = GET_RESOLUTION;
 	SetPos(Vec2(res.x / 2.f, 500.f));
 	SetScale(Vec2(50.f, 50.f));
-
-	// set player texture
-	SetTexture(static_cast<Texture*>(RESOURCE->LoadTexture(L"Player", L"texture\\test_airplane.bmp")));
 	
 	// create collider
 	CreateCollider();
@@ -137,18 +138,13 @@ void Player::AngryMove()
 // TODO
 void Player::CreateProjectile()
 {
-	shared_ptr<Object> proj = make_shared<Object>();
+	/*Object* proj = new Projectile();
+	CreateObject(proj, OBJECT_TYPE::PROJ_PLAYER);*/
 
-	// CreateObject(proj, OBJECT_TYPE::PROJ_PLAYER);
+	Object* proj = new Projectile_Sin();
+	CreateObject(proj, OBJECT_TYPE::PROJ_PLAYER);
 
-	/*auto proj = GetOuterScene()->SpawnDynamicObject<Projectile_Sin>
-		(
-			OBJ_PROJECTILE,
-			DEFAULT_OBJECT_STATE, 
-			DEFAULT_PROJECTILE_POS,
-			DEFAULT_PROJ_SCALE,
-			DEFAULT_PROJ_SPEED
-		);*/
+
 
 	/*GetOuterScene()->SpawnDynamicObject<Projectile_Cos>
 		(

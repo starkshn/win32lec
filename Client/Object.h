@@ -282,7 +282,24 @@ public:
 	int GetRight() { return int(_pos.x + _scale.x / 2); };
 	int GetBottom() { return int(_pos.y + _scale.y / 2); };
 
+public:
+	const bool GetThisObjectWillDelete()
+	{
+		return deleteObject;
+	}
+
 private:
+	void SetThisObjectWillDelete()
+	{
+		deleteObject = true;
+	}
+	
+	friend class EventManager;
+
+private:
+	// delete ¿©ºÎ
+	bool deleteObject = false;
+
 	Vec2 _pos = 
 	{ 
 		float(GET_RESOLUTION.x / 2),
