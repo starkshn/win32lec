@@ -13,12 +13,6 @@ public:
 private:
 	Collider& operator =	(Collider& origin) = delete;
 	Collider& operator ==	(Collider& origin) = delete;
-	/*Collider& operator >	(Collider& origin) = delete;
-	Collider& operator <	(Collider& origin) = delete;
-	Collider& operator ==	(Collider& origin) = delete;
-	Collider& operator &	(Collider& origin) = delete;
-	Collider& operator |	(Collider& origin) = delete;
-	Collider& operator ^	(Collider& origin) = delete;*/
 
 public:
 	static UINT g_nextID;
@@ -29,11 +23,11 @@ public:
 	void Render();
 
 public:
-	shared_ptr<Object> GetOuterObject()
+	Object* GetOuterObject()
 	{
-		return _outerObject.lock();
+		return _outerObject;
 	}
-	void SetOuterObject(weak_ptr<Object> obj)
+	void SetOuterObject(Object* obj)
 	{
 		_outerObject = obj;
 	}
@@ -50,17 +44,17 @@ public:
 	void SetColliderScale(Vec2 scale) { _colliderScale = scale; }
 
 	// 충돌중인 경우 호출되는 함수
-	void OnCollision(shared_ptr<Collider> other);
-	void OnCollisionEnter(shared_ptr<Collider> other);
-	void OnCollisionExit(shared_ptr<Collider> other);
+	void OnCollision(Collider* other);
+	void OnCollisionEnter(Collider* other);
+	void OnCollisionExit(Collider* other);
 
 private:
-	weak_ptr<Object>	_outerObject;
-	Vec2				_offset;
-	Vec2				_finalPos;
-	Vec2				_colliderScale;
-	UINT				_id;
-	INT					_isCollision = 0;
+	Object*		_outerObject = nullptr;
+	Vec2		_offset = Vec2(0, 0);
+	Vec2		_finalPos = Vec2(0, 0);
+	Vec2		_colliderScale = Vec2(10, 10);
+	UINT		_id;
+	INT			_isCollision = 0;
 	
 };
 

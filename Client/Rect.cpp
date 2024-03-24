@@ -16,5 +16,5 @@ void Rect::Update()
 
 void Rect::Render()
 {
-	Rectangle(GET_MEMDC(), GetLeft(), GetTop(), GetRight(), GetBottom());
+	Rectangle(GET_MEMDC, GetLeft(), GetTop(), GetRight(), GetBottom());
 }

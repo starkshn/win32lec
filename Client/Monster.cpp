@@ -13,7 +13,6 @@ Monster::~Monster()
 
 }
 
-
 void Monster::Update()
 {
 	Object::Update();
@@ -35,7 +34,7 @@ void Monster::Render()
 
 	TransparentBlt
 	(
-		GET_MEMDC(), int(lx), int(ly), w, h,
+		GET_MEMDC, int(lx), int(ly), w, h,
 		GetTexture()->GetDC(), 0, 0, w, h, RGB(255, 0, 255)
 	);
 
@@ -44,8 +43,10 @@ void Monster::Render()
 
 void Monster::Init()
 {
+	SetObjectName(L"DefaultMonster");
+
 	// set player texture
-	SetTexture(static_pointer_cast<Texture>(RESOURCE->LoadTexture(L"Player", L"texture\\test_airplane.bmp")));
+	SetTexture(static_cast<Texture*>(RESOURCE->LoadTexture(L"Player", L"texture\\test_airplane.bmp")));
 
 	// create collider
 	CreateCollider();
@@ -54,11 +55,6 @@ void Monster::Init()
 	int tw = GetTexture()->GetTexWidth();
 	col->SetColliderScale(Vec2(GetScale().x - 10.f, GetScale().y - 10.f));
 	col->SetOffset(Vec2(0, 0));
-
-	if (GetObjectState() == OBJECT_STATE::DEFAULT)
-	{
-		// SetPos(Vec2(GetPos().x));
-	}
 }
 
 void Monster::Begin()
@@ -67,6 +63,28 @@ void Monster::Begin()
 }
 
 void Monster::End()
+{
+
+}
+
+void Monster::OnCollision(Collider* otherCollider)
+{
+	auto otherObj = otherCollider->GetOuterObject();
+	auto name = otherObj->GetObjectName();
+
+	// TODO...
+	/*if (name == L"DefaultProjectile")
+	{
+			
+	}*/
+}
+
+void Monster::OnCollisionEnter(Collider* otherCollider)
+{
+
+}
+
+void Monster::OnCollisionExit(Collider* otherCollider)
 {
 
 }

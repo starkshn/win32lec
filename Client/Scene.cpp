@@ -9,14 +9,23 @@ Scene::Scene()
 
 Scene::~Scene()
 {
-
+	for (uint32 i = 0; i < static_cast<uint32>(OBJECT_TYPE::END); ++i)
+	{
+		for (uint32 j = 0; j < _sceneObjects[i].size(); ++j)
+		{
+			if (nullptr != _sceneObjects[i][j])
+			{
+				delete _sceneObjects[i][j];
+			}
+		}
+	}
 }
 
 void Scene::Update()
 {
-	for (int i = 0; i < (uint32)OBJECT_TYPE::END; ++i)
+	for (uint32 i = 0; i < (uint32)OBJECT_TYPE::END; ++i)
 	{
-		for (auto obj : _sceneObjects[i])
+		for (Object* obj : _sceneObjects[i])
 		{
 			if (obj)
 			{
@@ -28,9 +37,9 @@ void Scene::Update()
 
 void Scene::FinalUpdate()
 {
-	for (int i = 0; i < (uint32)OBJECT_TYPE::END; ++i)
+	for (uint32 i = 0; i < (uint32)OBJECT_TYPE::END; ++i)
 	{
-		for (auto obj : _sceneObjects[i])
+		for (Object* obj : _sceneObjects[i])
 		{
 			if (obj)
 			{
@@ -42,9 +51,9 @@ void Scene::FinalUpdate()
 
 void Scene::Render()
 {
-	for (int i = 0; i < (uint32)OBJECT_TYPE::END; ++i)
+	for (uint32 i = 0; i < (uint32)OBJECT_TYPE::END; ++i)
 	{
-		for (auto obj : _sceneObjects[i])
+		for (Object* obj : _sceneObjects[i])
 		{
 			if (obj)
 			{
@@ -57,9 +66,9 @@ void Scene::Render()
 
 void Scene::InitObjects()
 {
-	for (int i = 0; i < (uint32)OBJECT_TYPE::END; ++i)
+	for (uint32 i = 0; i < (uint32)OBJECT_TYPE::END; ++i)
 	{
-		for (auto obj : _sceneObjects[i])
+		for (Object* obj : _sceneObjects[i])
 		{
 			if (obj)
 			{

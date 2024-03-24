@@ -34,20 +34,20 @@ void CollisionManager::Update()
 
 void CollisionManager::CheckObjectsCollision(OBJECT_TYPE ltype, OBJECT_TYPE rtype)
 {
-	shared_ptr<Scene> curScene = SCENE->GetCurrentScene();
+	Scene* curScene = SCENE->GetCurrentScene();
 
-	const vector<shared_ptr<Object>>& rowObjs = curScene->GetObjectsByType(ltype);
-	const vector<shared_ptr<Object>>& colObjs = curScene->GetObjectsByType(rtype);
+	const vector<Object*>& rowObjs = curScene->GetObjectsByType(ltype);
+	const vector<Object*>& colObjs = curScene->GetObjectsByType(rtype);
+
 	map<ULONGLONG, bool>::iterator iter;
 
-	
 	for (UINT i = 0; i < rowObjs.size(); ++i)
 	{
 		// nullptr이거나 충돌체가 없는 경우
 		if (rowObjs[i]->GetCollider() == nullptr || rowObjs[i] == nullptr)
 			continue;
 
-		shared_ptr<Collider> rowCollider = rowObjs[i]->GetCollider();
+		Collider* rowCollider = rowObjs[i]->GetCollider();
 
 		for (UINT j = 0; j < colObjs.size(); ++j)
 		{
@@ -55,7 +55,7 @@ void CollisionManager::CheckObjectsCollision(OBJECT_TYPE ltype, OBJECT_TYPE rtyp
 			if (colObjs[j]->GetCollider() == nullptr || colObjs[j] == nullptr)
 				continue;
 
-			shared_ptr<Collider> colCollider = colObjs[j]->GetCollider();
+			Collider* colCollider = colObjs[j]->GetCollider();
 
 			// 같은 배열인 경우 (나의 그룹과 나자신의 그룹을 비교하는 경우 건너뛰어야한다)
 			if (rowObjs == colObjs) 
@@ -66,6 +66,8 @@ void CollisionManager::CheckObjectsCollision(OBJECT_TYPE ltype, OBJECT_TYPE rtyp
 			id._leftID	= rowCollider->GetID();
 			id._rightID = colCollider->GetID();
 
+			// TODO 
+			// std::map 말고 HashTable로 O(1)로 찾을 수 있도록 나중에 수정하자.
 			iter = _collisionInfo.find(id.ID);
 
 			// end라는 말은 이전 프레임에 충돌한 적이 없다는 말이다.
@@ -116,7 +118,7 @@ void CollisionManager::UpdateObjectsCollision(OBJECT_TYPE ltype, OBJECT_TYPE rty
 
 }
 
-bool CollisionManager::IsCollision(shared_ptr<Collider> left, shared_ptr<Collider> right)
+bool CollisionManager::IsCollision(Collider* left, Collider* right)
 {
 	Vec2 lPos = left->GetFinalPos();
 	Vec2 lScale = left->GetColliderScale();
@@ -132,13 +134,12 @@ bool CollisionManager::IsCollision(shared_ptr<Collider> left, shared_ptr<Collide
 	return false;
 }
 
-bool CollisionManager::IsOverlapCollision(shared_ptr<Collider> left, shared_ptr<Collider> right)
+bool CollisionManager::IsOverlapCollision(Collider* left, Collider* right)
 {
-
 	return false;
 }
 
-bool CollisionManager::IsEndCollision(shared_ptr<Collider> left, shared_ptr<Collider> right)
+bool CollisionManager::IsEndCollision(Collider* left, Collider* right)
 {
 
 	return false;

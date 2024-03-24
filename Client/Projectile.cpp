@@ -42,7 +42,7 @@ void Projectile::Render()
 
 	TransparentBlt
 	(
-		GET_MEMDC(), int(lx), int(ly), w, h,
+		GET_MEMDC, int(lx), int(ly), w, h,
 		GetTexture()->GetDC(), 0, 0, w, h, RGB(255, 0, 255)
 	);
 
@@ -51,8 +51,10 @@ void Projectile::Render()
 
 void Projectile::Init()
 {
+	SetObjectName(L"DefaultProjectile");
+
 	// set player texture
-	SetTexture(static_pointer_cast<Texture>(RESOURCE->LoadTexture(L"Missile", L"texture\\test_missile.bmp")));
+	SetTexture(static_cast<Texture*>(RESOURCE->LoadTexture(L"Missile", L"texture\\test_missile.bmp")));
 
 	CreateCollider();
 	auto col = GetCollider();
@@ -61,8 +63,9 @@ void Projectile::Init()
 	col->SetColliderScale(Vec2(float(th), float(tw)));
 	col->SetOffset(Vec2(float(0), float(0)));
 
-	Vec2 playerPos = GET_PLAYER()->GetPos();
-	Vec2 playerScale = GET_PLAYER()->GetScale();
+	Object* player = const_cast<Player*>(GET_PLAYER);
+	Vec2 playerPos = player->GetPos();
+	Vec2 playerScale = player->GetScale();
 
 	SetPos(Vec2(playerPos.x, playerPos.y - playerScale.y / 2.f));
 	SetScale(Vec2(30.f, 30.f));

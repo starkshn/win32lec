@@ -1,5 +1,7 @@
 #pragma once
 
+class Collider;
+
 union COLLIDER_ID
 {
 	struct
@@ -10,9 +12,6 @@ union COLLIDER_ID
 
 	ULONGLONG ID;
 };
-
-
-class Collider;
 
 class CollisionManager : public Manager
 {
@@ -29,9 +28,9 @@ private:
 	void UpdateObjectsCollision(OBJECT_TYPE ltype, OBJECT_TYPE rtype);
 
 private:
-	bool IsCollision(shared_ptr<Collider> left, shared_ptr<Collider> right);
-	bool IsOverlapCollision(shared_ptr<Collider> left, shared_ptr<Collider> right);
-	bool IsEndCollision(shared_ptr<Collider> left, shared_ptr<Collider> right);
+	bool IsCollision(Collider* left, Collider* right);
+	bool IsOverlapCollision(Collider* left, Collider* right);
+	bool IsEndCollision(Collider* left, Collider* right);
 
 private:
 	UINT _collisionCheck[UINT(OBJECT_TYPE::END)];

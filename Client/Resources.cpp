@@ -47,7 +47,7 @@ void Resources::LoadFile(const RES type, const wstring& path)
 			assert(_bitMap);
 
 			// 비트맵과 DC연결
-			_dc = CreateCompatibleDC(GET_MAIN_DC());
+			_dc = CreateCompatibleDC(GET_MAIN_DC);
 			HBITMAP temp = (HBITMAP)SelectObject(_dc, _bitMap);
 			DeleteObject(temp);
 			

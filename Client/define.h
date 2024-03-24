@@ -26,17 +26,18 @@ public:										\
 #define PATH		GET_SINGLE(PathManager)
 #define RESOURCE	GET_SINGLE(ResourceManager)
 #define COLLISION	GET_SINGLE(CollisionManager)
+#define EVENT		GET_SINGLE(EventManager)
 #define CORE		GET_SINGLE(Core)
 #define GDI			GET_SINGLE(SelectGDI)
 
 // Get Core
-#define GET_MAIN_DC()		CORE->GetMainDC()
-#define GET_WINDOW_HANDLE() CORE->GetHwnd()
-#define GET_MEMDC()			CORE->GetMemDC()
-#define GET_RESOLUTION()	CORE->GetResolution()
+#define GET_MAIN_DC			CORE->GetMainDC()
+#define GET_WINDOW_HANDLE	CORE->GetHwnd()
+#define GET_MEMDC			CORE->GetMemDC()
+#define GET_RESOLUTION		CORE->GetResolution()
 
 // Get Scene
-#define GET_PLAYER()		SCENE->GetPlayer()
+#define GET_PLAYER			SCENE->GetPlayer()
 
 // Get Key
 #define GET_KEY_STATE(k) KEY->GetKeyState(k)
@@ -66,31 +67,32 @@ public:										\
 #define DEFAULT_PATROL_DISTANCE 100.f
 #define DEFAULT_DIR Vec2(1, 0)
 
-	// Render
-#define DRAW_RECT() Rectangle(GET_MEMDC(), this->GetLeft(), this->GetTop(), this->GetRight(), this->GetBottom());
-#define DRAW_CIRCLE() Ellipse(GET_MEMDC(), this->GetLeft(), this->GetTop(), this->GetRight(), this->GetBottom());
-// #define DRAW_LINE(start, end) LineTo(GET_MEMDC(), start, end) 
-#define DRAW_RECT_COLLIDER(left, top, right, bottom) Rectangle(GET_MEMDC(), left, top, right, bottom);
+// Render
+#define DRAW_RECT() Rectangle(GET_MEMDC, this->GetLeft(), this->GetTop(), this->GetRight(), this->GetBottom());
 
-	// projectile
+#define DRAW_CIRCLE() Ellipse(GET_MEMDC, this->GetLeft(), this->GetTop(), this->GetRight(), this->GetBottom());
+
+#define DRAW_RECT_COLLIDER(left, top, right, bottom) Rectangle(GET_MEMDC, left, top, right, bottom);
+
+// projectile
 #define DEFAULT_PROJ_SCALE Vec2(30.f, 30.f)
 #define DEFAULT_PROJ_SPEED 300.f
-#define OBJ_PROJECTILE OBJECT_TYPE::PROJECTILE
+#define OBJ_PROJECTILE OBJECT_TYPE::PROJ_PLAYER
 #define DEFAULT_PROJECTILE_POS Vec2(this->GetPos().x, this->GetPos().y - this->GetScale().y / 2 - DEFAULT_PROJ_SCALE.y / 2)
 
-	// angle
-#define CHECK_SIN_ANGLE(angle)							\
+// angle
+#define CHECK_SIN_ANGLE(angle)						\
 if(angle > 360.f)									\
 {													\
 	this->SetAngle(angle - 360.f);					\
 	this->SetAngle(0.f);							\
-}												\
+}													\
 
 // dir
-#define DIR_UP Vec2(0, 1)
-#define DIR_DOWN Vec2(0, -1)
-#define DIR_LEFT Vec2(-1, 0)
-#define DIR_RIGHT Vec2(1, 0)
+#define DIR_UP		Vec2(0, 1)
+#define DIR_DOWN	Vec2(0, -1)
+#define DIR_LEFT	Vec2(-1, 0)
+#define DIR_RIGHT	Vec2(1, 0)
 
 // res
 #define GET_C_PATH PATH->GetContentDirPath()

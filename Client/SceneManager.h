@@ -33,37 +33,64 @@ public:
 		return _curScene->GetOwnSceneType();
 	}
 
-	const shared_ptr<Scene> GetCurrentScene()
+	Scene* GetCurrentScene()
 	{
 		return _curScene;
+	}
+
+	const Player* GetPlayer()
+	{
+		return GetCurrentScene()->GetPlayer();
 	}
 
 	// temp
 	void ChangeScene(SCENE_TYPE type)
 	{
-		auto to = _scenes[(uint32)type];
+		/*auto to = _scenes[(uint32)type];
 		to->EndScene();
 		_curScene.swap(to);
-		_curScene->BeginScene();
-	}
-
-	const shared_ptr<Player> GetPlayer()
-	{
-		return GetCurrentScene()->GetPlayer();
+		_curScene->BeginScene();*/
 	}
 
 private:
-	template <typename T>
 	void CreateScene(SCENE_TYPE type, const wstring& name)
 	{
-		auto scene = make_shared<T>();
-		_scenes[uint32(type)] = (scene);
-		_scenes[(uint32)type].get()->SetName(name);
-		_scenes[(uint32)type].get()->SetSceneType(type);
+		switch (type)
+		{
+		case SCENE_TYPE::MAIN_MENU:
+		{
+			Scene* scene = new MainMenuScene();
+			_scenes[uint32(type)] = (scene);
+			_scenes[(uint32)type]->SetName(name);
+			_scenes[(uint32)type]->SetSceneType(type);
+		}
+			break;
+		case SCENE_TYPE::START:
+		{
+			Scene* scene = new StartScene();
+			_scenes[uint32(type)] = (scene);
+			_scenes[(uint32)type]->SetName(name);
+			_scenes[(uint32)type]->SetSceneType(type);
+		}
+			break;
+		case SCENE_TYPE::STAGE_01:
+		{
+
+		}
+			break;
+		case SCENE_TYPE::STAGE_02:
+			break;
+		case SCENE_TYPE::TOOL:
+			break;
+		case SCENE_TYPE::END:
+			break;
+		default:
+			break;
+		}
 	}
 
 private:
-	vector<shared_ptr<Scene>> _scenes;
-	shared_ptr<Scene> _curScene;
+	vector<Scene*>		_scenes;
+	Scene*				_curScene;
 };
 

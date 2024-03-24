@@ -23,16 +23,16 @@ void ResourceManager::Update()
 
 }
 
-shared_ptr<Resources> ResourceManager::LoadTexture(const wstring& key, const wstring& path)
+Resources* ResourceManager::LoadTexture(const wstring& key, const wstring& path)
 {
 	auto tex = CheckResource(key);
-	if (tex) 
-		return tex;
+	if (tex) return tex;
 	
 	wstring filePath = PATH->GetContentDirPath();
 	filePath += path;
 
-	tex = static_pointer_cast<Resources>(make_shared<Texture>());
+	tex = static_cast<Resources*>(new Texture());
+
 	tex->LoadResource(FILE_TYPE::BITMAP ,RESOURCE_TYPE::TEXTURE, filePath);
 
 	tex->SetResKey(key);
@@ -43,7 +43,7 @@ shared_ptr<Resources> ResourceManager::LoadTexture(const wstring& key, const wst
 	return tex;
 }
 
-shared_ptr<Resources> ResourceManager::CheckResource(const wstring& key)
+Resources* ResourceManager::CheckResource(const wstring& key)
 {
 	auto iter = _resources.find(key);
 	if (iter == _resources.end())

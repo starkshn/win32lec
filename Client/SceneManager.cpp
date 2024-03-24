@@ -43,8 +43,8 @@ void SceneManager::Render()
 void SceneManager::InitScene()
 {
 	// Add scenes.
-	CreateScene<MainMenuScene>(SCENE_TYPE::MAIN_MENU, L"MainMenu");
-	CreateScene<StartScene>(SCENE_TYPE::START, L"StartScene");
+	CreateScene(SCENE_TYPE::MAIN_MENU, L"MainMenu");
+	// CreateScene(SCENE_TYPE::START, L"StartScene");
 
 	// init -> create all objects.
 	for (const auto& scene : _scenes)

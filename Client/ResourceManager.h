@@ -12,10 +12,10 @@ public:
 	void Update() override;
 
 public:
-	shared_ptr<Resources> LoadTexture(const wstring& key, const wstring& path);
-	shared_ptr<Resources> CheckResource(const wstring& key);
+	Resources* LoadTexture(const wstring& key, const wstring& path);
+	Resources* CheckResource(const wstring& key);
 
 private:
-	map<wstring, shared_ptr<Resources>> _resources;
+	map<wstring, Resources*> _resources;
 };
 

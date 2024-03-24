@@ -9,7 +9,7 @@ public:
 	friend class ReousceManager;
 
 public:
-	const wstring GetResKey() const
+	const wstring GetResKey()
 	{
 		return _resKey;
 	}
@@ -18,7 +18,7 @@ public:
 		_resKey = key;
 	}
 
-	const wstring GetResRelativePath() const
+	const wstring GetResRelativePath()
 	{
 		return _resRelativePath;
 	}

@@ -37,7 +37,7 @@ void Player::Render()
 
 	TransparentBlt
 	(
-		GET_MEMDC(), int(lx), int(ly), w, h,
+		GET_MEMDC, int(lx), int(ly), w, h,
 		GetTexture()->GetDC(), 0, 0, w, h, RGB(255, 0, 255)
 	);
 
@@ -46,13 +46,15 @@ void Player::Render()
 
 void Player::Init()
 {
-	auto res = GET_RESOLUTION();
+	SetObjectName(L"Player");
+
+	auto res = GET_RESOLUTION;
 
 	SetPos(Vec2(res.x / 2.f, 500.f));
 	SetScale(Vec2(50.f, 50.f));
 
 	// set player texture
-	SetTexture(static_pointer_cast<Texture>(RESOURCE->LoadTexture(L"Player", L"texture\\test_airplane.bmp")));
+	SetTexture(static_cast<Texture*>(RESOURCE->LoadTexture(L"Player", L"texture\\test_airplane.bmp")));
 	
 	// create collider
 	CreateCollider();
@@ -132,17 +134,12 @@ void Player::AngryMove()
 	
 }
 
+// TODO
 void Player::CreateProjectile()
 {
+	shared_ptr<Object> proj = make_shared<Object>();
 
-	auto proj = GetOuterScene()->SpawnDynamicObject<Projectile>
-		(
-			OBJ_PROJECTILE,
-			DEFAULT_OBJECT_STATE,
-			DEFAULT_PROJECTILE_POS,
-			DEFAULT_PROJ_SCALE,
-			DEFAULT_PROJ_SPEED
-		);
+	// CreateObject(proj, OBJECT_TYPE::PROJ_PLAYER);
 
 	/*auto proj = GetOuterScene()->SpawnDynamicObject<Projectile_Sin>
 		(

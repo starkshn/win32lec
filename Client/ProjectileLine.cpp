@@ -49,18 +49,18 @@ void ProjectileLine::Update()
 
 void ProjectileLine::Render()
 {
-	MoveToEx(GET_MEMDC(), (int)GetCenterPos().x, (int)GetCenterPos().y, NULL);
-	LineTo(GET_MEMDC(), (int)GetEndPos().x, (int)GetEndPos().y);
+	MoveToEx(GET_MEMDC, (int)GetCenterPos().x, (int)GetCenterPos().y, NULL);
+	LineTo(GET_MEMDC, (int)GetEndPos().x, (int)GetEndPos().y);
 }
 
 void ProjectileLine::Init()
 {
-	SetCenterPos(GetOuterScene()->GetPlayer()->GetPos());
+	/*SetCenterPos(GetOuterScene()->GetPlayer()->GetPos());
 	SetLength(100.f);
 	SetEndPos(Vec2(GetCenterPos().x + GetLenght(), GetCenterPos().y));
 	SetCenterEndPos(GetEndPos());
 	SetRotateSpeed(0.1f);
-	SetDir(Vec2(1, 0));
+	SetDir(Vec2(1, 0));*/
 }
 
 void ProjectileLine::Begin()

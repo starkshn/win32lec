@@ -41,7 +41,7 @@ float gdiv = 2.f;
 
 void Brick::Init()
 {
-	auto res = GET_RESOLUTION();
+	auto res = GET_RESOLUTION;
 	float radius = ((res.x / gdiv) - GetScale().x / 2.f);
 	_radius = radius;
 	SetPos(Vec2(GetPos().x + _radius, (res.y / 2.f)));

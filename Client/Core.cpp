@@ -88,6 +88,11 @@ void Core::RenderEnd()
 {
 	// copy prev to main window
 	BitBlt(_hdc, 0, 0, _resolution.x, _resolution.y, _memdc, 0, 0, SRCCOPY);
+
+
+	// 모든 프레임은 프레임의 가장 마지막에 처리한다.
+	// 이벤트 지연 처리
+	EVENT->Update();
 }
 
 void Core::InitMainWindowHandle(HWND hwnd)
@@ -122,6 +127,7 @@ void Core::InitManager()
 	RESOURCE->Init();
 	SCENE->Init();
 	COLLISION->Init();
+	EVENT->Init();
 }
 
 void Core::InitBitMap()

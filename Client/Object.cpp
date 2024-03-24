@@ -23,7 +23,7 @@ void Object::FinalUpdate()
 
 void Object::Render()
 {
-	Rectangle(GET_MEMDC(), GetLeft(), GetTop(), GetRight(), GetBottom());
+	Rectangle(GET_MEMDC, GetLeft(), GetTop(), GetRight(), GetBottom());
 
 	ComponentRender();
 }
@@ -84,8 +84,9 @@ void Object::Patrol_Vetical_Horizaon_Sin()
 	SetPos(pos);
 }
 
+
 void Object::CreateCollider()
 {
-	_colliderComponent = make_shared<Collider>();
-	_colliderComponent->SetOuterObject(GetThisWeakPtr());
+	_colliderComponent = new Collider();
+	_colliderComponent->SetOuterObject(GetThis());
 }

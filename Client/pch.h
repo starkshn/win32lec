@@ -34,8 +34,9 @@ using namespace std;
 #include "PathManager.h"
 #include "ResourceManager.h"
 #include "CollisionManager.h"
+#include "EventManager.h"
 #include "SelectGDI.h"
-
+#include "Func.h"
 
 // lib
 #pragma comment(lib, "Msimg32.lib")
