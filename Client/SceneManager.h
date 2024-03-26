@@ -90,7 +90,7 @@ private:
 	}
 
 private:
-	vector<Scene*>		_scenes;
-	Scene*				_curScene;
+	vector<Scene*> _scenes;
+	Scene* _curScene		= nullptr;
 };
 

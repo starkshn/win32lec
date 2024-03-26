@@ -12,7 +12,18 @@ SceneManager::SceneManager()
 
 SceneManager::~SceneManager()
 {
-	
+	for_each
+	(
+		_scenes.begin(), _scenes.end(),
+		[&](Scene* scene)
+		{
+			if (scene != nullptr)
+			{
+				delete scene;
+				scene = nullptr;
+			}
+		}
+	);
 }
 
 void SceneManager::Init()

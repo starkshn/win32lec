@@ -14,6 +14,9 @@ public:
 	virtual void End() override;
 
 public:
+	virtual void OnCollision(Collider* otherCollider) override;
+	virtual void OnCollisionEnter(Collider* otherCollider) override;
+	virtual void OnCollisionExit(Collider* otherCollider) override;
 	
 private:
 	

@@ -115,6 +115,7 @@ void Core::InitWindow()
 
 	int cx = rc.right - rc.left;
 	int cy = rc.bottom - rc.top;
+
 	SetWindowPos(_hwnd, nullptr, 300, 100, cx, cy, 0);
 
 	// get device context

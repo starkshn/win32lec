@@ -8,7 +8,7 @@ Resources::Resources()
 
 Resources::~Resources()
 {
-
+	
 }
 
 void Resources::LoadResource(const FILE_TYPE ftype, const RES type, const wstring& path)

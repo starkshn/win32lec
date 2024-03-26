@@ -29,7 +29,10 @@ void Scene::Update()
 		{
 			if (obj)
 			{
-				obj->Update();
+				if (obj->GetThisObjectWillDelete() == false)
+				{
+					obj->Update();
+				}
 			}
 		}
 	}
@@ -53,16 +56,24 @@ void Scene::Render()
 {
 	for (uint32 i = 0; i < (uint32)OBJECT_TYPE::END; ++i)
 	{
-		for (Object* obj : _sceneObjects[i])
+		vector<Object*>::iterator iter = _sceneObjects[i].begin();
+
+		for (; iter < _sceneObjects[i].end();)
 		{
-			if (obj)
+			// 삭제될 경우 렌더하지 않고 없애준다.
+			if ((*iter)->GetThisObjectWillDelete())
 			{
-				obj->Render();
+				iter = _sceneObjects[i].erase(iter);
+			}
+			// 삭제되지 않는경우 iter를 증가시킨다.
+			else
+			{
+				(*iter)->Render();
+				++iter;
 			}
 		}
 	}
 }
-
 
 void Scene::InitObjects()
 {

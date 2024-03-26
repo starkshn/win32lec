@@ -339,14 +339,14 @@ private:
 	// collider
 private:
 	// collider에서는 Object를 weak_ptr로 관리해준다.
-	Collider*			_colliderComponent;
+	Collider* _colliderComponent	= nullptr;
 	
 private:
-	Scene*				_outerScene;
-	SCENE_TYPE			_outerSceneType;
+	Scene* _outerScene				= nullptr;
+	SCENE_TYPE _outerSceneType		= SCENE_TYPE::END;
 
 	// 리소스 매니저로부터 관리하고 있는 리소스이지만, 리소스 매니저의 실제 객체는 Object를 가르킬 일이 없기 때문에 shared_ptr로 관리해준다.
-	Texture*			_texture;
-	wstring				_objName;
+	Texture* _texture				= nullptr;
+	wstring				_objName	= L"";
 };			
 

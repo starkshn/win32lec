@@ -49,12 +49,12 @@ public:
 	void OnCollisionExit(Collider* other);
 
 private:
-	Object*		_outerObject = nullptr;
-	Vec2		_offset = Vec2(0, 0);
-	Vec2		_finalPos = Vec2(0, 0);
-	Vec2		_colliderScale = Vec2(10, 10);
-	UINT		_id;
-	INT			_isCollision = 0;
+	Object*		_outerObject	= nullptr;
+	Vec2		_offset			= Vec2(0, 0);
+	Vec2		_finalPos		= Vec2(0, 0);
+	Vec2		_colliderScale	= Vec2(10, 10);
+	UINT		_id				= 0;
+	INT			_isCollision	= 0;
 	
 };
 

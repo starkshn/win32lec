@@ -37,10 +37,10 @@ void Brick::Render()
 	DRAW_RECT();
 }
 
-float gdiv = 2.f;
-
 void Brick::Init()
 {
+	float gdiv = 2.f;
+
 	auto res = GET_RESOLUTION;
 	float radius = ((res.x / gdiv) - GetScale().x / 2.f);
 	_radius = radius;

@@ -87,3 +87,22 @@ void Projectile::End()
 {
 
 }
+
+void Projectile::OnCollision(Collider* otherCollider)
+{
+
+}
+
+void Projectile::OnCollisionEnter(Collider* otherCollider)
+{
+	Object* otherObject = otherCollider->GetOuterObject();
+	if (otherObject->GetObjectName() == L"DefaultMonster")
+	{
+		DeleteObject(this);
+	}
+}
+
+void Projectile::OnCollisionExit(Collider* otherCollider)
+{
+
+}

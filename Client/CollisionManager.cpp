@@ -47,6 +47,8 @@ void CollisionManager::CheckObjectsCollision(OBJECT_TYPE ltype, OBJECT_TYPE rtyp
 		if (rowObjs[i]->GetCollider() == nullptr || rowObjs[i] == nullptr)
 			continue;
 
+		Object* rowObj = rowObjs[i];
+
 		Collider* rowCollider = rowObjs[i]->GetCollider();
 
 		for (UINT j = 0; j < colObjs.size(); ++j)
@@ -54,6 +56,8 @@ void CollisionManager::CheckObjectsCollision(OBJECT_TYPE ltype, OBJECT_TYPE rtyp
 			// nullptr이거나 충돌체가 없는 경우
 			if (colObjs[j]->GetCollider() == nullptr || colObjs[j] == nullptr)
 				continue;
+
+			Object* colObj = colObjs[j];
 
 			Collider* colCollider = colObjs[j]->GetCollider();
 
@@ -81,20 +85,38 @@ void CollisionManager::CheckObjectsCollision(OBJECT_TYPE ltype, OBJECT_TYPE rtyp
 			// 충돌하는 경우
 			if (IsCollision(rowCollider, colCollider))
 			{
+				// 현재 충돌중이다.
+
 				// 이전에도 충돌중이다.
 				if (iter->second == true)
 				{
-					rowCollider->OnCollision(colCollider);
-					colCollider->OnCollision(rowCollider);
-					iter->second = true;
+					// 삭제될 예정인 경우
+					if (rowObj->GetThisObjectWillDelete() || colObj->GetThisObjectWillDelete())
+					{
+						rowCollider->OnCollisionExit(colCollider);
+						colCollider->OnCollisionExit(rowCollider);
+						iter->second = false;
+					}
+					// 삭제될 예정인 경우가 아니라면
+					else
+					{
+						rowCollider->OnCollision(colCollider);
+						colCollider->OnCollision(rowCollider);
+						iter->second = true;
+					}
 				}
-				// 이전에는 충돌하지 않았다.
-				// 최초로 충돌
 				else
 				{
-					rowCollider->OnCollisionEnter(colCollider);
-					colCollider->OnCollisionEnter(rowCollider);
-					iter->second = true;
+					// 이전에는 충돌하지 않았다.
+					// 최초로 충돌하는 경우
+					
+					// 삭제될 예정인 경우가 둘다 아닐 경우
+					if (!rowObj->GetThisObjectWillDelete() && !colObj->GetThisObjectWillDelete())
+					{
+						rowCollider->OnCollisionEnter(colCollider);
+						colCollider->OnCollisionEnter(rowCollider);
+						iter->second = true;
+					}
 				}
 			}
 			else

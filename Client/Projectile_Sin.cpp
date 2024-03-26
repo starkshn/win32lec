@@ -33,17 +33,19 @@ void Projectile_Sin::Init()
 {
 	Projectile::Init();
 
-	SetSpeed(400.f);
+	SetSpeed(300.f);
 	SetDir(DIR_DOWN);
-	SetAmplitude(150.f);
-	SetAmplitudeSpeed(800.f);
+	SetAmplitude(100.f);
+	SetAmplitudeSpeed(400.f);
 	SetCenterPos(GetPos());
 }
 
 void Projectile_Sin::Begin()
 {
+
 }
 
 void Projectile_Sin::End()
 {
+
 }

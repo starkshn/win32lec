@@ -73,7 +73,7 @@ protected:
 
 protected:
 	vector<Object*>		_sceneObjects[MAX_LENGH];
-	wstring				_sceneName;
-	SCENE_TYPE			_sceneType;
+	wstring				_sceneName = L"";
+	SCENE_TYPE			_sceneType = SCENE_TYPE::END;
 };	
 

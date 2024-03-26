@@ -51,8 +51,8 @@ public:
 	}
 
 private:
-	wstring _resKey;			// res key
-	wstring _resRelativePath;	// 상대 경로
+	wstring _resKey = L"";			// res key
+	wstring _resRelativePath = L"";	// 상대 경로
 
 private:
 	HDC		_dc = 0;			// DC

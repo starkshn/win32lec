@@ -9,7 +9,10 @@ Object::Object()
 
 Object::~Object()
 {
-
+	if (nullptr != _colliderComponent)
+	{
+		delete _colliderComponent;
+	}
 }
 
 void Object::FinalUpdate()
@@ -53,11 +56,12 @@ void Object::Rotate(float radius)
 	SetPos(pos);
 }
 
-const float _amp = 150.f; // 진폭
-const float _sp = 300.f; // 스피드
 
 void Object::Patrol_Vetical_Horizaon_Sin()
 {
+	const float _amp = 150.f;		// 진폭
+	const float _sp = 300.f;		// 스피드
+
 	auto pos = GetPos();
 	pos.x += float(GetSpeed() * GetDir().x * DT_F);
 	float dis = abs(GetPatrolCenterPos().x - pos.x) - GetPatrolDistance();

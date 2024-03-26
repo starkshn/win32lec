@@ -26,7 +26,6 @@ public:
 
 private:
 	vector<EVENT_INFO>	_vecEvents;
-	
 	vector<Object*>		_vecDeleteObjects;
 };
 

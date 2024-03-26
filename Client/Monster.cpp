@@ -70,19 +70,16 @@ void Monster::End()
 
 void Monster::OnCollision(Collider* otherCollider)
 {
-	auto otherObj = otherCollider->GetOuterObject();
-	auto name = otherObj->GetObjectName();
-
-	// TODO...
-	/*if (name == L"DefaultProjectile")
-	{
-			
-	}*/
+	
 }
 
 void Monster::OnCollisionEnter(Collider* otherCollider)
 {
-
+	/*Object* otherObject = otherCollider->GetOuterObject();
+	if (otherObject->GetObjectName() == L"DefaultProjectile")
+	{
+		DeleteObject(this);
+	}*/
 }
 
 void Monster::OnCollisionExit(Collider* otherCollider)

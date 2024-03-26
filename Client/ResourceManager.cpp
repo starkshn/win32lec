@@ -10,7 +10,18 @@ ResourceManager::ResourceManager()
 
 ResourceManager::~ResourceManager()
 {
-
+	for_each
+	(
+		_resources.begin(), _resources.end(),
+		[&](std::pair<wstring, Resources*>pair)
+		{
+			if (pair.second != nullptr)
+			{
+				delete pair.second;
+				pair.second = nullptr;
+			}
+		}
+	);
 }
 
 void ResourceManager::Init()

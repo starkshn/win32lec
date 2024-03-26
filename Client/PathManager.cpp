@@ -21,11 +21,11 @@ void PathManager::Init()
 #ifdef _DEBUG												
 	for (size_t i = len - 1; i >= 0; --i)	
 	{
-		if (_contentDirPath[i] == '\\')					
-		{												
-			_contentDirPath[i] = '\0';					
-			break;										
-		}												
+		if (_contentDirPath[i] == '\\')
+		{										
+			_contentDirPath[i] = '\0';
+			break;	
+		}
 	}													
 #else														
 	int cnt = 0;										

@@ -7,7 +7,6 @@
 #include "pch.h"
 #include <crtdbg.h>
 
-using std::vector;
 
 #define MAX_LOADSTRING 100
 
@@ -92,7 +91,14 @@ _In_ int       nCmdShow)
         }
     }
 
-   
+   /* try
+    {
+        throw std::exception("C++ exception");
+    }
+    catch (const std::exception& ex)
+    {
+        std::cout << "Caught exception " << ex.what() << std::endl;
+    }*/
 
     return (int) msg.wParam;
 }
