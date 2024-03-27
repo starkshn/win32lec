@@ -21,6 +21,7 @@ public:
 	// 오브젝트의 위치를 따라간다.
 	void FinalUpdate();
 	void Render();
+	void Init();
 
 public:
 	Object* GetOuterObject()

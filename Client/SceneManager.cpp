@@ -55,11 +55,24 @@ void SceneManager::InitScene()
 {
 	// Add scenes.
 	CreateScene(SCENE_TYPE::MAIN_MENU, L"MainMenu");
-	// CreateScene(SCENE_TYPE::START, L"StartScene");
+	CreateScene(SCENE_TYPE::START, L"StartScene");
 
 	// init -> create all objects.
 	for (const auto& scene : _scenes)
 	{
 		if (scene) scene->InitScene();
 	}
+}
+
+// EVENT로 부터 호출된다.
+void SceneManager::ChangeScene(SCENE_TYPE dest)
+{
+	// 문제가 발생할 소지가 다분하다. -> 이벤트 등록해야한다.
+	// _curScene = _scenes[(UINT)dest];
+	
+	_curScene->EndScene();
+
+	_curScene = _scenes[(UINT)dest];
+
+	_curScene->BeginScene();
 }

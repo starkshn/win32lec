@@ -9,6 +9,11 @@ Projectile_Sin::~Projectile_Sin()
 {
 }
 
+Projectile_Sin* Projectile_Sin::Clone()
+{
+	return new Projectile_Sin(*this);
+}
+
 void Projectile_Sin::Update()
 {
 	Vec2 pos = GetPos();

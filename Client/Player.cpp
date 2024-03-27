@@ -16,6 +16,11 @@ Player::~Player()
 
 }
 
+Player* Player::Clone()
+{
+	return new Player(*this);
+}
+
 void Player::Update()
 {
 	Object::Update();
@@ -24,8 +29,6 @@ void Player::Update()
 
 void Player::Render()
 {
-	// DRAW_RECT();
-
 	uint32 h = (int)GetTexture()->GetTexHeight();
 	uint32 w = (int)GetTexture()->GetTexWidth();
 
@@ -33,8 +36,10 @@ void Player::Render()
 	int lx = int(pos.x - float(w / 2.f));
 	int ly = int(pos.y - float(h / 2.f));
 
+	// Texture의 모든 생각 다 복붙
 	// BitBlt(GET_MEMDC(), int(lx), int(ly), w, h, GetTexture()->GetDC(), 0, 0, SRCCOPY);
 
+	// 마젠타 색상 설정하여 마젠타 색상 제외하고 복붙해주는 함수
 	TransparentBlt
 	(
 		GET_MEMDC, int(lx), int(ly), w, h,
@@ -46,22 +51,24 @@ void Player::Render()
 
 void Player::Init()
 {
-	// name
+	// get resolution
+	auto res = GET_RESOLUTION;
+
+	// set name
 	SetObjectName(L"Player");
 
-	// texture
+	// set texture
 	SetTexture(static_cast<Texture*>(RESOURCE->LoadTexture(L"Player", L"texture\\test_airplane.bmp")));
 
-	// pos, scale
-	auto res = GET_RESOLUTION;
+	// set pos, scale
 	SetPos(Vec2(res.x / 2.f, 500.f));
 	SetScale(Vec2(50.f, 50.f));
 	
 	// create collider
 	CreateCollider();
-	auto col = GetCollider();
-	int th = GetTexture()->GetTexHeight();
-	int tw = GetTexture()->GetTexWidth();
+	auto col	= GetCollider();
+	int th		= GetTexture()->GetTexHeight();
+	int tw		= GetTexture()->GetTexWidth();
 	col->SetColliderScale(Vec2(float(th - 30), float(tw - 30)));
 	col->SetOffset(Vec2(0, 15));
 }
@@ -138,13 +145,12 @@ void Player::AngryMove()
 // TODO
 void Player::CreateProjectile()
 {
-	/*Object* proj = new Projectile();
-	CreateObject(proj, OBJECT_TYPE::PROJ_PLAYER);*/
+	// None Template
+	 Object* proj = new Projectile_Sin();
+	 CreateObject(proj, OBJECT_TYPE::PROJ_PLAYER);
 
-	Object* proj = new Projectile_Sin();
-	CreateObject(proj, OBJECT_TYPE::PROJ_PLAYER);
-
-
+	// Template (Test) -> 일단 ㄴㄴ
+	// CreateObject<Projectile>(OBJECT_TYPE::PROJ_PLAYER);
 
 	/*GetOuterScene()->SpawnDynamicObject<Projectile_Cos>
 		(
@@ -155,5 +161,6 @@ void Player::CreateProjectile()
 			DEFAULT_PROJ_SPEED
 		);*/
 
-	proj->Init();
+
+	 proj->Init();
 }

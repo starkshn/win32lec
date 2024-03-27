@@ -81,8 +81,8 @@ void KeyManager::Update()
 		}
 
 		// 임시로 Scene간 이동을 가능하게 한 코드이다.
-		// change scene
-		if (GET_KEY_STATE(KEYES::UP) == KEY_STATE::HOLD)
+		// change scene -> SCENE
+		/*if (GET_KEY_STATE(KEYES::UP) == KEY_STATE::HOLD)
 		{
 			if (SCENE->GetCurrentSceneType() == SCENE_TYPE::MAIN_MENU) return;
 			SCENE->ChangeScene(SCENE_TYPE::MAIN_MENU);
@@ -92,7 +92,7 @@ void KeyManager::Update()
 		{
 			if (SCENE->GetCurrentSceneType() == SCENE_TYPE::START) return;
 			SCENE->ChangeScene(SCENE_TYPE::START);
-		}
+		}*/
 	}
 	else
 	{

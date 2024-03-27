@@ -45,7 +45,7 @@ void EventManager::Execute(const EVENT_INFO& _event)
 			Object* obj = (Object*)(_event._lParam);
 			OBJECT_TYPE type = (OBJECT_TYPE)(_event._rParam);
 			
-			 SCENE->GetCurrentScene()->AddObject(obj, type);
+			 SCENE->GetCurrentScene()->AddObjectToCurrentScene(obj, type);
 		}
 		break;
 		case EVENT_TYPE::DELETE_OBJECT:
@@ -58,7 +58,9 @@ void EventManager::Execute(const EVENT_INFO& _event)
 		break;
 		case EVENT_TYPE::SCENE_CHANGE:
 		{
-
+			// lParam : Next Scene
+			(SCENE_TYPE)_event._lParam;
+			SCENE->ChangeScene((SCENE_TYPE)_event._lParam);
 		}
 		break;
 	default:

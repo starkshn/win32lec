@@ -38,22 +38,17 @@ public:
 		return _curScene;
 	}
 
-	const Player* GetPlayer()
+	Player* GetPlayer()
 	{
 		return GetCurrentScene()->GetPlayer();
 	}
 
-	// temp
-	void ChangeScene(SCENE_TYPE type)
-	{
-		/*auto to = _scenes[(uint32)type];
-		to->EndScene();
-		_curScene.swap(to);
-		_curScene->BeginScene();*/
-	}
+private:
+	void ChangeScene(SCENE_TYPE dest);
+	friend class EventManager;
 
 private:
-	void CreateScene(SCENE_TYPE type, const wstring& name)
+	inline void CreateScene(SCENE_TYPE type, const wstring& name)
 	{
 		switch (type)
 		{

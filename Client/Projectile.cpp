@@ -13,6 +13,11 @@ Projectile::~Projectile()
 
 }
 
+Projectile* Projectile::Clone()
+{
+	return new Projectile(*this);
+}
+
 void Projectile::Update()
 {
 	Vec2 pos = GetPos();

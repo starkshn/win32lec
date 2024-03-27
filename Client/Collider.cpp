@@ -63,6 +63,11 @@ void Collider::Render()
 	GDI->ReleasePen();
 }
 
+void Collider::Init()
+{
+
+}
+
 void Collider::OnCollision(Collider* other)
 {
 	GetOuterObject()->OnCollision(other);

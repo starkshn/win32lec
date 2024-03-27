@@ -15,6 +15,27 @@ Object::~Object()
 	}
 }
 
+Object::Object(const Object& other)
+	:
+	_dir(other._dir),
+	_centerPos(other._centerPos),
+	_type(other._type),
+	_state(other._state),
+	_patrolType(other._patrolType),
+	_rotateType(other._rotateType),
+	_speed(other._speed),
+	_patrolDistace(other._patrolDistace),
+	_colliderComponent(nullptr),
+	_outerScene(other._outerScene),
+	_outerSceneType(other._outerSceneType),
+	_texture(other._texture),
+	_objName(other._objName)
+{
+	_colliderComponent = new Collider(*other._colliderComponent);
+	_colliderComponent->SetOuterObject(this);
+	_colliderComponent->Init();
+}
+
 void Object::FinalUpdate()
 {
 	auto col = GetCollider();
@@ -38,6 +59,24 @@ void Object::ComponentRender()
 	{
 		col->Render();
 	}
+}
+
+void Object::CreateCollider()
+{
+	_colliderComponent = new Collider();
+	_colliderComponent->SetOuterObject(GetThis());
+	_colliderComponent->Init();
+}
+
+void Object::CreateCollider(uint32 textureHeight, uint32 textureWidth, Vec2 textureScale, Vec2 offset)
+{
+	_colliderComponent = new Collider();
+	_colliderComponent->SetOuterObject(GetThis());
+
+	_colliderComponent->SetColliderScale(textureScale);
+	_colliderComponent->SetOffset(offset);
+
+	_colliderComponent->Init();
 }
 
 void Object::Rotate(float radius)
@@ -88,9 +127,3 @@ void Object::Patrol_Vetical_Horizaon_Sin()
 	SetPos(pos);
 }
 
-
-void Object::CreateCollider()
-{
-	_colliderComponent = new Collider();
-	_colliderComponent->SetOuterObject(GetThis());
-}

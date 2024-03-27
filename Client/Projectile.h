@@ -5,6 +5,8 @@ class Projectile : public Object
 public:
 	Projectile();
 	~Projectile();
+
+	virtual Projectile* Clone() override;
 	
 public:
 	virtual void Update() override;

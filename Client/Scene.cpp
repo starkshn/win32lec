@@ -89,10 +89,17 @@ void Scene::InitObjects()
 	}
 }
 
-void Scene::RemoveObject()
+void Scene::DeleteAllObjectsByType(OBJECT_TYPE type)
 {
+	DeleteObjectsSafe<Object*>(_sceneObjects[(uint32)type]);
 }
 
-void Scene::FindObject()
+void Scene::DeleteAllObjects()
 {
+	for (uint32 i = 0; i < (uint32)OBJECT_TYPE::END; ++i)
+	{
+		DeleteAllObjectsByType((OBJECT_TYPE)i);
+	}
 }
+
+

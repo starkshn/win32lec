@@ -41,35 +41,53 @@ public:
 	}
 
 public:
-	// col
+	// 타입에 따라 오브젝트'들'을 반환하는 함수
 	const vector<Object*>& GetObjectsByType(OBJECT_TYPE type)
 	{
 		return _sceneObjects[(uint32)type];
 	}
 
-	void AddObject(Object* obj, OBJECT_TYPE type)
+	// 오브젝트를 씬에 추가해주는 함수
+	void AddObjectToCurrentScene(Object* obj, OBJECT_TYPE type)
 	{
 		_sceneObjects[(uint32)type].push_back(obj);
-		_sceneObjects[(uint32)type].back()->SetOuterScene(this);
-		_sceneObjects[(uint32)type].back()->SetOuterSceneType(this->GetOwnSceneType());
+		obj->SetOuterScene(this);
+		obj->SetOuterSceneType(this->GetOwnSceneType());
 	}
 
-	void CreatePlayer(Player* player)
+	// 타입에 따라 오브젝트를 생성하고 씬에 추가해주는 함수
+	template<typename T>
+	Object* CreateAndAppendToScene(OBJECT_TYPE type)
 	{
-		AddObject(player, OBJECT_TYPE::PLAYER);
+		T* obj = new T;
+
+		_sceneObjects[(uint32)type].push_back(obj);
+		obj->SetOuterScene(this);
+		obj->SetOuterSceneType(this->GetOwnSceneType());
+
+		return obj;
 	}
 
-public:
-	void InitObjects();
-	
-	const Player* GetPlayer() 
-	{ 
+	// 플레이어 생성과 씬에 추가를 해주는 함수
+	Object* CreatePlayer()
+	{
+		return CreateAndAppendToScene<Player>(OBJECT_TYPE::PLAYER);
+	}
+
+	// 현재씬의 플레이어 반환해주는 함수
+	Player* GetPlayer()
+	{
 		return static_cast<Player*>(_sceneObjects[(uint32)OBJECT_TYPE::PLAYER].back());
 	}
 
 protected:
-	void RemoveObject();
-	void FindObject();
+	// Scene Begin호출후 오브젝트 초기값 셋팅들
+	void InitObjects();
+
+protected:
+	// Scene변경될 때 호출 될 함수들
+	virtual void DeleteAllObjectsByType(OBJECT_TYPE type);
+	void DeleteAllObjects();
 
 protected:
 	vector<Object*>		_sceneObjects[MAX_LENGH];

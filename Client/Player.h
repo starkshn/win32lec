@@ -10,6 +10,8 @@ public:
 	Player();
 	~Player() override;
 
+	virtual Player* Clone() override;
+
 public:
 	virtual void Update() override;
 	virtual void Render() override;
@@ -27,8 +29,6 @@ public:
 	void CreateProjectile();
 
 private:
-	Scene*					_curScene = nullptr;
-	SCENE_TYPE				_curType;
 	ProjectileLine*			_projLine = nullptr;
 	Vec2					_projDir = {1, 0};
 };

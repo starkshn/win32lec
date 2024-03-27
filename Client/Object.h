@@ -10,14 +10,14 @@ class Object
 public:
 	Object();
 	virtual ~Object();
+	Object(const Object& other);
+
+	// 복사 생성자 반환하는 함수
+	virtual Object* Clone() abstract;
 
 public:
-	virtual void Update() 
-	{
-		
-	};
-
-	virtual void FinalUpdate() final;
+	virtual void Update() {};
+	virtual void FinalUpdate() final; // 부모가 마지막
 	virtual void Render();
 	void ComponentRender();
 	virtual void Init() {};
@@ -25,12 +25,8 @@ public:
 	virtual void End() {};
 
 public:
-	Object* GetThis()
-	{
-		return this;
-	}
+	Object* GetThis() { return this; }
 
-public:
 	// scene 현재 오브젝트 관리 주체
 	// TODO GetOuterScene 받는쪽에서 주의해야할 듯하다??
 	const Scene* GetOuterScene()
@@ -43,7 +39,6 @@ public:
 		_outerScene = outetScene; 
 	}
 
-
 	// scene type
 	const SCENE_TYPE GetOuterSceneType() 
 	{ 
@@ -55,10 +50,13 @@ public:
 		_outerSceneType = type; 
 	}
 
-	// texture
+	// Texture
 	Texture* GetTexture() 
 	{ 
-		return _texture;
+		if (nullptr != _texture)
+			return _texture;
+		else
+			return nullptr;
 	}
 
 	void SetTexture(Texture* tex) 
@@ -66,8 +64,10 @@ public:
 		_texture = tex;
 	}
 
-	// collider
+	// Collider
 	void CreateCollider();
+
+	void CreateCollider(uint32 textureHeight, uint32 textureWidth, Vec2 textureScale, Vec2 offset);
 
 	Collider* GetCollider() 
 	{ 
@@ -283,12 +283,14 @@ public:
 	int GetBottom() { return int(_pos.y + _scale.y / 2); };
 
 public:
+	// 이벤트 매니저에의해 삭제될 여부를 반환하는 함수
 	const bool GetThisObjectWillDelete()
 	{
 		return deleteObject;
 	}
 
 private:
+	// 이벤트 매니저에 한해서 friend로 등록.
 	void SetThisObjectWillDelete()
 	{
 		deleteObject = true;
@@ -320,10 +322,10 @@ private:
 	Vec2 _dir					= DEFAULT_DIR;
 	Vec2 _centerPos;
 
-	OBJECT_TYPE _type			= DEFAULT_OBJECT_TYPE;
-	OBJECT_STATE _state			= DEFAULT_OBJECT_STATE;
-	PATROL_TYPE _patrolType		= DEFAULT_PATROL_TYPE;
-	ROTATE_TYPE _rotateType		= DEFAULT_ROTATE_TYPE;
+	OBJECT_TYPE		_type		= DEFAULT_OBJECT_TYPE;
+	OBJECT_STATE	_state		= DEFAULT_OBJECT_STATE;
+	PATROL_TYPE		_patrolType	= DEFAULT_PATROL_TYPE;
+	ROTATE_TYPE		_rotateType	= DEFAULT_ROTATE_TYPE;
 	OBJECT_PROPERTY _property	= DEFAULT_PROPERTY_TYPE;
 	float _speed				= DEFAULT_SPEED;
 	float _patrolDistace		= DEFAULT_PATROL_DISTANCE;
@@ -336,17 +338,16 @@ private:
 	float _amplitudeSpeed		= 0.f;
 	float _theta				= 0.f;
 
-	// collider
 private:
 	// collider에서는 Object를 weak_ptr로 관리해준다.
-	Collider* _colliderComponent	= nullptr;
+	Collider*	_colliderComponent	= nullptr;
 	
 private:
-	Scene* _outerScene				= nullptr;
-	SCENE_TYPE _outerSceneType		= SCENE_TYPE::END;
+	Scene*		_outerScene			= nullptr;
+	SCENE_TYPE	_outerSceneType		= SCENE_TYPE::END;
 
 	// 리소스 매니저로부터 관리하고 있는 리소스이지만, 리소스 매니저의 실제 객체는 Object를 가르킬 일이 없기 때문에 shared_ptr로 관리해준다.
-	Texture* _texture				= nullptr;
-	wstring				_objName	= L"";
+	Texture*	_texture			= nullptr;
+	wstring		_objName			= L"";
 };			
 

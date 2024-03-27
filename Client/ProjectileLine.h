@@ -9,6 +9,8 @@ public:
 	virtual void Begin() override;
 	virtual void End() override;
 
+	virtual ProjectileLine* Clone() override;
+
 public:
 	const Vec2 GetEndPos() { return _endPos; }
 	void SetEndPos(Vec2 pos) { _endPos = pos;}

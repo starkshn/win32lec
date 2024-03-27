@@ -19,39 +19,43 @@ MainMenuScene::~MainMenuScene()
 
 void MainMenuScene::InitScene()
 {
-	auto res = GET_RESOLUTION;
+	//auto res = GET_RESOLUTION;
 
-	// Player
-	Player* player = new Player();
-	CreatePlayer(player);
+	//// Player
+	//CreatePlayer();
 
-	Vec2 scale			= DEFAULT_SCALE;
-	float patrolDist	= DEFAULT_PATROL_DISTANCE;
-	int spawnCnt		= 5;
+	//Vec2 scale			= DEFAULT_SCALE;
+	//float patrolDist	= DEFAULT_PATROL_DISTANCE;
+	//int spawnCnt		= 5;
 
-	Object* monster = static_cast<Object*>(new Monster());
-	AddObject(monster, OBJECT_TYPE::MONSTER);
+	//// Object* monster = static_cast<Object*>(new Monster());
+	//// AddObject(monster, OBJECT_TYPE::MONSTER);
 
-	/*monster = static_cast<Object*>(new Monster());
-	AddObject(monster, OBJECT_TYPE::MONSTER);
+	//AddObject<Monster>(OBJECT_TYPE::MONSTER);
 
-	monster = static_cast<Object*>(new Monster());
-	AddObject(monster, OBJECT_TYPE::MONSTER);*/
-			
-	
+	///*monster = static_cast<Object*>(new Monster());
+	//AddObject(monster, OBJECT_TYPE::MONSTER);
 
-	// 충돌지정
-	// Player 그룹과 monster그룹간의 충돌 체크
-	// COLLISION->SetObjectCollisionByType(OBJECT_TYPE::PLAYER, OBJECT_TYPE::MONSTER);
+	//monster = static_cast<Object*>(new Monster());
+	//AddObject(monster, OBJECT_TYPE::MONSTER);*/
+	//		
+	//// 충돌지정
+	//// Player 그룹과 monster그룹간의 충돌 체크
+	//// COLLISION->SetObjectCollisionByType(OBJECT_TYPE::PLAYER, OBJECT_TYPE::MONSTER);
 
-	// COLLISION->SetObjectCollisionByType(OBJECT_TYPE::PROJ_PLAYER, OBJECT_TYPE::MONSTER);
+	//// COLLISION->SetObjectCollisionByType(OBJECT_TYPE::PROJ_PLAYER, OBJECT_TYPE::MONSTER);
 
-	InitObjects();
+	//InitObjects();
 }
 
 void MainMenuScene::Update()
 {
 	Scene::Update();
+
+	if (KEY_PRESSED(KEYES::DOWN))
+	{
+		ChnageScene_EV(SCENE_TYPE::START);
+	}
 }
 
 void MainMenuScene::Render()
@@ -61,12 +65,57 @@ void MainMenuScene::Render()
 
 void MainMenuScene::BeginScene()
 {
+	auto res = GET_RESOLUTION;
+
+	// Player
+	Player* oriPlayer = static_cast<Player*>(CreatePlayer());
+
+	
+
+	Vec2 scale = DEFAULT_SCALE;
+	float patrolDist = DEFAULT_PATROL_DISTANCE;
+	int spawnCnt = 5;
+
+	CreateAndAppendToScene<Monster>(OBJECT_TYPE::MONSTER);
+
+	// 스폰된 오브젝트들 Init 작업
+	InitObjects();
+
+	// 복사생성자
+	Object* newPlayer2 = oriPlayer->Clone();
+	newPlayer2->SetPos(Vec2(100.f, 500.f));
+	AddObjectToCurrentScene(newPlayer2, OBJECT_TYPE::PLAYER);
+
 	COLLISION->SetObjectCollisionByType(OBJECT_TYPE::PLAYER, OBJECT_TYPE::MONSTER);
 
 	COLLISION->SetObjectCollisionByType(OBJECT_TYPE::PROJ_PLAYER, OBJECT_TYPE::MONSTER);
+
+	for (int i = 0; i < (uint32)OBJECT_TYPE::END; ++i)
+	{
+		for (Object* obj : _sceneObjects[i])
+		{
+			if (obj)
+			{
+				obj->Begin();
+			}
+		}
+	}
 }
 
 void MainMenuScene::EndScene()
 {
+	for (int i = 0; i < (uint32)OBJECT_TYPE::END; ++i)
+	{
+		for (Object* obj : _sceneObjects[i])
+		{
+			if (obj)
+			{
+				obj->End();
+			}
+		}
+	}
+
 	COLLISION->ResetObjectCollision();
+
+	DeleteAllObjects();
 }

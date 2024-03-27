@@ -72,3 +72,8 @@ void ProjectileLine::End()
 {
 
 }
+
+ProjectileLine* ProjectileLine::Clone()
+{
+	return new ProjectileLine(*this);
+}

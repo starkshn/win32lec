@@ -35,7 +35,7 @@ void PathManager::Init()
 		{												
 			++cnt;										
 		}												
-		else if (cnt == 1 && _contentDirPath[i] == '\\'	
+		else if (cnt == 1 && _contentDirPath[i] == '\\')
 		{												
 			_contentDirPath[i] = '\0';					
 			break;										

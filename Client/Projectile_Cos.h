@@ -7,6 +7,8 @@ public:
 	Projectile_Cos();
 	~Projectile_Cos();
 
+	virtual Projectile_Cos* Clone() override;
+
 public:
 	virtual void Update() override;
 	virtual void Render() override;
