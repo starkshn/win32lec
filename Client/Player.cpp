@@ -5,6 +5,7 @@
 #include "Projectile_Cos.h"
 #include "Texture.h"
 #include "Collider.h"
+#include "Component.h"
 
 Player::Player()
 {
@@ -64,13 +65,15 @@ void Player::Init()
 	SetPos(Vec2(res.x / 2.f, 500.f));
 	SetScale(Vec2(50.f, 50.f));
 	
-	// create collider
-	CreateCollider();
-	auto col	= GetCollider();
+	// create comp
+
+	// collider
+	Component* comp = CreateComponent<Collider>(COMP_TYPE::COLLIDER);
 	int th		= GetTexture()->GetTexHeight();
 	int tw		= GetTexture()->GetTexWidth();
-	col->SetColliderScale(Vec2(float(th - 30), float(tw - 30)));
-	col->SetOffset(Vec2(0, 15));
+	comp->SetScale(Vec2(float(th - 30), float(tw - 30)));
+	comp->SetOffset(Vec2(0, 15));
+	comp->SetVisible();
 }
 
 void Player::Begin()

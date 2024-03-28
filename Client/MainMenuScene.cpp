@@ -70,8 +70,6 @@ void MainMenuScene::BeginScene()
 	// Player
 	Player* oriPlayer = static_cast<Player*>(CreatePlayer());
 
-	
-
 	Vec2 scale = DEFAULT_SCALE;
 	float patrolDist = DEFAULT_PATROL_DISTANCE;
 	int spawnCnt = 5;
@@ -82,9 +80,9 @@ void MainMenuScene::BeginScene()
 	InitObjects();
 
 	// 복사생성자
-	Object* newPlayer2 = oriPlayer->Clone();
+	/*Object* newPlayer2 = oriPlayer->Clone();
 	newPlayer2->SetPos(Vec2(100.f, 500.f));
-	AddObjectToCurrentScene(newPlayer2, OBJECT_TYPE::PLAYER);
+	AddObjectToCurrentScene(newPlayer2, OBJECT_TYPE::PLAYER);*/
 
 	COLLISION->SetObjectCollisionByType(OBJECT_TYPE::PLAYER, OBJECT_TYPE::MONSTER);
 

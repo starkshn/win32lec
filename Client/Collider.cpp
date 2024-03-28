@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Collider.h"
 #include "Object.h"
+#include "Component.h"
 
 UINT Collider::g_nextID = 1;
 
@@ -17,20 +18,19 @@ Collider::~Collider()
 }
 
 Collider::Collider(const Collider& origin)
-	:
-	_outerObject(),
-	_offset(origin._offset),
-	_finalPos(origin._finalPos),
-	_colliderScale(origin._colliderScale),
-	_id(g_nextID++)
 {
-	
+	auto comp = static_cast<Component>(origin);
+
+	SetOwnerObject(nullptr);
+	SetOffset(comp.GetOffset());
+	SetFinalPos(comp.GetFinalPos());
+	SetScale(comp.GetScale());
+	SetID(g_nextID++);
 }
 
 void Collider::FinalUpdate()
 {
-	Vec2 objPos = GetOuterObject()->GetPos();
-	_finalPos = objPos + _offset;
+	Component::FinalUpdate();
 
 	assert(0 <= _isCollision);
 }
@@ -48,8 +48,8 @@ void Collider::Render()
 		GDI->SetPen(GET_MEMDC, PEN_TYPE::GREEN);
 	}
 
-	Vec2 scale = GetColliderScale();
-	Vec2 finalPos = GetFinalPos();
+	Vec2 scale		= GetScale();
+	Vec2 finalPos	= GetFinalPos();
 
 	DRAW_RECT_COLLIDER
 	(
@@ -70,17 +70,17 @@ void Collider::Init()
 
 void Collider::OnCollision(Collider* other)
 {
-	GetOuterObject()->OnCollision(other);
+	GetOwnerObject()->OnCollision(other);
 }
 
 void Collider::OnCollisionEnter(Collider* other)
 {
 	_isCollision++;
-	GetOuterObject()->OnCollisionEnter(other);
+	GetOwnerObject()->OnCollisionEnter(other);
 }
 
 void Collider::OnCollisionExit(Collider* other)
 {
 	_isCollision--;
-	GetOuterObject()->OnCollisionExit(other);
+	GetOwnerObject()->OnCollisionExit(other);
 }

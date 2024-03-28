@@ -65,12 +65,11 @@ void Projectile::Init()
 	// set player texture
 	SetTexture(static_cast<Texture*>(RESOURCE->LoadTexture(L"Missile", L"texture\\test_missile.bmp")));
 
-	CreateCollider();
-	auto col = GetCollider();
+	Component* comp = CreateComponent<Collider>(COMP_TYPE::COLLIDER);
 	int th = GetTexture()->GetTexHeight();
 	int tw = GetTexture()->GetTexWidth();
-	col->SetColliderScale(Vec2(float(th), float(tw)));
-	col->SetOffset(Vec2(float(0), float(0)));
+	comp->SetScale(Vec2(float(th), float(tw)));
+	comp->SetOffset(Vec2(float(0), float(0)));
 
 	Object* player = const_cast<Player*>(GET_PLAYER);
 	Vec2 playerPos = player->GetPos();
@@ -100,7 +99,7 @@ void Projectile::OnCollision(Collider* otherCollider)
 
 void Projectile::OnCollisionEnter(Collider* otherCollider)
 {
-	Object* otherObject = otherCollider->GetOuterObject();
+	Object* otherObject = otherCollider->GetOwnerObject();
 	if (otherObject->GetObjectName() == L"DefaultMonster")
 	{
 		DeleteObject(this);

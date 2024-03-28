@@ -59,13 +59,12 @@ public:										\
 #define DEFAULT_Y_SCALE 50.f
 #define DEFAULT_SCALE Vec2(DEFAULT_X_SCALE, DEFAULT_Y_SCALE)
 #define DEFAULT_OBJECT_TYPE OBJECT_TYPE::RECTANGLE
-#define DEFAULT_OBJECT_STATE OBJECT_STATE::DEFAULT
-#define DEFAULT_PATROL_TYPE PATROL_TYPE::NONE
-#define DEFAULT_ROTATE_TYPE ROTATE_TYPE::CIRCLE
-#define DEFAULT_PROPERTY_TYPE OBJECT_PROPERTY::STATIC
 #define DEFAULT_SPEED 50.f
 #define DEFAULT_PATROL_DISTANCE 100.f
 #define DEFAULT_DIR Vec2(1, 0)
+
+// Onject's Component
+
 
 // Render
 #define DRAW_RECT() Rectangle(GET_MEMDC, this->GetLeft(), this->GetTop(), this->GetRight(), this->GetBottom());

@@ -4,15 +4,12 @@
 
 Object::Object()
 {
-
+	_vecComponents.resize((uint32)COMP_TYPE::END);
 }
 
 Object::~Object()
 {
-	if (nullptr != _colliderComponent)
-	{
-		delete _colliderComponent;
-	}
+	DeleteObjectsSafe<Component*>(_vecComponents);
 }
 
 Object::Object(const Object& other)
@@ -20,28 +17,33 @@ Object::Object(const Object& other)
 	_dir(other._dir),
 	_centerPos(other._centerPos),
 	_type(other._type),
-	_state(other._state),
-	_patrolType(other._patrolType),
-	_rotateType(other._rotateType),
 	_speed(other._speed),
-	_patrolDistace(other._patrolDistace),
-	_colliderComponent(nullptr),
 	_outerScene(other._outerScene),
 	_outerSceneType(other._outerSceneType),
 	_texture(other._texture),
 	_objName(other._objName)
 {
-	_colliderComponent = new Collider(*other._colliderComponent);
-	_colliderComponent->SetOuterObject(this);
-	_colliderComponent->Init();
+	// Collider 깊은 복사
+	if (nullptr != other.GetCollider())
+	{
+		_vecComponents[(uint32)COMP_TYPE::COLLIDER] = nullptr;
+		_vecComponents[(uint32)COMP_TYPE::COLLIDER] = new Collider;
+		_vecComponents[(uint32)COMP_TYPE::COLLIDER]->SetOwnerObject(this);
+		_vecComponents[(uint32)COMP_TYPE::COLLIDER]->Init();
+	}
+	
+
 }
 
 void Object::FinalUpdate()
 {
-	auto col = GetCollider();
-	if (nullptr != col)
+	// 모든 컴포넌트 파이널 업데이트
+	for (uint32 i = 0; i < (uint32)COMP_TYPE::END; ++i)
 	{
-		col->FinalUpdate();
+		if (nullptr != _vecComponents[i])
+		{
+			_vecComponents[i]->FinalUpdate();
+		}
 	}
 }
 
@@ -54,29 +56,14 @@ void Object::Render()
 
 void Object::ComponentRender()
 {
-	auto col = GetCollider();
-	if (nullptr != col)
+	for (uint32 i = 0; i < (uint32)COMP_TYPE::END; ++i)
 	{
-		col->Render();
+		Component* comp = _vecComponents[i];
+		if (nullptr != comp && comp->GetVisibility())
+		{
+			comp->Render();
+		}
 	}
-}
-
-void Object::CreateCollider()
-{
-	_colliderComponent = new Collider();
-	_colliderComponent->SetOuterObject(GetThis());
-	_colliderComponent->Init();
-}
-
-void Object::CreateCollider(uint32 textureHeight, uint32 textureWidth, Vec2 textureScale, Vec2 offset)
-{
-	_colliderComponent = new Collider();
-	_colliderComponent->SetOuterObject(GetThis());
-
-	_colliderComponent->SetColliderScale(textureScale);
-	_colliderComponent->SetOffset(offset);
-
-	_colliderComponent->Init();
 }
 
 void Object::Rotate(float radius)
@@ -98,32 +85,32 @@ void Object::Rotate(float radius)
 
 void Object::Patrol_Vetical_Horizaon_Sin()
 {
-	const float _amp = 150.f;		// 진폭
-	const float _sp = 300.f;		// 스피드
+	//const float _amp = 150.f;		// 진폭
+	//const float _sp = 300.f;		// 스피드
 
-	auto pos = GetPos();
-	pos.x += float(GetSpeed() * GetDir().x * DT_F);
-	float dis = abs(GetPatrolCenterPos().x - pos.x) - GetPatrolDistance();
+	//auto pos = GetPos();
+	//pos.x += float(GetSpeed() * GetDir().x * DT_F);
+	//float dis = abs(GetPatrolCenterPos().x - pos.x) - GetPatrolDistance();
 
-	// y axis -> sin
-	SetAngle(GetAngle() + DT_F * _sp);
-	pos.y = (-1 * float(sin(RAD(GetAngle()))) * _amp) + GetPatrolCenterPos().y;
+	//// y axis -> sin
+	//SetAngle(GetAngle() + DT_F * _sp);
+	//pos.y = (-1 * float(sin(RAD(GetAngle()))) * _amp) + GetPatrolCenterPos().y;
 
-	// x축 방향전환시
-	if (0.f < dis)
-	{
-		SetDir(GetDir() * -1);
-		pos.x += dis * GetDir().x;
-	}
+	//// x축 방향전환시
+	//if (0.f < dis)
+	//{
+	//	SetDir(GetDir() * -1);
+	//	pos.x += dis * GetDir().x;
+	//}
 
-	// 60분법 각도가 360도를 넘는경우
-	if (GetAngle() > 360)
-	{
-		auto dis = GetAngle() - 360;
-		SetAngle(GetAngle() - dis);
-		SetAngle(0);
-	}
+	//// 60분법 각도가 360도를 넘는경우
+	//if (GetAngle() > 360)
+	//{
+	//	auto dis = GetAngle() - 360;
+	//	SetAngle(GetAngle() - dis);
+	//	SetAngle(0);
+	//}
 
-	SetPos(pos);
+	//SetPos(pos);
 }
 

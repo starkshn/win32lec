@@ -17,10 +17,10 @@ void Monster::Update()
 {
 	Object::Update();
 
-	if (GetProperty() != OBJECT_PROPERTY::STATIC)
+	/*if (GetProperty() != OBJECT_PROPERTY::STATIC)
 	{
 		Patrol_Vetical_Horizaon_Sin();
-	}
+	}*/
 }
 
 void Monster::Render()
@@ -50,12 +50,11 @@ void Monster::Init()
 	SetTexture(static_cast<Texture*>(RESOURCE->LoadTexture(L"Player", L"texture\\test_airplane.bmp")));
 
 	// collider
-	CreateCollider();
-	auto col = GetCollider();
+	Component* comp = CreateComponent<Collider>(COMP_TYPE::COLLIDER);
 	int th = GetTexture()->GetTexHeight();
 	int tw = GetTexture()->GetTexWidth();
-	col->SetColliderScale(Vec2(GetScale().x - 10.f, GetScale().y - 10.f));
-	col->SetOffset(Vec2(0, 0));
+	comp->SetScale(Vec2(GetScale().x - 10.f, GetScale().y - 10.f));
+	comp->SetOffset(Vec2(0, 0));
 }
 
 void Monster::Begin()
@@ -75,11 +74,7 @@ void Monster::OnCollision(Collider* otherCollider)
 
 void Monster::OnCollisionEnter(Collider* otherCollider)
 {
-	/*Object* otherObject = otherCollider->GetOuterObject();
-	if (otherObject->GetObjectName() == L"DefaultProjectile")
-	{
-		DeleteObject(this);
-	}*/
+	
 }
 
 void Monster::OnCollisionExit(Collider* otherCollider)

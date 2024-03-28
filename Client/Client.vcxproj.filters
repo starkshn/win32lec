@@ -87,9 +87,6 @@
     <Filter Include="Engine\03.Manager\ResourceManager">
       <UniqueIdentifier>{9383cfa1-d0be-44f0-bee2-089b4bbccae6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\07.Collider">
-      <UniqueIdentifier>{469d7805-a4b0-465a-a9ea-226047dc586b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\99.Utils\SelectGDI">
       <UniqueIdentifier>{be4c4a96-3eb8-417e-8c24-5061a9e12c60}</UniqueIdentifier>
     </Filter>
@@ -98,6 +95,18 @@
     </Filter>
     <Filter Include="Engine\03.Manager\EventManager">
       <UniqueIdentifier>{97eafc1d-f96d-470e-9dc2-e76d3343de46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\07.Component">
+      <UniqueIdentifier>{40ba90e3-2457-403d-adde-17a491f3d333}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\07.Component\Collider">
+      <UniqueIdentifier>{469d7805-a4b0-465a-a9ea-226047dc586b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\07.Component\Movement">
+      <UniqueIdentifier>{6de9c4b8-0b4b-4e65-9b88-74cebeb278b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\07.Component\Animation">
+      <UniqueIdentifier>{3c7c6fdc-1c60-445c-befe-20063c0a80ea}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -193,7 +202,7 @@
       <Filter>Engine\03.Manager\ResourceManager</Filter>
     </ClInclude>
     <ClInclude Include="Collider.h">
-      <Filter>Engine\07.Collider</Filter>
+      <Filter>Engine\07.Component\Collider</Filter>
     </ClInclude>
     <ClInclude Include="SelectGDI.h">
       <Filter>Engine\99.Utils\SelectGDI</Filter>
@@ -206,6 +215,12 @@
     </ClInclude>
     <ClInclude Include="Func.h">
       <Filter>Engine\99.Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Engine\07.Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Animator.h">
+      <Filter>Engine\07.Component\Animation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -282,7 +297,7 @@
       <Filter>Engine\03.Manager\ResourceManager</Filter>
     </ClCompile>
     <ClCompile Include="Collider.cpp">
-      <Filter>Engine\07.Collider</Filter>
+      <Filter>Engine\07.Component\Collider</Filter>
     </ClCompile>
     <ClCompile Include="SelectGDI.cpp">
       <Filter>Engine\99.Utils\SelectGDI</Filter>
@@ -295,6 +310,12 @@
     </ClCompile>
     <ClCompile Include="Func.cpp">
       <Filter>Engine\99.Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Engine\07.Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Animator.cpp">
+      <Filter>Engine\07.Component\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

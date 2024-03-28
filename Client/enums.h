@@ -14,44 +14,6 @@ enum class OBJECT_TYPE
 	END = 32,
 };
 
-enum class OBJECT_STATE
-{
-	DEFAULT,
-	PATROL,
-	ROTATE,
-
-
-	END,
-};
-
-enum class PATROL_TYPE
-{
-	NONE,
-	VERTICAL = 1,
-	HORIZON  = 2,
-
-
-	END,
-};
-
-enum class ROTATE_TYPE
-{
-	NONE,
-	CIRCLE,
-	
-
-	END,
-};
-
-enum class OBJECT_PROPERTY
-{
-	NONE,
-	STATIC,
-	DYNAMIC,
-
-	END,
-};
-
 enum class SCENE_TYPE
 {
 	MAIN_MENU,
@@ -113,4 +75,13 @@ enum class EVENT_TYPE
 	
 
 	END,
+};
+
+enum class COMP_TYPE
+{
+	COLLIDER = 1,
+	MOVEMENT = 2,
+	ANIMATOR = 3,
+
+	END = 32,
 };

@@ -1,9 +1,11 @@
 #pragma once
 
-class Scene;
-class Collider;
+#include "Component.h"
+#include "Collider.h"
+#include "Animator.h"
 
 class Texture;
+class Scene;
 
 class Object
 {
@@ -27,28 +29,63 @@ public:
 public:
 	Object* GetThis() { return this; }
 
-	// scene 현재 오브젝트 관리 주체
-	// TODO GetOuterScene 받는쪽에서 주의해야할 듯하다??
-	const Scene* GetOuterScene()
+public:
+	template <typename T>
+	Component* CreateComponent(COMP_TYPE type)
 	{
-		return _outerScene;
+		Component* newComp = static_cast<Component*>(new T);
+		newComp->SetOwnerObject(this);
+		_vecComponents[(uint32)type] = newComp;
+		return newComp;
 	}
 
-	void SetOuterScene(Scene* outetScene) 
-	{ 
-		_outerScene = outetScene; 
+	const Component* GetComponent(COMP_TYPE type)
+	{
+		if (nullptr != _vecComponents[(uint32)type])
+			return _vecComponents[(uint32)type];
+		else return nullptr;
 	}
 
-	// scene type
-	const SCENE_TYPE GetOuterSceneType() 
-	{ 
-		return _outerSceneType; 
+	Collider* GetCollider() const
+	{
+		if (nullptr != _vecComponents[(uint32)COMP_TYPE::COLLIDER])
+		{
+			return static_cast<Collider*>(_vecComponents[(uint32)COMP_TYPE::COLLIDER]);
+		}
+		else return nullptr;
 	}
 
-	void SetOuterSceneType(SCENE_TYPE type) 
-	{ 	
-		_outerSceneType = type; 
+	Animator* GetAnimator() const
+	{
+		if (nullptr != _vecComponents[(uint32)COMP_TYPE::ANIMATOR])
+		{
+			return static_cast<Animator*>(_vecComponents[(uint32)COMP_TYPE::ANIMATOR]);
+		}
+		else return nullptr;
 	}
+
+	// 충돌
+public:
+	virtual void OnCollision(Collider* otherCollider) {};
+	virtual void OnCollisionEnter(Collider* otherCollider) {};
+	virtual void OnCollisionExit(Collider* otherCollider) {};
+
+public:
+	// 이벤트 매니저에의해 삭제될 여부를 반환하는 함수
+	const bool GetThisObjectWillDelete() { return deleteObject;}
+
+private:
+	// 이벤트 매니저에 한해서 friend로 등록.
+	void SetThisObjectWillDelete() { deleteObject = true; }
+	friend class EventManager;
+
+	// Get Set
+public:
+	// scene
+	const Scene* GetOuterScene() { return _outerScene; }
+	void SetOuterScene(Scene* outetScene) { _outerScene = outetScene; }
+	const SCENE_TYPE GetOuterSceneType() { return _outerSceneType; }
+	void SetOuterSceneType(SCENE_TYPE type) { _outerSceneType = type; }
 
 	// Texture
 	Texture* GetTexture() 
@@ -58,37 +95,11 @@ public:
 		else
 			return nullptr;
 	}
-
-	void SetTexture(Texture* tex) 
-	{ 
-		_texture = tex;
-	}
-
-	// Collider
-	void CreateCollider();
-
-	void CreateCollider(uint32 textureHeight, uint32 textureWidth, Vec2 textureScale, Vec2 offset);
-
-	Collider* GetCollider() 
-	{ 
-		return _colliderComponent; 
-	}
-
-	void SetCollider(Collider* collider)
-	{
-		_colliderComponent = collider;
-	}
+	void SetTexture(Texture* tex) { _texture = tex; }
 
 	// name
-	const wstring& GetObjectName()
-	{
-		return _objName;
-	}
-
-	void SetObjectName(const wstring& name)
-	{
-		_objName = name;
-	}
+	const wstring& GetObjectName(){ return _objName; }
+	void SetObjectName(const wstring& name) { _objName = name; }
 
 	// pos
 	const Vec2 GetPos() { return _pos; }
@@ -106,36 +117,6 @@ public:
 	const float GetSpeed() { return _speed; }
 	void SetSpeed(float speed) { _speed = speed; }
 
-	// 속성
-	const OBJECT_PROPERTY GetProperty() 
-	{ 
-		return _property; 
-	}
-
-	void SetProperty(OBJECT_PROPERTY type) 
-	{ 
-		_property = type;
-	}
-
-	// obj state
-	const OBJECT_STATE GetObjectState() { return _state; }
-	void SetObjectState(OBJECT_STATE type) 
-	{ 
-		_state = type;
-	}
-
-	// 패트롤 타입
-	const PATROL_TYPE GetPatrolType() 
-	{ return _patrolType; }
-
-	void SetPatrolType(const PATROL_TYPE type) { _patrolType = type; }
-
-	// 회전 타입
-	const ROTATE_TYPE GetRotateType() 
-	{ return _rotateType; }
-
-	void SetRotateType(const ROTATE_TYPE type) { _rotateType = type; }
-
 	// 방향 
 	const Vec2 GetDir() { return _dir; }
 	void SetDir(Vec2 dir) 
@@ -145,106 +126,40 @@ public:
 	}
 
 	// 세타
-	const float GetTheta() 
-	{ 
-		return _theta; 
-	}
-
-	void SetTheta(float theta) 
-	{ 
-		_theta = theta; 
-	}
+	const float GetTheta() { return _theta; }
+	void SetTheta(float theta) { _theta = theta; }
 
 	// 60분법 각도
-	const float GetAngle() 
-	{ 
-		return _angle; 
-	}
-
-	void SetAngle(float angle) 
-	{ 
-		_angle = angle; 
-	}
+	const float GetAngle() { return _angle; }
+	void SetAngle(float angle) { _angle = angle; }
 
 	// 라디안
-	const float GetRadian() 
-	{ 
-		return _radian; 
-	}
-
-	void SetRadian(float rad) 
-	{ 
-		_radian = rad; 
-	}
+	const float GetRadian() { return _radian; }
+	void SetRadian(float rad) { _radian = rad; }
 
 	// 패트롤 중앙 위치
-	void SetPatrolCenterPos(Vec2 patrolCentorPos) 
-	{ 
-		_patrolCenterPos = patrolCentorPos; 
-	}
+	void SetPatrolCenterPos(Vec2 patrolCentorPos) { _patrolCenterPos = patrolCentorPos; }
+	const Vec2 GetPatrolCenterPos() { return _patrolCenterPos; }
 
-	const Vec2 GetPatrolCenterPos() 
-	{ 
-		return _patrolCenterPos;
-	}
-
-	// 패트롤 거리
-	void SetPatrolDistance(float dist) 
-	{
-		_patrolDistace = dist; 
-	}
-
-	const float GetPatrolDistance() 
-	{ 
-		return _patrolDistace;
-	}
-
-	// 회전 속도
-	void SetRotateSpeed(float speed) 
-	{ 
-		_rotateSpeed = speed; 
 	
-	}
-	const float GetRotateSpeed() 
-	{ 
-		return _rotateSpeed; 
-	}
-
+	// 회전 속도
+	void SetRotateSpeed(float speed)  { _rotateSpeed = speed; }
+	const float GetRotateSpeed() { return _rotateSpeed; }
+	
 	// 오브젝트 중앙점
-	void SetCenterPos(Vec2 centerPos) 
-	{ 
-		_centerPos = centerPos;
-	}
-
-	const Vec2 GetCenterPos() 
-	{ 
-		return _centerPos;
-	}
+	void SetCenterPos(Vec2 centerPos) { _centerPos = centerPos; }
+	const Vec2 GetCenterPos() { return _centerPos; }
 
 	// 진폭 값
-	const float GetAmplitude() 
-	{ 
-		return _amplitude;
-	
-	}
-	void SetAmplitude(float amplitude) 
-	{ 
-		_amplitude = amplitude; 
-	}
+	const float GetAmplitude() { return _amplitude; }
+	void SetAmplitude(float amplitude) { _amplitude = amplitude; }
 
 	// 진폭 이동 속도
-	const float GetAmplitudeSpeed()
-	{ 
-		return _amplitudeSpeed; 
-	}
-
-	void SetAmplitudeSpeed(float speed) 
-	{ 
-		_amplitudeSpeed = speed;
-	}
+	const float GetAmplitudeSpeed() { return _amplitudeSpeed; }
+	void SetAmplitudeSpeed(float speed) { _amplitudeSpeed = speed; }
 
 	// 벡터 길이
-	inline const float GetVectorLength(const Vec2& vec)
+	inline const float GetVectorLength(const Vec2& vec) 
 	{
 		return sqrt(vec.x * vec.x + vec.y * vec.y);
 	}
@@ -268,12 +183,6 @@ public:
 
 	// 오브젝트 sin그래프 따라 패트롤
 	void Patrol_Vetical_Horizaon_Sin();
-
-	// 충돌
-public:
-	virtual void OnCollision(Collider* otherCollider) {};
-	virtual void OnCollisionEnter(Collider* otherCollider) {};
-	virtual void OnCollisionExit(Collider* otherCollider) {};
 	
 public:
 	// when OBJECT_TYPE is rectangle can use below functions
@@ -281,22 +190,6 @@ public:
 	int GetTop() { return int(_pos.y - _scale.y / 2); };
 	int GetRight() { return int(_pos.x + _scale.x / 2); };
 	int GetBottom() { return int(_pos.y + _scale.y / 2); };
-
-public:
-	// 이벤트 매니저에의해 삭제될 여부를 반환하는 함수
-	const bool GetThisObjectWillDelete()
-	{
-		return deleteObject;
-	}
-
-private:
-	// 이벤트 매니저에 한해서 friend로 등록.
-	void SetThisObjectWillDelete()
-	{
-		deleteObject = true;
-	}
-	
-	friend class EventManager;
 
 private:
 	// delete 여부
@@ -321,16 +214,16 @@ private:
 
 	Vec2 _dir					= DEFAULT_DIR;
 	Vec2 _centerPos;
-
-	OBJECT_TYPE		_type		= DEFAULT_OBJECT_TYPE;
-	OBJECT_STATE	_state		= DEFAULT_OBJECT_STATE;
-	PATROL_TYPE		_patrolType	= DEFAULT_PATROL_TYPE;
-	ROTATE_TYPE		_rotateType	= DEFAULT_ROTATE_TYPE;
-	OBJECT_PROPERTY _property	= DEFAULT_PROPERTY_TYPE;
+	OBJECT_TYPE	_type			= DEFAULT_OBJECT_TYPE;
 	float _speed				= DEFAULT_SPEED;
-	float _patrolDistace		= DEFAULT_PATROL_DISTANCE;
 
 private:
+	// 모든 컴포넌트 클래스 관리하는 벡터 (Collider 포험)
+	vector<Component*> _vecComponents;
+
+private:
+	// TODO
+	// 컴포넌트로 따로 뺄 부분
 	float _angle				= 0.f;
 	float _radian				= 0.f;
 	float _rotateSpeed			= 0.f;
@@ -338,10 +231,6 @@ private:
 	float _amplitudeSpeed		= 0.f;
 	float _theta				= 0.f;
 
-private:
-	// collider에서는 Object를 weak_ptr로 관리해준다.
-	Collider*	_colliderComponent	= nullptr;
-	
 private:
 	Scene*		_outerScene			= nullptr;
 	SCENE_TYPE	_outerSceneType		= SCENE_TYPE::END;

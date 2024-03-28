@@ -1,8 +1,9 @@
 #pragma once
+#include "Component.h"
 
 class Object;
 
-class Collider
+class Collider : public Component
 {
 public:
 	Collider();
@@ -10,52 +11,27 @@ public:
 
 	Collider(const Collider& other);
 
-private:
-	Collider& operator =	(Collider& origin) = delete;
-	Collider& operator ==	(Collider& origin) = delete;
+public:
+	virtual void FinalUpdate() override;
+	virtual void Render() override;
+	virtual void Init() override;
 
 public:
+	// 고유한 ID 설정
+	const uint32 GetID() { return _id; }
+	void SetID(uint32 id) { _id = id; }
+
+public:
+	// 충돌 발생 여부
+	void OnCollision(Collider* other);		// 충돌 중인지
+	void OnCollisionEnter(Collider* other); // 충돌 최초로 한지
+	void OnCollisionExit(Collider* other);  // 충돌 벗어났는지
+
+private:
 	static UINT g_nextID;
 
-public:
-	// 오브젝트의 위치를 따라간다.
-	void FinalUpdate();
-	void Render();
-	void Init();
-
-public:
-	Object* GetOuterObject()
-	{
-		return _outerObject;
-	}
-	void SetOuterObject(Object* obj)
-	{
-		_outerObject = obj;
-	}
-
-	const UINT GetID() { return _id; }
-
-	const Vec2 GetOffset() { return _offset; }
-	void SetOffset(Vec2 offset) { _offset = offset; }
-
-	const Vec2 GetFinalPos() { return _finalPos; }
-	void SetFinalPos(Vec2 pos) { _finalPos = pos; }
-
-	const Vec2 GetColliderScale() { return _colliderScale; }
-	void SetColliderScale(Vec2 scale) { _colliderScale = scale; }
-
-	// 충돌중인 경우 호출되는 함수
-	void OnCollision(Collider* other);
-	void OnCollisionEnter(Collider* other);
-	void OnCollisionExit(Collider* other);
-
 private:
-	Object*		_outerObject	= nullptr;
-	Vec2		_offset			= Vec2(0, 0);
-	Vec2		_finalPos		= Vec2(0, 0);
-	Vec2		_colliderScale	= Vec2(10, 10);
 	UINT		_id				= 0;
 	INT			_isCollision	= 0;
-	
 };
 
