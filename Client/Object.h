@@ -17,12 +17,26 @@ public:
 	// 복사 생성자 반환하는 함수
 	virtual Object* Clone() abstract;
 
+	// 아래 함수들은 순서대로 한 Tick에서 발생하는 함수들이다.
 public:
+	// 오브젝트들에 대한 업데이트 (좌표, 상태)
 	virtual void Update() {};
+
+	// Component들에 대한 업데이트
+	// Collider 충돌, 좌표 계산, Animation 상태 계산 etc...
 	virtual void FinalUpdate() final; // 부모가 마지막
+
+	// 실제 렌더링 함수 (Texture etc...)
 	virtual void Render();
+
+	// 컴포넌트 렌더링 (Collider 충돌상태 색깔, 현재 애니매이션 재생)
 	void ComponentRender();
+
+public:
+	// 오브젝트 초기화 함수
 	virtual void Init() {};
+
+	// 씬 진입/탈출 시 호출되는 오브젝트 함수
 	virtual void Begin() {};
 	virtual void End() {};
 
@@ -31,15 +45,28 @@ public:
 
 public:
 	template <typename T>
-	Component* CreateComponent(COMP_TYPE type)
+	T* CreateComponent(COMP_TYPE type)
 	{
-		Component* newComp = static_cast<Component*>(new T);
+		T* newComp = (new T);
 		newComp->SetOwnerObject(this);
-		_vecComponents[(uint32)type] = newComp;
+		AddComponent(newComp, type);
 		return newComp;
 	}
 
-	const Component* GetComponent(COMP_TYPE type)
+	template <typename T>
+	void AddComponent(T* comp, COMP_TYPE type)
+	{
+		_vecComponents[(uint32)type] = static_cast<Component*>(comp);
+	}
+	
+	const bool CheckCompIsValid(COMP_TYPE type) const
+	{
+		if (GetComponent(type)) return true;
+		else return false;
+	}
+
+	// 단순 유무 반환
+	Component* GetComponent(COMP_TYPE type) const
 	{
 		if (nullptr != _vecComponents[(uint32)type])
 			return _vecComponents[(uint32)type];
@@ -236,6 +263,8 @@ private:
 	SCENE_TYPE	_outerSceneType		= SCENE_TYPE::END;
 
 	// 리소스 매니저로부터 관리하고 있는 리소스이지만, 리소스 매니저의 실제 객체는 Object를 가르킬 일이 없기 때문에 shared_ptr로 관리해준다.
+
+	// pTexture의 경우 이제 애니매이션이 있기 때문에 멤버 변수로 들고 있을 필요는 없다.
 	Texture*	_texture			= nullptr;
 	wstring		_objName			= L"";
 };			

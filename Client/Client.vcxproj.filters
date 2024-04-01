@@ -105,7 +105,13 @@
     <Filter Include="Engine\07.Component\Movement">
       <UniqueIdentifier>{6de9c4b8-0b4b-4e65-9b88-74cebeb278b0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\07.Component\Animation">
+    <Filter Include="Engine\07.Component\ChildComponent">
+      <UniqueIdentifier>{db88bf32-ed76-4fff-8e49-1f2b7d3c8398}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\07.Component\ChildComponent\Animations">
+      <UniqueIdentifier>{a85bb016-16b3-4c33-a3ff-c1bbb848defd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\07.Component\Animator">
       <UniqueIdentifier>{3c7c6fdc-1c60-445c-befe-20063c0a80ea}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -220,7 +226,16 @@
       <Filter>Engine\07.Component</Filter>
     </ClInclude>
     <ClInclude Include="Animator.h">
-      <Filter>Engine\07.Component\Animation</Filter>
+      <Filter>Engine\07.Component\Animator</Filter>
+    </ClInclude>
+    <ClInclude Include="Movement.h">
+      <Filter>Engine\07.Component\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Engine\07.Component\ChildComponent\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="ChildComponent.h">
+      <Filter>Engine\07.Component\ChildComponent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -315,7 +330,16 @@
       <Filter>Engine\07.Component</Filter>
     </ClCompile>
     <ClCompile Include="Animator.cpp">
-      <Filter>Engine\07.Component\Animation</Filter>
+      <Filter>Engine\07.Component\Animator</Filter>
+    </ClCompile>
+    <ClCompile Include="Movement.cpp">
+      <Filter>Engine\07.Component\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Engine\07.Component\ChildComponent\Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="ChildComponent.cpp">
+      <Filter>Engine\07.Component\ChildComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

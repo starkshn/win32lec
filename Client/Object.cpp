@@ -4,11 +4,13 @@
 
 Object::Object()
 {
+	// 컴포넌트 resize
 	_vecComponents.resize((uint32)COMP_TYPE::END);
 }
 
 Object::~Object()
 {
+	// 오브젝트가 들고 있는 모든 컴포넌트 다 Delete
 	DeleteObjectsSafe<Component*>(_vecComponents);
 }
 
@@ -24,7 +26,7 @@ Object::Object(const Object& other)
 	_objName(other._objName)
 {
 	// Collider 깊은 복사
-	if (nullptr != other.GetCollider())
+	if (other.CheckCompIsValid(COMP_TYPE::COLLIDER))
 	{
 		_vecComponents[(uint32)COMP_TYPE::COLLIDER] = nullptr;
 		_vecComponents[(uint32)COMP_TYPE::COLLIDER] = new Collider;
@@ -32,7 +34,14 @@ Object::Object(const Object& other)
 		_vecComponents[(uint32)COMP_TYPE::COLLIDER]->Init();
 	}
 	
-
+	// Animator 깊은 복사
+	if (other.CheckCompIsValid(COMP_TYPE::ANIMATOR))
+	{
+		_vecComponents[(uint32)COMP_TYPE::ANIMATOR] = nullptr;
+		_vecComponents[(uint32)COMP_TYPE::ANIMATOR] = new Animator;
+		_vecComponents[(uint32)COMP_TYPE::ANIMATOR]->SetOwnerObject(this);
+		_vecComponents[(uint32)COMP_TYPE::ANIMATOR]->Init();
+	}
 }
 
 void Object::FinalUpdate()
@@ -42,7 +51,7 @@ void Object::FinalUpdate()
 	{
 		if (nullptr != _vecComponents[i])
 		{
-			_vecComponents[i]->FinalUpdate();
+			_vecComponents[i]->Update();
 		}
 	}
 }

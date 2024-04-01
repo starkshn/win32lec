@@ -6,6 +6,7 @@
 #include "Texture.h"
 #include "Collider.h"
 #include "Component.h"
+#include "Animator.h"
 
 Player::Player()
 {
@@ -30,23 +31,16 @@ void Player::Update()
 
 void Player::Render()
 {
-	uint32 h = (int)GetTexture()->GetTexHeight();
-	uint32 w = (int)GetTexture()->GetTexWidth();
-
-	Vec2 pos = GetPos();
-	int lx = int(pos.x - float(w / 2.f));
-	int ly = int(pos.y - float(h / 2.f));
-
 	// Texture의 모든 생각 다 복붙
 	// BitBlt(GET_MEMDC(), int(lx), int(ly), w, h, GetTexture()->GetDC(), 0, 0, SRCCOPY);
 
 	// 마젠타 색상 설정하여 마젠타 색상 제외하고 복붙해주는 함수
-	TransparentBlt
+	/*TransparentBlt
 	(
 		GET_MEMDC, int(lx), int(ly), w, h,
 		GetTexture()->GetDC(), 0, 0, w, h, RGB(255, 0, 255)
-	);
-
+	);*/
+	
 	ComponentRender();
 }
 
@@ -59,7 +53,8 @@ void Player::Init()
 	SetObjectName(L"Player");
 
 	// set texture
-	SetTexture(static_cast<Texture*>(RESOURCE->LoadTexture(L"Player", L"texture\\test_airplane.bmp")));
+	// 애니매이션 등장 이후로 직접 Texture를 로드할 필요가 없다
+	// SetTexture(static_cast<Texture*>(RESOURCE->LoadTexture(L"Player", L"texture\\test_airplane.bmp")));
 
 	// set pos, scale
 	SetPos(Vec2(res.x / 2.f, 500.f));
@@ -68,12 +63,33 @@ void Player::Init()
 	// create comp
 
 	// collider
-	Component* comp = CreateComponent<Collider>(COMP_TYPE::COLLIDER);
-	int th		= GetTexture()->GetTexHeight();
-	int tw		= GetTexture()->GetTexWidth();
-	comp->SetScale(Vec2(float(th - 30), float(tw - 30)));
-	comp->SetOffset(Vec2(0, 15));
-	comp->SetVisible();
+	Collider* compCollider = CreateComponent<Collider>(COMP_TYPE::COLLIDER);
+	int th		= 100;
+	int tw		= 100;
+	compCollider->SetScale(Vec2(float(th - 30), float(tw - 30)));
+	compCollider->SetOffset(Vec2(0, 15));
+
+	// Animator Create
+	Animator* compAnimator = CreateComponent<Animator>(COMP_TYPE::ANIMATOR);
+
+	Texture* animRes = static_cast<Texture*>(RESOURCE->LoadTexture(L"PlayerAnim", L"texture\\ZeldaAnimation_Mazenta.bmp"));
+
+	// 120 x 130 
+	// 정면 모습 텍스쳐 기준 pos: 0, 520
+	// 한 애니매이션당 자를 간격 120, 130
+	// anim 간 스텝할(이동하며 자를) 거리 120, 0
+	// duration 0.1f
+	// 10 Frame
+
+
+	// 아래 순서대로
+	// 1. 애니매이션 생성
+	// 2. 생성한 애니매이션 가져오기
+	// 3. 현재 current Animation으로 설정 (그래야 PlayAnimation동작함)
+	compAnimator->CreateAnimation(Z_WALK_FRONT, animRes, Vec2(0.f, 520.f), Vec2(120.f, 130.f), Vec2(120.f, 0), 0.05f, 10);
+	Animation* anim = compAnimator->FindAnimation(Z_WALK_FRONT);
+	compAnimator->SetCurrentAnim(anim);
+	anim->SetAnimLoop(false);
 }
 
 void Player::Begin()

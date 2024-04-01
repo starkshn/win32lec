@@ -80,8 +80,8 @@ enum class EVENT_TYPE
 enum class COMP_TYPE
 {
 	COLLIDER = 1,
-	MOVEMENT = 2,
-	ANIMATOR = 3,
+	ANIMATOR = 2,
+	MOVEMENT = 3,
 
 	END = 32,
 };

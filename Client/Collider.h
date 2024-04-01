@@ -7,12 +7,12 @@ class Collider : public Component
 {
 public:
 	Collider();
-	~Collider();
+	virtual ~Collider() override;
 
 	Collider(const Collider& other);
 
 public:
-	virtual void FinalUpdate() override;
+	virtual void Update() override;
 	virtual void Render() override;
 	virtual void Init() override;
 

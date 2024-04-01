@@ -32,7 +32,7 @@ Component::Component(const Component& other)
 	GDI->ReleasePen();
 }
 
-void Component::FinalUpdate()
+void Component::Update()
 {
 	Vec2 objPos = GetOwnerObject()->GetPos();
 	SetFinalPos(objPos + _offset);

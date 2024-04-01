@@ -61,8 +61,11 @@ void Scene::Render()
 		for (; iter < _sceneObjects[i].end();)
 		{
 			// 삭제될 경우 렌더하지 않고 없애준다.
+			// 벡터에서 없앤다.
 			if ((*iter)->GetThisObjectWillDelete())
 			{
+				// [] [] [e] []
+				// [] [] [] [e] 
 				iter = _sceneObjects[i].erase(iter);
 			}
 			// 삭제되지 않는경우 iter를 증가시킨다.

@@ -106,3 +106,10 @@ if(angle > 360.f)									\
 #define RES RESOURCE_TYPE 
 
 
+
+
+
+// Animation Test
+#define Z_WALK_FRONT L"Walk_Front"
+
+

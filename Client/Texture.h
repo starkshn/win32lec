@@ -2,8 +2,9 @@
 #include "Resources.h"
 class Texture : public Resources
 {
-public:
+private:
 	Texture();
 	virtual ~Texture() override;
+	friend class ResourceManager;
 };
 

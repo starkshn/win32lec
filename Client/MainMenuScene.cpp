@@ -19,33 +19,7 @@ MainMenuScene::~MainMenuScene()
 
 void MainMenuScene::InitScene()
 {
-	//auto res = GET_RESOLUTION;
-
-	//// Player
-	//CreatePlayer();
-
-	//Vec2 scale			= DEFAULT_SCALE;
-	//float patrolDist	= DEFAULT_PATROL_DISTANCE;
-	//int spawnCnt		= 5;
-
-	//// Object* monster = static_cast<Object*>(new Monster());
-	//// AddObject(monster, OBJECT_TYPE::MONSTER);
-
-	//AddObject<Monster>(OBJECT_TYPE::MONSTER);
-
-	///*monster = static_cast<Object*>(new Monster());
-	//AddObject(monster, OBJECT_TYPE::MONSTER);
-
-	//monster = static_cast<Object*>(new Monster());
-	//AddObject(monster, OBJECT_TYPE::MONSTER);*/
-	//		
-	//// 충돌지정
-	//// Player 그룹과 monster그룹간의 충돌 체크
-	//// COLLISION->SetObjectCollisionByType(OBJECT_TYPE::PLAYER, OBJECT_TYPE::MONSTER);
-
-	//// COLLISION->SetObjectCollisionByType(OBJECT_TYPE::PROJ_PLAYER, OBJECT_TYPE::MONSTER);
-
-	//InitObjects();
+	
 }
 
 void MainMenuScene::Update()

@@ -6,7 +6,7 @@ class Component
 {
 public:
 	Component();
-	~Component();
+	virtual ~Component();
 
 	Component(const Component& other);
 
@@ -15,7 +15,7 @@ private:
 	Component& operator ==	(Component& origin) = delete;
 
 public:
-	virtual void FinalUpdate();// 오브젝트의 위치를 따라간다.
+	virtual void Update();// 오브젝트의 위치를 따라간다.
 	virtual void Render();
 	virtual void Init() {};
 

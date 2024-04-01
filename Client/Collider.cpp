@@ -28,9 +28,9 @@ Collider::Collider(const Collider& origin)
 	SetID(g_nextID++);
 }
 
-void Collider::FinalUpdate()
+void Collider::Update()
 {
-	Component::FinalUpdate();
+	Component::Update();
 
 	assert(0 <= _isCollision);
 }
