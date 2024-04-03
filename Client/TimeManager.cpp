@@ -17,6 +17,8 @@ TimeManager::~TimeManager()
 void TimeManager::Init()
 {
 	// prev counts
+	// 초당 카운트를 세는 횟수가 100만
+	// 100만이라는 값을 저장하기 위해서 LARGE_INTEGER를 사용한다.
 	QueryPerformanceCounter(&_prevCount);
 
 	// 1 per second counts 

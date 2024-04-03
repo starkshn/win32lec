@@ -39,49 +39,45 @@ void CollisionManager::CheckObjectsCollision(OBJECT_TYPE ltype, OBJECT_TYPE rtyp
 	const vector<Object*>& rowObjs = curScene->GetObjectsByType(ltype);
 	const vector<Object*>& colObjs = curScene->GetObjectsByType(rtype);
 
-	map<ULONGLONG, bool>::iterator iter;
+	unordered_map<ULONGLONG, bool>::iterator iter;
 
 	for (UINT i = 0; i < rowObjs.size(); ++i)
 	{
-		// nullptr이거나 충돌체가 없는 경우
 		if (rowObjs[i]->GetCollider() == nullptr || rowObjs[i] == nullptr)
 			continue;
 
 		Object* rowObj = rowObjs[i];
-
 		Collider* rowCollider = rowObjs[i]->GetCollider();
 
 		for (UINT j = 0; j < colObjs.size(); ++j)
 		{
-			// nullptr이거나 충돌체가 없는 경우
 			if (colObjs[j]->GetCollider() == nullptr || colObjs[j] == nullptr)
 				continue;
 
 			Object* colObj = colObjs[j];
-
 			Collider* colCollider = colObjs[j]->GetCollider();
 
 			// 같은 배열인 경우 (나의 그룹과 나자신의 그룹을 비교하는 경우 건너뛰어야한다)
-			if (rowObjs == colObjs) 
+			if (rowObjs == colObjs)
 				continue;
 
 			// union을 통해 ID를 만들어 낸다.
 			COLLIDER_ID id;
-			id._leftID	= rowCollider->GetID();
+			id._leftID = rowCollider->GetID();
 			id._rightID = colCollider->GetID();
 
-			// TODO 
+			// TODO
 			// std::map 말고 HashTable로 O(1)로 찾을 수 있도록 나중에 수정하자.
-			iter = _collisionInfo.find(id.ID);
+			iter = _unmapCollisionInfo.find(id.ID);
 
 			// end라는 말은 이전 프레임에 충돌한 적이 없다는 말이다.
 			// 충돌을 한적 있건 없건 간에 검사를 했다면 map에 등록을 시켜 놔야한다.
-			if (iter == _collisionInfo.end())
+			if (iter == _unmapCollisionInfo.end())
 			{
-				_collisionInfo.insert(make_pair(id.ID, false));
-				iter = _collisionInfo.find(id.ID);
+				_unmapCollisionInfo.insert(make_pair(id.ID, false));
+				iter = _unmapCollisionInfo.find(id.ID);
 			}
-			
+
 			// 충돌하는 경우
 			if (IsCollision(rowCollider, colCollider))
 			{
@@ -108,8 +104,8 @@ void CollisionManager::CheckObjectsCollision(OBJECT_TYPE ltype, OBJECT_TYPE rtyp
 				else
 				{
 					// 이전에는 충돌하지 않았다.
-					// 최초로 충돌하는 경우
-					
+					// 최초로 충돌하는 경우이다.
+
 					// 삭제될 예정인 경우가 둘다 아닐 경우
 					if (!rowObj->GetThisObjectWillDelete() && !colObj->GetThisObjectWillDelete())
 					{

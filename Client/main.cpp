@@ -91,15 +91,6 @@ _In_ int       nCmdShow)
         }
     }
 
-   /* try
-    {
-        throw std::exception("C++ exception");
-    }
-    catch (const std::exception& ex)
-    {
-        std::cout << "Caught exception " << ex.what() << std::endl;
-    }*/
-
     return (int) msg.wParam;
 }
 

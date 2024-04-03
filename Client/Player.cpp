@@ -7,6 +7,7 @@
 #include "Collider.h"
 #include "Component.h"
 #include "Animator.h"
+#include "Animation.h"
 
 Player::Player()
 {
@@ -30,17 +31,7 @@ void Player::Update()
 }
 
 void Player::Render()
-{
-	// Texture의 모든 생각 다 복붙
-	// BitBlt(GET_MEMDC(), int(lx), int(ly), w, h, GetTexture()->GetDC(), 0, 0, SRCCOPY);
-
-	// 마젠타 색상 설정하여 마젠타 색상 제외하고 복붙해주는 함수
-	/*TransparentBlt
-	(
-		GET_MEMDC, int(lx), int(ly), w, h,
-		GetTexture()->GetDC(), 0, 0, w, h, RGB(255, 0, 255)
-	);*/
-	
+{	
 	ComponentRender();
 }
 
@@ -60,8 +51,9 @@ void Player::Init()
 	SetPos(Vec2(res.x / 2.f, 500.f));
 	SetScale(Vec2(50.f, 50.f));
 	
-	// create comp
-
+	// ===================================
+	// Comp
+	// ===================================
 	// collider
 	Collider* compCollider = CreateComponent<Collider>(COMP_TYPE::COLLIDER);
 	int th		= 100;
@@ -71,7 +63,6 @@ void Player::Init()
 
 	// Animator Create
 	Animator* compAnimator = CreateComponent<Animator>(COMP_TYPE::ANIMATOR);
-
 	Texture* animRes = static_cast<Texture*>(RESOURCE->LoadTexture(L"PlayerAnim", L"texture\\ZeldaAnimation_Mazenta.bmp"));
 
 	// 120 x 130 
@@ -89,7 +80,14 @@ void Player::Init()
 	compAnimator->CreateAnimation(Z_WALK_FRONT, animRes, Vec2(0.f, 520.f), Vec2(120.f, 130.f), Vec2(120.f, 0), 0.05f, 10);
 	Animation* anim = compAnimator->FindAnimation(Z_WALK_FRONT);
 	compAnimator->SetCurrentAnim(anim);
-	anim->SetAnimLoop(false);
+	anim->SetAnimLoop(true);
+
+	uint32 _max = anim->GetAnimMaxFrame();
+	for (uint32 i = 0; i < _max; ++i)
+	{
+		AnimFrame& finfo = anim->GetAnimFrame(i);
+		finfo._offset = Vec2(0.f, -50.f);
+	}
 }
 
 void Player::Begin()

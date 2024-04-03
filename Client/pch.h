@@ -3,12 +3,12 @@
 // std
 #include <memory>
 #include <iostream>
+#include <algorithm>
 #include <array>
 #include <vector>
 #include <list>
 #include <map>
 #include <unordered_map>
-#include <algorithm>
 #include <string>
 using namespace std;
 

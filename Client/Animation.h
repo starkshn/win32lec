@@ -10,6 +10,7 @@ typedef struct AnimFrame
 {
 	Vec2 _leftTop;		// 좌상단 위치
 	Vec2 _animInterval; // 잘려야 하는 크기
+	Vec2 _offset;		// 애니매이션 offset
 	float _duration;    // 프레임당 머무는 시간
 
 } FrameInfo;
@@ -50,11 +51,14 @@ public:
 	uint32 GetAnimFrameCount() { return _frameCount; }
 	void SetAnimFrameCount(uint32 frameCount) { _frameCount = frameCount; }
 
-	const bool GetAnimLoop() { return _animLoop; }
+	const bool GetIsLoopAnimation() { return _animLoop; }
 	void SetAnimLoop(bool loop) { _animLoop = loop; }
 
 	const bool GetAnimEnd() { return _animEnd; }
 	void SetAnimEnd(bool end) { _animEnd = end; }
+
+	AnimFrame& GetAnimFrame(uint32 idx) { return _vecFrameInfo[idx]; }
+	uint32 GetAnimMaxFrame() { return _vecFrameInfo.size(); }
 
 private:
 	Texture* _animTexture	= nullptr;
@@ -66,9 +70,9 @@ private:
 	uint32	_frameCount		= 0;
 	vector<FrameInfo> _vecFrameInfo;
 
-	uint32 _curFrame = 0; // 현재 프레임
-	float _accTime = 0.f; // 시간을 누적할 변수
-	bool _animLoop = false; // 전체 프레임을 돌아서 애니매이션 재생이 끝났다는 것을 알리는 멤버 변수
-	bool _animEnd = false;
+	uint32 _curFrame	= 0;		// 현재 애니매이션 프레임 (몇 번째 애니매이션 인지)
+	float _accTime		= 0.f;		// 시간을 누적할 변수
+	bool _animLoop		= false;	// 애니매이션 루프 재생 여부
+	bool _animEnd		= false;	// 전체 프레임을 돌아서 애니매이션 재생이 끝났다는 것을 알리는 멤버 변수
 };
 

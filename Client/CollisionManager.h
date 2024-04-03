@@ -25,6 +25,7 @@ public:
 
 private:
 	void CheckObjectsCollision(OBJECT_TYPE ltype, OBJECT_TYPE rtype);
+
 	void UpdateObjectsCollision(OBJECT_TYPE ltype, OBJECT_TYPE rtype);
 
 private:
@@ -36,6 +37,7 @@ private:
 	UINT _collisionCheck[UINT(OBJECT_TYPE::END)];
 	
 	// 이전 프레임 충돌 정보
-	map<ULONGLONG, bool> _collisionInfo;
+	// map<ULONGLONG, bool> _collisionInfo;
+	unordered_map<ULONGLONG, bool> _unmapCollisionInfo;
 };
 
