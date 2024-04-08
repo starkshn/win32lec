@@ -20,32 +20,21 @@ public:
 	virtual void EndScene() abstract;
 
 public:
-	void SetName(const wstring& name) 
+	void SetCameraLookAtPos(Vec2 pos)
 	{
-		_sceneName = name; 
-	}
-
-	const wstring& GetName()
-	{ 
-		return _sceneName;
-	}
-
-	void SetSceneType(const SCENE_TYPE type)
-	{ 
-		_sceneType = type;
-	}
-
-	const SCENE_TYPE GetOwnSceneType() 
-	{ 
-		return _sceneType;
+		CAMERA->SetLookAtPos(pos);
 	}
 
 public:
+	void SetName(const wstring& name) { _sceneName = name; }
+	const wstring& GetName() { return _sceneName; }
+
+	void SetSceneType(const SCENE_TYPE type) { _sceneType = type; }
+	const SCENE_TYPE GetOwnSceneType() { return _sceneType; }
+
+public:
 	// 타입에 따라 오브젝트'들'을 반환하는 함수
-	const vector<Object*>& GetObjectsByType(OBJECT_TYPE type)
-	{
-		return _sceneObjects[(uint32)type];
-	}
+	const vector<Object*>& GetObjectsByType(OBJECT_TYPE type) { return _sceneObjects[(uint32)type]; }
 
 	// 오브젝트를 씬에 추가해주는 함수
 	void AddObjectToCurrentScene(Object* obj, OBJECT_TYPE type)
@@ -83,6 +72,8 @@ public:
 protected:
 	// Scene Begin호출후 오브젝트 초기값 셋팅들
 	void InitObjects();
+	void InitObjectCollision(OBJECT_TYPE ltype, OBJECT_TYPE rtype);
+	void ObjectBegin();
 
 protected:
 	// Scene변경될 때 호출 될 함수들

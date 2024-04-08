@@ -69,6 +69,11 @@ void Core::UpdateManager()
 	PATH->Update();
 	RESOURCE->Update();
 
+	// Manager는 아니지만 EVENT 다음으로 가장 마지막 호출 해준다.
+	// 이곳에서 RenderPos가 정해짐
+	// 이후 Comp 에서는 이곳의 RenderPos를 쓴다.
+	CAMERA->Update();
+
 	// EventManager의 경우 RenderEnd에서 진행
 }
 
@@ -90,7 +95,6 @@ void Core::RenderEnd()
 {
 	// copy prev to main window
 	BitBlt(_hdc, 0, 0, _resolution.x, _resolution.y, _memdc, 0, 0, SRCCOPY);
-
 
 	// 모든 프레임은 프레임의 가장 마지막에 처리한다.
 	// 이벤트 지연 처리
@@ -130,6 +134,7 @@ void Core::InitManager()
 	RESOURCE->Init();
 	SCENE->Init();
 	COLLISION->Init();
+	CAMERA->Init();
 	EVENT->Init();
 }
 

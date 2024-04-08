@@ -26,6 +26,8 @@ KeyManager::KeyManager()
 	VK_Mapping[20] = VK_SPACE;
 	VK_Mapping[21] = VK_RETURN;
 	VK_Mapping[22] = VK_ESCAPE;
+	VK_Mapping[23] = VK_LBUTTON;
+	VK_Mapping[24] = VK_RBUTTON;
 }
 
 KeyManager::~KeyManager()
@@ -42,6 +44,12 @@ void KeyManager::Init()
 }
 
 void KeyManager::Update()
+{
+	UpdateKeyInput();
+	UpdateMousePos();
+}
+
+void KeyManager::UpdateKeyInput()
 {
 	// focused window check
 	// HWND mainhWnd = GET_WINDOW_HANDLE();
@@ -79,20 +87,6 @@ void KeyManager::Update()
 				_keys[i]._prevPressedState = false;
 			}
 		}
-
-		// 임시로 Scene간 이동을 가능하게 한 코드이다.
-		// change scene -> SCENE
-		/*if (GET_KEY_STATE(KEYES::UP) == KEY_STATE::HOLD)
-		{
-			if (SCENE->GetCurrentSceneType() == SCENE_TYPE::MAIN_MENU) return;
-			SCENE->ChangeScene(SCENE_TYPE::MAIN_MENU);
-		}
-		
-		if (GET_KEY_STATE(KEYES::DOWN) == KEY_STATE::HOLD)
-		{
-			if (SCENE->GetCurrentSceneType() == SCENE_TYPE::START) return;
-			SCENE->ChangeScene(SCENE_TYPE::START);
-		}*/
 	}
 	else
 	{
@@ -110,4 +104,18 @@ void KeyManager::Update()
 			}
 		}
 	}
+}
+
+void KeyManager::UpdateMousePos()
+{
+	POINT pos = {};
+
+	// Window Func
+	GetCursorPos(&pos); // 현재 마우스 좌표 얻어오는 함수
+
+	// Window Func
+	// 현재 포커싱된 윈도우를 기준으로 현재 마우스 좌표를 얻어와야한다.
+	ScreenToClient(GET_WINDOW_HANDLE, &pos);
+
+	SetMousePos(Vec2(float(pos.x), float(pos.y)));
 }

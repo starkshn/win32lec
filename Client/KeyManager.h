@@ -1,35 +1,4 @@
 #pragma once
-#include "define.h"
-
-//enum class VK
-//{
-//	VK_LEFT,
-//	VK_DOWN,
-//	VK_RIGHT,
-//	VK_UP,
-//	'Q',
-//	'E',
-//	'R',
-//	'T',
-//	'Y',
-//	'U',
-//	'I',
-//	'O',
-//	'P',
-//	'W',
-//	'A',
-//	'S',
-//	'D',
-//	VK_MENU,
-//	VK_LSHIFT,
-//	VK_CONTROL,
-//	VK_SPACE,
-//	VK_RETURN,
-//	VK_ESCAPE,
-//
-//	// LAST = 100,
-//};
-
 
 enum class KEY_STATE
 {
@@ -64,6 +33,8 @@ enum class KEYES
 	SPACE,
 	ENTER,
 	ESC,
+	LBTN,
+	RBTN,
 	LAST = 100,
 };
 
@@ -86,9 +57,17 @@ public:
 
 public:
 	KEY_STATE GetKeyState(KEYES key) { return _keys[int(key)]._keyState; }
+
+	void UpdateKeyInput();
+	void UpdateMousePos();
+
+	Vec2 GetCurMousePos() { return _curMousePos; }
+	void SetMousePos(Vec2 pos) { _curMousePos = pos; }
 	
 private:
 	vector<KeyInfo> _keys;
 	int VK_Mapping[(int)KEYES::LAST];
+
+	Vec2 _curMousePos;
 };
 

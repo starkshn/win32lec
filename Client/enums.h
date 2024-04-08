@@ -11,7 +11,7 @@ enum class OBJECT_TYPE
 	PROJECTILE_LINE,
 	BRICK,
 
-	END = 32,
+	END = MAX_LENGH,
 };
 
 enum class SCENE_TYPE
@@ -23,9 +23,7 @@ enum class SCENE_TYPE
 
 	TOOL = 31,
 
-
-
-	END = 32,
+	END = MAX_LENGH,
 };
 
 enum class RESOURCE_TYPE
@@ -34,8 +32,7 @@ enum class RESOURCE_TYPE
 	TEXTURE,
 	SOUND,
 
-
-	END,
+	END = MAX_LENGH,
 };
 
 enum class FILE_TYPE
@@ -46,7 +43,7 @@ enum class FILE_TYPE
 	JPG,
 
 
-	END,
+	END = MAX_LENGH,
 };
 
 enum class BRUSH_TYPE
@@ -54,7 +51,7 @@ enum class BRUSH_TYPE
 	HOLLOW,
 
 
-	END,
+	END = MAX_LENGH,
 };
 
 enum class PEN_TYPE
@@ -64,7 +61,7 @@ enum class PEN_TYPE
 	BLUE,
 
 
-	END,
+	END = MAX_LENGH,
 };
 
 enum class EVENT_TYPE
@@ -74,7 +71,7 @@ enum class EVENT_TYPE
 	SCENE_CHANGE,
 	
 
-	END,
+	END = MAX_LENGH,
 };
 
 enum class COMP_TYPE
@@ -83,5 +80,5 @@ enum class COMP_TYPE
 	ANIMATOR = 2,
 	MOVEMENT = 3,
 
-	END = 32,
+	END = MAX_LENGH,
 };

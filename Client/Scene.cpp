@@ -92,6 +92,25 @@ void Scene::InitObjects()
 	}
 }
 
+void Scene::InitObjectCollision(OBJECT_TYPE ltype, OBJECT_TYPE rtype)
+{
+	COLLISION->SetObjectCollisionByType(ltype, rtype);
+}
+
+void Scene::ObjectBegin()
+{
+	for (int i = 0; i < (uint32)OBJECT_TYPE::END; ++i)
+	{
+		for (Object* obj : _sceneObjects[i])
+		{
+			if (obj)
+			{
+				obj->Begin();
+			}
+		}
+	}
+}
+
 void Scene::DeleteAllObjectsByType(OBJECT_TYPE type)
 {
 	DeleteObjectsSafe<Object*>(_sceneObjects[(uint32)type]);

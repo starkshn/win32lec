@@ -21,10 +21,10 @@ void StartScene::Update()
 {
 	Scene::Update();
 
-	if (KEY_PRESSED(KEYES::UP))
+	/*if (KEY_PRESSED(KEYES::UP))
 	{
 		ChnageScene_EV(SCENE_TYPE::MAIN_MENU);
-	}
+	}*/
 }
 
 void StartScene::Render()

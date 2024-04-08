@@ -59,7 +59,7 @@ _In_ int       nCmdShow)
     }
 
     // Core Init
-    if (FAILED(GET_SINGLE(Core)->Init(g_hWnd, POINT{ 600, 600 })))
+    if (FAILED(GET_SINGLE(Core)->Init(g_hWnd, POINT{ 800, 800 })))
     {
         MessageBox(nullptr, L"Core intialize Fail", L"ERROR", MB_OK);
         return FALSE;

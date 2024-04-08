@@ -19,12 +19,14 @@ using namespace std;
 #include <optional>
 #include <tchar.h>
 
-
 // header
 #include "types.h"
 #include "define.h"
 #include "enums.h"
+
+// Core
 #include "Core.h"
+#include "Camera.h"
 
 // Manager
 #include "Manager.h"
@@ -35,8 +37,14 @@ using namespace std;
 #include "ResourceManager.h"
 #include "CollisionManager.h"
 #include "EventManager.h"
+// #include "Camera.h" // <- 여기 선언하면 안된다.
+
+
+// Utils
 #include "SelectGDI.h"
 #include "Func.h"
+#include "WMath.h"
+
 
 // lib
 #pragma comment(lib, "Msimg32.lib")

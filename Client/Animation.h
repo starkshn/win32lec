@@ -58,7 +58,7 @@ public:
 	void SetAnimEnd(bool end) { _animEnd = end; }
 
 	AnimFrame& GetAnimFrame(uint32 idx) { return _vecFrameInfo[idx]; }
-	uint32 GetAnimMaxFrame() { return _vecFrameInfo.size(); }
+	uint32 GetAnimMaxFrame() { return uint32(_vecFrameInfo.size()); }
 
 private:
 	Texture* _animTexture	= nullptr;

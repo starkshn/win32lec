@@ -58,8 +58,7 @@ void Object::FinalUpdate()
 
 void Object::Render()
 {
-	Rectangle(GET_MEMDC, GetLeft(), GetTop(), GetRight(), GetBottom());
-
+	SetRenderPos(CAMERA->GetRenderPos(GetPos()));
 	ComponentRender();
 }
 

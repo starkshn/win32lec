@@ -41,11 +41,13 @@ void Animation::Update()
 
 void Animation::Render()
 {
-	// 애니매이션 끝도달 확인 
-	// 끝에 도달했는데 루프가 아닌경우 return 
-	if (GetAnimEnd() && GetIsLoopAnimation() == false) return;
+	Component::Render();
 
-	Vec2 fp = GetFinalPos();
+	// 애니매이션 끝도달 확인
+	// 끝에 도달했는데 루프가 아닌경우 종료 
+	if (GetAnimEnd() && GetIsLoopAnimation() == false) return;
+	
+	Vec2 renderPos = GetRenderPos();
 	Vec2 interval = _vecFrameInfo[_curFrame]._animInterval;
 	Vec2 ltp = _vecFrameInfo[_curFrame]._leftTop;
 	Vec2 offset = _vecFrameInfo[_curFrame]._offset;
@@ -53,8 +55,8 @@ void Animation::Render()
 	TransparentBlt
 	(
 		GET_MEMDC, 
-		(int)((fp.x + offset.x) - interval.x / 2),
-		(int)((fp.y + offset.y) - interval.y / 2),
+		(int)((renderPos.x + offset.x) - interval.x / 2),
+		(int)((renderPos.y + offset.y) - interval.y / 2),
 		int(interval.x), int(interval.y),
 		_animTexture->GetDC(),
 		int(ltp.x), int(ltp.y),

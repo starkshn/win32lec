@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CollisionManager.h"
-#include "Object.h"
 #include "Collider.h"
+#include "Object.h"
 
 CollisionManager::CollisionManager()
 {
@@ -138,13 +138,15 @@ void CollisionManager::UpdateObjectsCollision(OBJECT_TYPE ltype, OBJECT_TYPE rty
 
 bool CollisionManager::IsCollision(Collider* left, Collider* right)
 {
-	Vec2 lPos = left->GetFinalPos();
+	// Vec2 lPos = left->GetFinalPos();
+	Vec2 lPos = left->GetRenderPos();
 	Vec2 lScale = left->GetScale();
 
-	Vec2 rPos = right->GetFinalPos();
+	// Vec2 rPos = right->GetFinalPos();
+	Vec2 rPos = right->GetRenderPos();
 	Vec2 rScale = right->GetScale();
 
-	if (abs(rPos.x - lPos.x) < (rScale.x + rScale.x) / 2.f && abs(rPos.y - lPos.y) < (rScale.y + lScale.y) / 2.f)
+	if (abs(lPos.x - rPos.x) < (lScale.x + rScale.x) / 2.f && abs(lPos.y - rPos.y) < (lScale.y + rScale.y) / 2.f)
 	{
 		return true;
 	}

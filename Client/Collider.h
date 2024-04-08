@@ -28,6 +28,10 @@ public:
 	void OnCollisionExit(Collider* other);  // Ãæµ¹ ¹þ¾î³µ´ÂÁö
 
 private:
+	void SelectBrushAndPenColor();
+	void RollBackBrushAndPenColor();
+
+private:
 	static UINT g_nextID;
 
 private:

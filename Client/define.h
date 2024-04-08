@@ -16,9 +16,6 @@ public:										\
 // Get single instance
 #define GET_SINGLE(classname)	classname::GetInstance()
 
-// 0 ~ 100
-#define MAX_LENGH (uint32)OBJECT_TYPE::END
-
 // Get Manager
 #define TIME		GET_SINGLE(TimeManager)
 #define KEY			GET_SINGLE(KeyManager)
@@ -29,6 +26,10 @@ public:										\
 #define EVENT		GET_SINGLE(EventManager)
 #define CORE		GET_SINGLE(Core)
 #define GDI			GET_SINGLE(SelectGDI)
+#define CAMERA		GET_SINGLE(Camera)
+
+// 0 ~ 100
+#define MAX_LENGH 32
 
 // Get Core
 #define GET_MAIN_DC			CORE->GetMainDC()
@@ -36,22 +37,31 @@ public:										\
 #define GET_MEMDC			CORE->GetMemDC()
 #define GET_RESOLUTION		CORE->GetResolution()
 
+
 // Get Scene
 #define GET_PLAYER			SCENE->GetPlayer()
 
+
 // Get Key
 #define GET_KEY_STATE(k) KEY->GetKeyState(k)
+
 
 // Time Manager
 #define DT		TIME->GetDeltaTime() // delta time(double)
 #define DT_F	TIME->GetDeltaTimeFloat() // deltat time(float)
 #define FPS		TIME->GetFPS() // fps (UINT)
 
+
 // Key Manager
 #define KEY_CMP(key, state) GET_KEY_STATE(key) == state
 #define KEY_HOLD(key) KEY_CMP(key, KEY_STATE::HOLD)
 #define KEY_PRESSED(key) KEY_CMP(key, KEY_STATE::PRESSED)
 #define KEY_RELEASED(key) KEY_CMP(key, KEY_STATE::RELEASED)
+#define GET_MOUSE_POS KEY->GetCurMousePos()
+
+// Resource
+#define GET_C_PATH PATH->GetContentDirPath()
+#define RES RESOURCE_TYPE 
 
 
 // Object
@@ -62,8 +72,6 @@ public:										\
 #define DEFAULT_SPEED 50.f
 #define DEFAULT_PATROL_DISTANCE 100.f
 #define DEFAULT_DIR Vec2(1, 0)
-
-// Onject's Component
 
 
 // Render
@@ -93,20 +101,10 @@ if(angle > 360.f)									\
 #define DIR_LEFT	Vec2(-1, 0)
 #define DIR_RIGHT	Vec2(1, 0)
 
-// res
-#define GET_C_PATH PATH->GetContentDirPath()
-
-
 // math
 #define PI 3.141592
 #define RAD(angle) angle * PI / 180
 #define ANGLE(rad) rad * 180 / PI
-
-// res
-#define RES RESOURCE_TYPE 
-
-
-
 
 
 // Animation Test

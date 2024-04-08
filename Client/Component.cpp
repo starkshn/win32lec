@@ -34,11 +34,20 @@ Component::Component(const Component& other)
 
 void Component::Update()
 {
+	// 최상단 부모인 Component에서 OwnerObject에 대한 FinalPos를 업데이트 한다.
 	Vec2 objPos = GetOwnerObject()->GetPos();
 	SetFinalPos(objPos + _offset);
+
+	// 최상단 부모인 Component에서 render할 좌표를 업데이트 해준다.
+	SetRenderPos(GetCompRenderPos());
 }
 
 void Component::Render()
 {
+	
+}
 
+const Vec2 Component::GetCompRenderPos()
+{
+	return _renderPos = GetOwnerObject()->GetRenderPos();
 }

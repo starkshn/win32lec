@@ -2,6 +2,7 @@
 
 class Object;
 
+
 class Component
 {
 public:
@@ -40,11 +41,18 @@ public:
 	const Vec2 GetScale() { return _scale; }
 	void SetScale(Vec2 scale) { _scale = scale; }
 
+	// renderPos
+	const Vec2 GetCompRenderPos();
+	
+	void SetRenderPos(Vec2 pos) { _renderPos = pos; }
+	const Vec2 GetRenderPos() { return _renderPos; }
+
 private:
 	Object*		_ownerObject	= nullptr;
 	Vec2		_offset			= Vec2(0, 0);
 	Vec2		_finalPos		= Vec2(0, 0);
 	Vec2		_scale			= Vec2(10, 10);
+	Vec2		_renderPos		= Vec2(-0.01f, -0.01f);
 	bool		_visiable		= true;
 };
 

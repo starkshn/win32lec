@@ -16,29 +16,31 @@ Monster::~Monster()
 void Monster::Update()
 {
 	Object::Update();
-
-	/*if (GetProperty() != OBJECT_PROPERTY::STATIC)
-	{
-		Patrol_Vetical_Horizaon_Sin();
-	}*/
 }
 
 void Monster::Render()
 {
+	Object::Render();
+
 	uint32 h = (int)GetTexture()->GetTexHeight();
 	uint32 w = (int)GetTexture()->GetTexWidth();
 
 	Vec2 pos = GetPos();
-	int lx = int(pos.x - float(w / 2.f));
-	int ly = int(pos.y - float(h / 2.f));
+	Vec2 renderPos = GetRenderPos();
+	/*int lx = int(pos.x - float(w / 2.f));
+	int ly = int(pos.y - float(h / 2.f));*/
+
+	int lx = int(renderPos.x - float(w / 2.f));
+	int ly = int(renderPos.y - float(h / 2.f));
 
 	TransparentBlt
 	(
-		GET_MEMDC, int(lx), int(ly), w, h,
-		GetTexture()->GetDC(), 0, 0, w, h, RGB(255, 0, 255)
+		GET_MEMDC, 
+		int(lx), int(ly), w, h,
+		GetTexture()->GetDC(), 
+		0, 0, w, h, 
+		RGB(255, 0, 255)
 	);
-
-	ComponentRender();
 }
 
 void Monster::Init()

@@ -114,6 +114,9 @@
     <Filter Include="Engine\07.Component\Animator">
       <UniqueIdentifier>{3c7c6fdc-1c60-445c-befe-20063c0a80ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\08.Camera">
+      <UniqueIdentifier>{7d1a825b-09f4-4a79-a9da-51a8f9bb9c39}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -237,6 +240,12 @@
     <ClInclude Include="ChildComponent.h">
       <Filter>Engine\07.Component\ChildComponent</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Engine\08.Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="WMath.h">
+      <Filter>Engine\99.Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -340,6 +349,12 @@
     </ClCompile>
     <ClCompile Include="ChildComponent.cpp">
       <Filter>Engine\07.Component\ChildComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Engine\08.Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="WMath.cpp">
+      <Filter>Engine\99.Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

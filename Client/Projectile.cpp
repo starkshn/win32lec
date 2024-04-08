@@ -42,44 +42,54 @@ void Projectile::Update()
 
 void Projectile::Render()
 {
+	Object::Render();
+	Vec2 rednerPos = GetRenderPos();
+
 	uint32 h = (int)GetTexture()->GetTexHeight();
 	uint32 w = (int)GetTexture()->GetTexWidth();
 
 	Vec2 pos = GetPos();
-	int lx = int(pos.x - float(w / 2.f));
-	int ly = int(pos.y - float(h / 2.f));
+	/*int lx = int(pos.x - float(w / 2.f));
+	int ly = int(pos.y - float(h / 2.f));*/
+
+	int lx = int(rednerPos.x - float(w / 2.f));
+	int ly = int(rednerPos.y - float(h / 2.f));
 
 	TransparentBlt
 	(
-		GET_MEMDC, int(lx), int(ly), w, h,
-		GetTexture()->GetDC(), 0, 0, w, h, RGB(255, 0, 255)
+		GET_MEMDC, 
+		int(lx), int(ly), 
+		w, h,
+		GetTexture()->GetDC(), 
+		0, 0, w, h, 
+		RGB(255, 0, 255)
 	);
-
-	ComponentRender();
 }
 
 void Projectile::Init()
 {
+	// Set name
 	SetObjectName(L"DefaultProjectile");
 
-	// set player texture
-	SetTexture(static_cast<Texture*>(RESOURCE->LoadTexture(L"Missile", L"texture\\test_missile.bmp")));
-
-	Component* comp = CreateComponent<Collider>(COMP_TYPE::COLLIDER);
-	int th = GetTexture()->GetTexHeight();
-	int tw = GetTexture()->GetTexWidth();
-	comp->SetScale(Vec2(float(th), float(tw)));
-	comp->SetOffset(Vec2(float(0), float(0)));
-
+	// Set pos, scale, dir, speed
 	Object* player = const_cast<Player*>(GET_PLAYER);
 	Vec2 playerPos = player->GetPos();
 	Vec2 playerScale = player->GetScale();
 
 	SetPos(Vec2(playerPos.x, playerPos.y - playerScale.y / 2.f));
 	SetScale(Vec2(30.f, 30.f));
-
 	SetDir(DIR_UP);
 	SetSpeed(600.f);
+
+	// Set texture
+	SetTexture(static_cast<Texture*>(RESOURCE->LoadTexture(L"Missile", L"texture\\test_missile.bmp")));
+
+	// Create Collider
+	Component* comp = CreateComponent<Collider>(COMP_TYPE::COLLIDER);
+	int th = GetTexture()->GetTexHeight();
+	int tw = GetTexture()->GetTexWidth();
+	comp->SetScale(Vec2(float(th), float(tw)));
+	comp->SetOffset(Vec2(float(0), float(0)));
 }
 
 void Projectile::Begin()

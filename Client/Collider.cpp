@@ -20,7 +20,6 @@ Collider::~Collider()
 Collider::Collider(const Collider& origin)
 {
 	auto comp = static_cast<Component>(origin);
-
 	SetOwnerObject(nullptr);
 	SetOffset(comp.GetOffset());
 	SetFinalPos(comp.GetFinalPos());
@@ -37,30 +36,22 @@ void Collider::Update()
 
 void Collider::Render()
 {
-	if (_isCollision > 0)
-	{
-		GDI->SetBrush(GET_MEMDC, BRUSH_TYPE::HOLLOW);
-		GDI->SetPen(GET_MEMDC, PEN_TYPE::RED);
-	}
-	else
-	{
-		GDI->SetBrush(GET_MEMDC, BRUSH_TYPE::HOLLOW);
-		GDI->SetPen(GET_MEMDC, PEN_TYPE::GREEN);
-	}
+	Component::Render();
+
+	SelectBrushAndPenColor();
 
 	Vec2 scale		= GetScale();
-	Vec2 finalPos	= GetFinalPos();
+	Vec2 renderPos	= GetRenderPos();
 
 	DRAW_RECT_COLLIDER
 	(
-		int(finalPos.x - scale.x / 2.f),
-		int(finalPos.y - scale.y / 2.f),
-		int(finalPos.x + scale.x / 2.f),
-		int(finalPos.y + scale.y / 2.f)
+		int(renderPos.x - scale.x / 2.f),
+		int(renderPos.y - scale.y / 2.f),
+		int(renderPos.x + scale.x / 2.f),
+		int(renderPos.y + scale.y / 2.f)
 	);
 
-	GDI->ReleaseBrush();
-	GDI->ReleasePen();
+	RollBackBrushAndPenColor();
 }
 
 void Collider::Init()
@@ -83,4 +74,24 @@ void Collider::OnCollisionExit(Collider* other)
 {
 	_isCollision--;
 	GetOwnerObject()->OnCollisionExit(other);
+}
+
+void Collider::SelectBrushAndPenColor()
+{
+	if (_isCollision > 0)
+	{
+		GDI->SetBrush(GET_MEMDC, BRUSH_TYPE::HOLLOW);
+		GDI->SetPen(GET_MEMDC, PEN_TYPE::RED);
+	}
+	else
+	{
+		GDI->SetBrush(GET_MEMDC, BRUSH_TYPE::HOLLOW);
+		GDI->SetPen(GET_MEMDC, PEN_TYPE::GREEN);
+	}
+}
+
+void Collider::RollBackBrushAndPenColor()
+{
+	GDI->ReleaseBrush();
+	GDI->ReleasePen();
 }

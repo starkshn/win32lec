@@ -1,9 +1,10 @@
 #pragma once
 
-#include "Component.h"
 #include "Collider.h"
 #include "Animator.h"
 
+// forward declrations...
+class Component;
 class Texture;
 class Scene;
 
@@ -27,6 +28,8 @@ public:
 	virtual void FinalUpdate() final; // 부모가 마지막
 
 	// 실제 렌더링 함수 (Texture etc...)
+	// 이곳에서 Component Render를 같이 수행함
+	// Object를 상속받는 객체들은 Object::Render를 호출해야함
 	virtual void Render();
 
 	// 컴포넌트 렌더링 (Collider 충돌상태 색깔, 현재 애니매이션 재생)
@@ -99,7 +102,7 @@ public:
 
 public:
 	// 이벤트 매니저에의해 삭제될 여부를 반환하는 함수
-	const bool GetThisObjectWillDelete() { return deleteObject;}
+	bool GetThisObjectWillDelete() { return deleteObject;}
 
 private:
 	// 이벤트 매니저에 한해서 friend로 등록.
@@ -131,6 +134,10 @@ public:
 	// pos
 	const Vec2 GetPos() { return _pos; }
 	void SetPos(Vec2 pos) { _pos = pos; }
+
+	// RenderPos
+	Vec2 GetRenderPos() { return _renderPos; }
+	void SetRenderPos(Vec2 pos) { _renderPos = pos; }
 
 	// scale
 	const Vec2 GetScale() { return _scale; }
@@ -239,10 +246,11 @@ private:
 		float(GET_RESOLUTION.y / 2)
 	};
 
-	Vec2 _dir					= DEFAULT_DIR;
-	Vec2 _centerPos;
+	Vec2		_dir			= DEFAULT_DIR;
+	Vec2		_centerPos		= Vec2(0.f, 0.f);
 	OBJECT_TYPE	_type			= DEFAULT_OBJECT_TYPE;
-	float _speed				= DEFAULT_SPEED;
+	Vec2		_renderPos		= Vec2(0.f, 0.f);
+	float		_speed			= DEFAULT_SPEED;
 
 private:
 	// 모든 컴포넌트 클래스 관리하는 벡터 (Collider 포험)

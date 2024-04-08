@@ -14,9 +14,7 @@ public:
 	const HWND GetHwnd() { return _hwnd; }
 	const HDC GetMemDC() { return _memdc; }
 	const HDC GetMainDC() { return _hdc; }
-
-	// 아레 함수 왜 컴파일 에러가 발생하는지..??
-	const POINT GetResolution() { return _resolution; }
+	const Vec2 GetResolution() { return Vec2(float(_resolution.x), float(_resolution.y)); }
 	
 private:
 	void Update();

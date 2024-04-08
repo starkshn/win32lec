@@ -1,9 +1,7 @@
 #include "pch.h"
 #include "SceneManager.h"
-#include "Scene.h"
 #include "MainMenuScene.h"
 #include "StartScene.h"
-
 
 SceneManager::SceneManager()
 {
@@ -53,11 +51,10 @@ void SceneManager::Render()
 
 void SceneManager::InitScene()
 {
-	// Add scenes.
+	// Create Scenes.
 	CreateScene(SCENE_TYPE::MAIN_MENU, L"MainMenu");
 	CreateScene(SCENE_TYPE::START, L"StartScene");
 
-	// init -> create all objects.
 	for (const auto& scene : _scenes)
 	{
 		if (scene) scene->InitScene();
@@ -75,4 +72,40 @@ void SceneManager::ChangeScene(SCENE_TYPE dest)
 	_curScene = _scenes[(UINT)dest];
 
 	_curScene->BeginScene();
+}
+
+void SceneManager::CreateScene(SCENE_TYPE type, const wstring& name)
+{
+	switch (type)
+	{
+	case SCENE_TYPE::MAIN_MENU:
+	{
+		Scene* scene = new MainMenuScene();
+		_scenes[uint32(type)] = (scene);
+		_scenes[(uint32)type]->SetName(name);
+		_scenes[(uint32)type]->SetSceneType(type);
+	}
+	break;
+	case SCENE_TYPE::START:
+	{
+		Scene* scene = new StartScene();
+		_scenes[uint32(type)] = (scene);
+		_scenes[(uint32)type]->SetName(name);
+		_scenes[(uint32)type]->SetSceneType(type);
+	}
+	break;
+	case SCENE_TYPE::STAGE_01:
+	{
+
+	}
+	break;
+	case SCENE_TYPE::STAGE_02:
+		break;
+	case SCENE_TYPE::TOOL:
+		break;
+	case SCENE_TYPE::END:
+		break;
+	default:
+		break;
+	}
 }

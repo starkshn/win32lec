@@ -43,7 +43,7 @@ void PathManager::Init()
 	}													
 #endif
 
-	wcscat_s(_contentDirPath, 255, L"\\bin\\content\\");
+	wcscat_s(_contentDirPath, 255, L"\\Output\\bin\\content\\");
 }
 
 void PathManager::Update()
