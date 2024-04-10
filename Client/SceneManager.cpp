@@ -2,6 +2,7 @@
 #include "SceneManager.h"
 #include "MainMenuScene.h"
 #include "StartScene.h"
+#include "ToolScene.h"
 
 SceneManager::SceneManager()
 {
@@ -30,10 +31,8 @@ void SceneManager::Init()
 	InitScene();
 
 	// set first scene.
-	SetGameFirstScene(SCENE_TYPE::MAIN_MENU);
+	SetGameFirstScene(SCENE_TYPE::TOOL);
 
-	// TODO
-	// enter scene
 	_curScene->BeginScene();
 }
 
@@ -54,6 +53,7 @@ void SceneManager::InitScene()
 	// Create Scenes.
 	CreateScene(SCENE_TYPE::MAIN_MENU, L"MainMenu");
 	CreateScene(SCENE_TYPE::START, L"StartScene");
+	CreateScene(SCENE_TYPE::TOOL, L"ToolScene");
 
 	for (const auto& scene : _scenes)
 	{
@@ -102,6 +102,12 @@ void SceneManager::CreateScene(SCENE_TYPE type, const wstring& name)
 	case SCENE_TYPE::STAGE_02:
 		break;
 	case SCENE_TYPE::TOOL:
+	{
+		Scene* scene = new ToolScene();
+		_scenes[uint32(type)] = (scene);
+		_scenes[(uint32)type]->SetName(name);
+		_scenes[(uint32)type]->SetSceneType(type);
+	}
 		break;
 	case SCENE_TYPE::END:
 		break;

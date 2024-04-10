@@ -1,10 +1,11 @@
 #pragma once
 #include "Object.h"
+#include "UnitObject.h"
 #include "ProjectileLine.h"
 
 class Texture;
 
-class Player : public Object
+class Player : public UnitObject
 {
 public:
 	Player();
@@ -18,6 +19,9 @@ public:
 	virtual void Init() override;
 	virtual void Begin() override;
 	virtual void End() override;
+
+public:
+	virtual void Attack() override;
 
 private:
 	// Update key input มฆวั

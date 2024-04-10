@@ -40,15 +40,11 @@ public:
 	void LoadResource(const FILE_TYPE ftype, const RES type, const wstring& path);
 	void LoadFile(const RES type, const wstring& path);
 
-	const uint32 GetTexWidth() 
-	{
-		return _bitMapInfo.bmWidth;
-	}
+	const uint32 GetTexWidth() { return _bitMapInfo.bmWidth; }
+	void SetTexWidth(uint32 width) { _bitMapInfo.bmWidth = width; }
 
-	const uint32 GetTexHeight()
-	{
-		return _bitMapInfo.bmHeight;
-	}
+	const uint32 GetTexHeight() { return _bitMapInfo.bmHeight; }
+	void SetTexHeight(uint32 height) { _bitMapInfo.bmHeight = height; }
 
 private:
 	wstring _resKey = L"";			// res key

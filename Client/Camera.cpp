@@ -23,33 +23,25 @@ void Camera::Init()
 
 void Camera::Update()
 {
-	Object* targetObject = GetTarget();
-	if (nullptr != targetObject)
-	{
-		if (targetObject->GetThisObjectWillDelete())
-		{
-			SetTarget(nullptr);
-		}
-		else
-		{
-			SetLookAtPos(targetObject->GetPos());
-		}
-	}
+	// target이 있다면 따라가는 함수
+	FollowTarget();
 
+	// 방향키 이동 업데이트
 	KeyInput();
 
 	// 화면 중앙 좌표와 카메라 LookAt 좌표간의 차이값 계산
-	if (_flag)
-		CalDiff();
+	if (_triggerLBTN)
+		CalDiff_LBTN();
 }
 
-void Camera::CalDiff()
+void Camera::CalDiff_LBTN()
 {
 	_cameraAccTime += DT_F;
 	
 	if (_cameraAccTime >= _cameraFollowTime)
 	{
 		SetCameraCurrentLookAtPos(GetCameraCurrentLookAtPos());
+		_triggerLBTN = false;
 	}
 	else
 	{
@@ -65,12 +57,34 @@ void Camera::CalDiff()
 
 	// 차이값 (오브젝트들이 렌더를 위해 사용하는 값이다.)
 	_diff = GetCameraCurrentLookAtPos() - resCenterPos;
-	// SetCameraPrevLookAtPos(GetCameraCurrentLookAtPos());
+}
+
+void Camera::CalDiff_DirMove()
+{
+	Vec2 res = GET_RESOLUTION;
+	Vec2 resCenterPos = res / 2.f;
+	_diff = GetCameraCurrentLookAtPos() - resCenterPos;
+}
+
+void Camera::FollowTarget()
+{
+	Object* targetObject = GetTarget();
+	if (nullptr != targetObject)
+	{
+		if (targetObject->GetThisObjectWillDelete())
+		{
+			SetTarget(nullptr);
+		}
+		else
+		{
+			SetLookAtPos(targetObject->GetPos());
+		}
+	}
 }
 
 void Camera::KeyInput()
 {
-	Vec2 pos = GetLookAtPos();
+	Vec2 pos = GetCameraCurrentLookAtPos();
 
 	if (KEY_HOLD(KEYES::LEFT))
 	{
@@ -92,7 +106,21 @@ void Camera::KeyInput()
 		pos.x += 500.f * DT_F;
 	}
 
-	SetLookAtPos(pos);
+	// 현재 보고있는 좌표값 업데이트
+	SetCameraCurrentLookAtPos(pos);
+
+	// 움직인 만큼 렌더링 좌표 계산 (오브젝트 들이 사용함)
+	CalDiff_DirMove();
+}
+
+void Camera::ZoomIn()
+{
+	
+}
+
+void Camera::ZoomOut()
+{
+
 }
 
 const void Camera::SetDestLookAtPos(Vec2 pos)
@@ -127,7 +155,7 @@ const void Camera::SetDestLookAtPos(Vec2 pos)
 	// 가속도 계산
 	_a = (0 - _v0) / _cameraFollowTime;
 
-	_flag = true;
+	_triggerLBTN = true;
 }
 
 void Camera::MoveCameraAcceleratedMotion(float time)

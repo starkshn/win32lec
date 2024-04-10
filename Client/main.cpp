@@ -3,9 +3,9 @@
 
 #include "framework.h"
 #include "Client.h"
-#include <vector>
 #include "pch.h"
 #include <crtdbg.h>
+#include "Tool.h"
 
 
 #define MAX_LOADSTRING 100
@@ -108,7 +108,9 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_CLIENT));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = nullptr;
+
+    // 메뉴바 설정
+    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_CLIENT);
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -134,6 +136,12 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    return TRUE;
 }
 
+
+// forward declarations...
+// ToolScene의 함수 전방선언 갈긴다.
+// 링크 단계에서 묶인다.
+// INT_PTR CALLBACK TileCountPrc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
@@ -149,11 +157,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case IDM_EXIT:
                 DestroyWindow(hWnd);
                 break;
+            case ID_SET_TILE:
+            {
+                INT_PTR ret = DialogBox(hInst, MAKEINTRESOURCE(IDD_TILE_COUNT), hWnd, TileCountPrc);
+                if (ret == IDOK)
+                {
+                    
+                }
+            }
+            break;
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
             }
         }
         break;
+ 
     // 무효화 영역이 발생한 경우 발생
     // Invalidate 영역
     case WM_PAINT:
@@ -169,6 +187,29 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             EndPaint(hWnd, &ps);
         }
         break;
+        // 마우스 휠 처리
+        //case WM_MOUSEWHEEL:
+        //{
+        //    wchar_t buffer[255] = {};
+        //    if ((SHORT)HIWORD(wParam) > 0) //마우스휠을 올릴 경우
+        //    {
+        //        swprintf_s(buffer, L"WHEEL : %hd", (int16)(HIWORD(wParam)));
+        //        SetWindowText(GET_WINDOW_HANDLE, buffer);
+
+        //        KEY->UpdateMouseWheel((int16)(HIWORD(wParam)));
+        //    }
+        //    else if ((SHORT)HIWORD(wParam) < 0)  //마우스휠을 내릴 경우
+        //    {
+        //        swprintf_s(buffer, L"WHEEL : %hd", (int16)(HIWORD(wParam)));
+        //        SetWindowText(GET_WINDOW_HANDLE, buffer);
+
+        //        KEY->UpdateMouseWheel((int16)(HIWORD(wParam)));
+        //    }
+        //    else
+        //    {
+        //    }
+        //}
+    break;
     case WM_DESTROY:
         PostQuitMessage(0);
         break;

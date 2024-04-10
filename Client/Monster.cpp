@@ -15,12 +15,12 @@ Monster::~Monster()
 
 void Monster::Update()
 {
-	Object::Update();
+	UnitObject::Update();
 }
 
 void Monster::Render()
 {
-	Object::Render();
+	GameObject::Render();
 
 	uint32 h = (int)GetTexture()->GetTexHeight();
 	uint32 w = (int)GetTexture()->GetTexWidth();
@@ -65,6 +65,11 @@ void Monster::Begin()
 }
 
 void Monster::End()
+{
+
+}
+
+void Monster::Attack()
 {
 
 }

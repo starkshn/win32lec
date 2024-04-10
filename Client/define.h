@@ -57,7 +57,12 @@ public:										\
 #define KEY_HOLD(key) KEY_CMP(key, KEY_STATE::HOLD)
 #define KEY_PRESSED(key) KEY_CMP(key, KEY_STATE::PRESSED)
 #define KEY_RELEASED(key) KEY_CMP(key, KEY_STATE::RELEASED)
-#define GET_MOUSE_POS KEY->GetCurMousePos()
+#define GET_MOUSE_POS KEY->GetMousePos()
+
+// Camera
+#define GET_WINDOW_MOUSE_POS(renderMousePos) CAMERA->GetWindowActualPosFromRenderPos(renderMousePos)
+
+#define GET_RENDER_MOUSE_POS(windowMousePos) CAMERA->GetRenderPosFromWindowActualPos(windowMousePos)
 
 // Resource
 #define GET_C_PATH PATH->GetContentDirPath()
@@ -72,7 +77,7 @@ public:										\
 #define DEFAULT_SPEED 50.f
 #define DEFAULT_PATROL_DISTANCE 100.f
 #define DEFAULT_DIR Vec2(1, 0)
-
+#define MAX_TILE_COUNT 9
 
 // Render
 #define DRAW_RECT() Rectangle(GET_MEMDC, this->GetLeft(), this->GetTop(), this->GetRight(), this->GetBottom());
@@ -109,5 +114,8 @@ if(angle > 360.f)									\
 
 // Animation Test
 #define Z_WALK_FRONT L"Walk_Front"
+
+// Tile
+#define TILE_SIZE 64
 
 

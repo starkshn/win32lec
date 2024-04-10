@@ -48,30 +48,6 @@
     <Filter Include="Engine\99.Utils">
       <UniqueIdentifier>{82b2921c-45aa-4512-961e-bd52cfc4cf41}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\04.Object\Player">
-      <UniqueIdentifier>{6d701a18-122c-43b2-a471-f1404499f4f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\04.Object\Rect">
-      <UniqueIdentifier>{db40a4e5-666c-40d7-8d1c-538f67d08d8a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\04.Object\Monster">
-      <UniqueIdentifier>{bfffd152-c4f7-4fb8-b8e1-492826975bf7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\04.Object\Rect\Brick">
-      <UniqueIdentifier>{0621947d-6977-41f6-947d-e2a3bd401c60}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\04.Object\Player\ProjectileLine">
-      <UniqueIdentifier>{e6cd871d-1d6c-45c8-be79-4b76483fcf9f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\04.Object\Projectile">
-      <UniqueIdentifier>{dae72f3a-3760-447a-875f-264d5a584efd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\04.Object\Projectile\Projectile_Sin">
-      <UniqueIdentifier>{9ac14e2b-aa4f-425c-ab7c-60405d1fca6c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\04.Object\Projectile\Projectile_Cos">
-      <UniqueIdentifier>{c75f852c-cac6-4663-b36b-6e482a8e2bcc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\06.Resource">
       <UniqueIdentifier>{0ebae5c2-ab8a-482c-8852-62de0b300b03}</UniqueIdentifier>
     </Filter>
@@ -116,6 +92,51 @@
     </Filter>
     <Filter Include="Engine\08.Camera">
       <UniqueIdentifier>{7d1a825b-09f4-4a79-a9da-51a8f9bb9c39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\UI_Object">
+      <UniqueIdentifier>{bb6d6b88-2bab-4a2d-b413-e01662f0df98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\GameObject">
+      <UniqueIdentifier>{8db662e9-256b-4138-94a8-0c74f7d0e151}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03.Manager\Key\Command">
+      <UniqueIdentifier>{37021073-a4d8-4522-81c4-6b0a37be611a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03.Manager\Key\Command\FireMissile">
+      <UniqueIdentifier>{d89f3035-8d3f-42f1-aeb4-d8bc3ec2b9e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\07.Component\InputHandler">
+      <UniqueIdentifier>{5b0d688a-841f-4ea9-a485-f082c1183d13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\GameObject\Tile">
+      <UniqueIdentifier>{44d73c3b-d7e1-4a5c-87be-9364032bf98d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\GameObject\UnitObject">
+      <UniqueIdentifier>{e0f185f4-a3cd-4d89-9658-54653a829e9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\GameObject\UnitObject\Monster">
+      <UniqueIdentifier>{bfffd152-c4f7-4fb8-b8e1-492826975bf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\GameObject\UnitObject\Player">
+      <UniqueIdentifier>{6d701a18-122c-43b2-a471-f1404499f4f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\GameObject\UnitObject\Player\ProjectileLine">
+      <UniqueIdentifier>{e6cd871d-1d6c-45c8-be79-4b76483fcf9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\GameObject\UnitObject\Projectile">
+      <UniqueIdentifier>{dae72f3a-3760-447a-875f-264d5a584efd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\GameObject\UnitObject\Projectile\Projectile_Sin">
+      <UniqueIdentifier>{9ac14e2b-aa4f-425c-ab7c-60405d1fca6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\GameObject\UnitObject\Projectile\Projectile_Cos">
+      <UniqueIdentifier>{c75f852c-cac6-4663-b36b-6e482a8e2bcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\GameObject\UnitObject\Rect">
+      <UniqueIdentifier>{db40a4e5-666c-40d7-8d1c-538f67d08d8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\GameObject\UnitObject\Rect\Brick">
+      <UniqueIdentifier>{0621947d-6977-41f6-947d-e2a3bd401c60}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -169,31 +190,31 @@
       <Filter>Engine\01.Header</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Engine\04.Object\Player</Filter>
+      <Filter>Engine\04.Object\GameObject\UnitObject\Player</Filter>
     </ClInclude>
     <ClInclude Include="Rect.h">
-      <Filter>Engine\04.Object\Rect</Filter>
+      <Filter>Engine\04.Object\GameObject\UnitObject\Rect</Filter>
     </ClInclude>
     <ClInclude Include="Monster.h">
-      <Filter>Engine\04.Object\Monster</Filter>
+      <Filter>Engine\04.Object\GameObject\UnitObject\Monster</Filter>
     </ClInclude>
     <ClInclude Include="Brick.h">
-      <Filter>Engine\04.Object\Rect\Brick</Filter>
+      <Filter>Engine\04.Object\GameObject\UnitObject\Rect\Brick</Filter>
     </ClInclude>
     <ClInclude Include="enums.h">
       <Filter>Engine\01.Header</Filter>
     </ClInclude>
     <ClInclude Include="ProjectileLine.h">
-      <Filter>Engine\04.Object\Player\ProjectileLine</Filter>
+      <Filter>Engine\04.Object\GameObject\UnitObject\Player\ProjectileLine</Filter>
     </ClInclude>
     <ClInclude Include="Projectile.h">
-      <Filter>Engine\04.Object\Projectile</Filter>
+      <Filter>Engine\04.Object\GameObject\UnitObject\Projectile</Filter>
     </ClInclude>
     <ClInclude Include="Projectile_Sin.h">
-      <Filter>Engine\04.Object\Projectile\Projectile_Sin</Filter>
+      <Filter>Engine\04.Object\GameObject\UnitObject\Projectile\Projectile_Sin</Filter>
     </ClInclude>
     <ClInclude Include="Projectile_Cos.h">
-      <Filter>Engine\04.Object\Projectile\Projectile_Cos</Filter>
+      <Filter>Engine\04.Object\GameObject\UnitObject\Projectile\Projectile_Cos</Filter>
     </ClInclude>
     <ClInclude Include="Resources.h">
       <Filter>Engine\06.Resource</Filter>
@@ -246,6 +267,30 @@
     <ClInclude Include="WMath.h">
       <Filter>Engine\99.Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Engine\03.Manager\Key\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitObject.h">
+      <Filter>Engine\04.Object\GameObject\UnitObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Command_FireMissile.h">
+      <Filter>Engine\03.Manager\Key\Command\FireMissile</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHandler.h">
+      <Filter>Engine\07.Component\InputHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolScene.h">
+      <Filter>Engine\05.Scene\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Engine\04.Object\GameObject\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Engine\04.Object\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool.h">
+      <Filter>Engine\99.Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -282,28 +327,28 @@
       <Filter>Engine\99.Utils</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Engine\04.Object\Player</Filter>
+      <Filter>Engine\04.Object\GameObject\UnitObject\Player</Filter>
     </ClCompile>
     <ClCompile Include="Rect.cpp">
-      <Filter>Engine\04.Object\Rect</Filter>
+      <Filter>Engine\04.Object\GameObject\UnitObject\Rect</Filter>
     </ClCompile>
     <ClCompile Include="Monster.cpp">
-      <Filter>Engine\04.Object\Monster</Filter>
+      <Filter>Engine\04.Object\GameObject\UnitObject\Monster</Filter>
     </ClCompile>
     <ClCompile Include="Brick.cpp">
-      <Filter>Engine\04.Object\Rect\Brick</Filter>
+      <Filter>Engine\04.Object\GameObject\UnitObject\Rect\Brick</Filter>
     </ClCompile>
     <ClCompile Include="ProjectileLine.cpp">
-      <Filter>Engine\04.Object\Player\ProjectileLine</Filter>
+      <Filter>Engine\04.Object\GameObject\UnitObject\Player\ProjectileLine</Filter>
     </ClCompile>
     <ClCompile Include="Projectile.cpp">
-      <Filter>Engine\04.Object\Projectile</Filter>
+      <Filter>Engine\04.Object\GameObject\UnitObject\Projectile</Filter>
     </ClCompile>
     <ClCompile Include="Projectile_Sin.cpp">
-      <Filter>Engine\04.Object\Projectile\Projectile_Sin</Filter>
+      <Filter>Engine\04.Object\GameObject\UnitObject\Projectile\Projectile_Sin</Filter>
     </ClCompile>
     <ClCompile Include="Projectile_Cos.cpp">
-      <Filter>Engine\04.Object\Projectile\Projectile_Cos</Filter>
+      <Filter>Engine\04.Object\GameObject\UnitObject\Projectile\Projectile_Cos</Filter>
     </ClCompile>
     <ClCompile Include="Resources.cpp">
       <Filter>Engine\06.Resource</Filter>
@@ -356,6 +401,30 @@
     <ClCompile Include="WMath.cpp">
       <Filter>Engine\99.Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Command.cpp">
+      <Filter>Engine\03.Manager\Key\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitObject.cpp">
+      <Filter>Engine\04.Object\GameObject\UnitObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Command_FireMissile.cpp">
+      <Filter>Engine\03.Manager\Key\Command\FireMissile</Filter>
+    </ClCompile>
+    <ClCompile Include="InputHandler.cpp">
+      <Filter>Engine\07.Component\InputHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolScene.cpp">
+      <Filter>Engine\05.Scene\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Engine\04.Object\GameObject\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Engine\04.Object\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Tool.cpp">
+      <Filter>Engine\99.Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -374,5 +443,6 @@
     <None Include="SimpleMath.inl">
       <Filter>Engine\99.Utils</Filter>
     </None>
+    <None Include="X" />
   </ItemGroup>
 </Project>

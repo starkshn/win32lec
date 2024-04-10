@@ -11,11 +11,35 @@ public:
 	void Init();
 	void Update();
 
-	// 해상도(화면) 정중앙 위치와 현재 카메라 LookAtPos와의 차이값을 계산하는 함수
-	void CalDiff();
 
 public:
+	// 해상도(화면) 정중앙 위치와 현재 카메라 LookAtPos와의 차이값을 계산하는 함수
+	// 마우스 왼쪽 버튼 클릭시
+	void CalDiff_LBTN();
+
+	// 방향키 입력시 화면 정중앙과 이동한 좌표 차이만큼 렌더링 좌표 업데이트
+	void CalDiff_DirMove();
+
+public:
+	// target이 있다면 쭉 따라가는 함수
+	void FollowTarget();
+	
+	// 방향키 이동 업데이트 함수
 	void KeyInput();
+
+	void ZoomIn();
+	void ZoomOut();
+
+	Vec2 GetRenderPosFromWindowActualPos(Vec2 renderPos)
+	{
+		return renderPos - _diff;
+	}
+	Vec2 GetWindowActualPosFromRenderPos(Vec2 actualPos)
+	{
+		return actualPos + _diff;
+	}
+
+public:
 
 	const Vec2 GetLookAtPos() { return _lookAtPos; }
 	void SetLookAtPos(Vec2 pos) { _lookAtPos = pos; }
@@ -51,14 +75,7 @@ public:
 	const float GetCameraFollowSpeed() { return _cameraFollowSpeed; }
 	void SetCameraFollowSpeed(float speed) { _cameraFollowSpeed = speed; }
 
-	Vec2 GetRenderPosFromWindowActualPos(Vec2 renderPos)
-	{
-		return renderPos - _diff;
-	}
-	Vec2 GetWindowActualPosFromRenderPos(Vec2 actualPos)
-	{
-		return actualPos + _diff;
-	}
+	
 
 	// 시간에 따른 속도를 구함
 	void MoveCameraAcceleratedMotion(float time);
@@ -88,6 +105,6 @@ private:
 	float _a		= 0.f;						// 가속도
 	float _curSpeed = 0.f;						// 현재 속도
 
-	bool _flag = false;
+	bool _triggerLBTN = false;
 };
 

@@ -1,6 +1,8 @@
 #pragma once
 #include "Object.h"
-class Monster : public Object
+#include "UnitObject.h"
+
+class Monster : public UnitObject
 {
 
 public:
@@ -17,6 +19,9 @@ public:
 	virtual void Init() override;
 	virtual void Begin() override;
 	virtual void End() override;
+
+public:
+	virtual void Attack() override;
 
 public:
 	virtual void OnCollision(Collider* otherCollider) override;

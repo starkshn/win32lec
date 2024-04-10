@@ -31,7 +31,7 @@ void Player::Update()
 
 void Player::Render()
 {	
-	Object::Render();	
+	UnitObject::Render();
 }
 
 void Player::Init()
@@ -80,6 +80,13 @@ void Player::Begin()
 void Player::End()
 {
 
+}
+
+void Player::Attack()
+{
+	Object* proj = new Projectile_Sin();
+	CreateObject(proj, OBJECT_TYPE::PROJ_PLAYER);
+	proj->Init();
 }
 
 void Player::DisMovement()

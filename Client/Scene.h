@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Rect.h"
 #include "Brick.h"
+#include "Texture.h"
 
 class Scene
 {
@@ -13,11 +14,14 @@ public:
 
 public:
 	virtual void InitScene() abstract;
+	virtual void BeginScene() abstract;
+	virtual void EndScene() abstract;
 	virtual void Update();
 	virtual void FinalUpdate();
 	virtual void Render();
-	virtual void BeginScene() abstract;
-	virtual void EndScene() abstract;
+
+public:
+	void CreateTile(uint32 tileXCount, uint32 tileYCount);
 
 public:
 	void SetCameraLookAtPos(Vec2 pos)
@@ -35,6 +39,23 @@ public:
 public:
 	// 타입에 따라 오브젝트'들'을 반환하는 함수
 	const vector<Object*>& GetObjectsByType(OBJECT_TYPE type) { return _sceneObjects[(uint32)type]; }
+
+	Object* GetObjectByTypeAndIndex(OBJECT_TYPE type, uint32 idx)
+	{
+		auto vec = GetObjectsByType(type);
+		uint32 vecSize = uint32(vec.size());
+
+		// idx가 벡터 범위 벗어난다면 assert
+		assert(idx < vecSize);
+
+		return vec[idx];
+	}
+
+	Vec2 GetMouseRenderPos() { return _mouseRenderPos; }
+	void SetMouseRenderPos(Vec2 renderPos) { _mouseRenderPos = renderPos; }
+
+	Vec2 GetMouseWindowPos() { return _mouseWindowPos; }
+	void SetMouseWindowPos(Vec2 windowPos) { _mouseWindowPos = windowPos; }
 
 	// 오브젝트를 씬에 추가해주는 함수
 	void AddObjectToCurrentScene(Object* obj, OBJECT_TYPE type)
@@ -69,20 +90,37 @@ public:
 		return static_cast<Player*>(_sceneObjects[(uint32)OBJECT_TYPE::PLAYER].back());
 	}
 
+	Vec2 GetCurrentTileXYCount() { return Vec2(float(_tileXCount), float(_tileYCount)); }
+	void SetCurrentTileXYCount(Vec2 count) 
+	{
+		_tileXCount = uint32(count.x);
+		_tileYCount = uint32(count.y);
+	}
+
 protected:
 	// Scene Begin호출후 오브젝트 초기값 셋팅들
 	void InitObjects();
 	void InitObjectCollision(OBJECT_TYPE ltype, OBJECT_TYPE rtype);
 	void ObjectBegin();
 
-protected:
+public:
 	// Scene변경될 때 호출 될 함수들
 	virtual void DeleteAllObjectsByType(OBJECT_TYPE type);
+
+protected:
 	void DeleteAllObjects();
 
 protected:
 	vector<Object*>		_sceneObjects[MAX_LENGH];
 	wstring				_sceneName = L"";
 	SCENE_TYPE			_sceneType = SCENE_TYPE::END;
+
+protected:
+	uint32				_tileXCount = 0;
+	uint32				_tileYCount = 0;
+
+private:
+	Vec2				_mouseRenderPos = Vec2();
+	Vec2				_mouseWindowPos = Vec2();
 };	
 

@@ -13,7 +13,10 @@ public:
 private:
 	void InitScene();
 
-	inline void SetCurrentScene(SCENE_TYPE type) { _curScene = _scenes[(uint32)type]; }
+	void SetCurrentScene(SCENE_TYPE type)
+	{ 
+		_curScene = _scenes[(uint32)type];
+	}
 	inline void SetGameFirstScene(SCENE_TYPE type) { SetCurrentScene(type); }
 
 public:
@@ -35,7 +38,7 @@ private:
 	void CreateScene(SCENE_TYPE type, const wstring& name);
 
 private:
-	vector<Scene*> _scenes;
-	Scene* _curScene		= nullptr;
+	vector<Scene*>	_scenes;
+	Scene*			_curScene = nullptr;
 };
 

@@ -56,3 +56,4 @@ void TimeManager::Update()
 	}
 #endif
 }
+

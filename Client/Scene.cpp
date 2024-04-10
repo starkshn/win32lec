@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Scene.h"
 #include "Object.h"
+#include "Tile.h"
 
 Scene::Scene()
 {
@@ -77,6 +78,34 @@ void Scene::Render()
 		}
 	}
 }
+
+void Scene::CreateTile(uint32 tileXCount, uint32 tileYCount)
+{
+	Texture* tileTex = static_cast<Texture*>(RESOURCE->LoadTexture(L"Tile", L"texture\\tile.bmp"));
+
+	// Set Tile Pos
+	for (uint32 i = 0; i < tileYCount; ++i)
+	{
+		for (uint32 j = 0; j < tileXCount; ++j)
+		{
+			Tile* tile = static_cast<Tile*>(CreateAndAppendToScene<Tile>(OBJECT_TYPE::DEFAULT_TILE));
+
+			tile->SetScale(Vec2(TILE_SIZE, TILE_SIZE));
+
+			Vec2 scale = tile->GetScale();
+			tile->SetOffSet(Vec2(scale.x / 2.f, scale.y / 2.f));
+
+			int x = j * TILE_SIZE;
+			int y = i * TILE_SIZE;
+			tile->SetPos(Vec2(float(x), float(y)));
+			tile->SetTexture(tileTex);
+		}
+	}
+
+	// Init Tile Tex
+	InitObjects();
+}
+
 
 void Scene::InitObjects()
 {

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "KeyManager.h"
+#include "Command.h"
 
 KeyManager::KeyManager()
 {
@@ -28,11 +29,13 @@ KeyManager::KeyManager()
 	VK_Mapping[22] = VK_ESCAPE;
 	VK_Mapping[23] = VK_LBUTTON;
 	VK_Mapping[24] = VK_RBUTTON;
+
+	// VK_Mapping[25]
 }
 
 KeyManager::~KeyManager()
 {
-
+	
 }
 
 void KeyManager::Init()
@@ -118,4 +121,20 @@ void KeyManager::UpdateMousePos()
 	ScreenToClient(GET_WINDOW_HANDLE, &pos);
 
 	SetMousePos(Vec2(float(pos.x), float(pos.y)));
+}
+
+void KeyManager::UpdateMouseWheel(int16 upDownValue)
+{
+	Vec2 mousePos = GetMousePos();
+
+	// ÈÙÀ» À§·Î
+	if (upDownValue > 0)
+	{
+		CAMERA->ZoomIn();
+	}
+	// ÈÙÀ» ¾Æ·¡·Î
+	else 
+	{
+		CAMERA->ZoomOut();
+	}
 }
