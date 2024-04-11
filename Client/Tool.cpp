@@ -18,8 +18,8 @@ INT_PTR TileCountPrc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		if (LOWORD(wParam) == IDOK)
 		{
-			uint32 maxRow = uint32(GetDlgItemInt(hDlg, IDC_EDIT1, nullptr, false));
-			uint32 maxCol = uint32(GetDlgItemInt(hDlg, IDC_EDIT2, nullptr, false));
+			int32 maxRow = int32(GetDlgItemInt(hDlg, IDC_EDIT1, nullptr, false));
+			int32 maxCol = int32(GetDlgItemInt(hDlg, IDC_EDIT2, nullptr, false));
 			
 			// 현재 씬 가져오기
 			Scene* curScene = SceneManager::GetInstance()->GetCurrentScene();
@@ -36,7 +36,7 @@ INT_PTR TileCountPrc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
 			// Tile 생성
 			toolScene->CreateTile(maxCol, maxRow);
-			toolScene->SetCurrentTileXYCount(Vec2(maxCol, maxRow));
+			toolScene->SetCurrentTileXYCount(Vec2(float(maxCol), float(maxRow)));
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return (INT_PTR)TRUE;

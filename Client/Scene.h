@@ -5,6 +5,7 @@
 #include "Rect.h"
 #include "Brick.h"
 #include "Texture.h"
+#include "UI.h"
 
 class Scene
 {

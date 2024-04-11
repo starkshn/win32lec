@@ -24,8 +24,7 @@ public:
 	virtual void Update() {};
 
 	// Component들에 대한 업데이트
-	// Collider 충돌, 좌표 계산, Animation 상태 계산 etc...
-	virtual void FinalUpdate() final; // 부모가 마지막
+	virtual void FinalUpdate();
 
 	// 실제 렌더링 함수 (Texture etc...)
 	// 이곳에서 Component Render를 같이 수행함

@@ -12,6 +12,8 @@ enum class OBJECT_TYPE
 	BRICK,
 	DEFAULT_TILE,
 
+	UI,
+
 	END = MAX_LENGH,
 };
 

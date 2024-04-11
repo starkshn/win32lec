@@ -138,6 +138,9 @@
     <Filter Include="Engine\04.Object\GameObject\UnitObject\Rect\Brick">
       <UniqueIdentifier>{0621947d-6977-41f6-947d-e2a3bd401c60}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04.Object\UI_Object\GameUI">
+      <UniqueIdentifier>{1ff3530d-63e6-4c45-8026-85c3a989e869}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -291,6 +294,9 @@
     <ClInclude Include="Tool.h">
       <Filter>Engine\99.Utils</Filter>
     </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>Engine\04.Object\UI_Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -424,6 +430,9 @@
     </ClCompile>
     <ClCompile Include="Tool.cpp">
       <Filter>Engine\99.Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Engine\04.Object\UI_Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

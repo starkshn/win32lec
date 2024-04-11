@@ -215,6 +215,7 @@
     <ClInclude Include="Tool.h" />
     <ClInclude Include="ToolScene.h" />
     <ClInclude Include="types.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="UnitObject.h" />
     <ClInclude Include="WMath.h" />
   </ItemGroup>
@@ -261,6 +262,7 @@
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Tool.cpp" />
     <ClCompile Include="ToolScene.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="UnitObject.cpp" />
     <ClCompile Include="WMath.cpp" />
   </ItemGroup>
