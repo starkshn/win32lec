@@ -30,19 +30,16 @@ public:
 	void ZoomIn();
 	void ZoomOut();
 
-	Vec2 GetRenderPosFromWindowActualPos(Vec2 renderPos)
+	Vec2 GetRenderPosFromWindowActualPos(Vec2 windowPos)
 	{
-		return renderPos - _diff;
+		return windowPos - _diff;
 	}
-	Vec2 GetWindowActualPosFromRenderPos(Vec2 actualPos)
+	Vec2 GetWindowActualPosFromRenderPos(Vec2 renderPos)
 	{
-		return actualPos + _diff;
+		return renderPos + _diff;
 	}
 
 public:
-
-	const Vec2 GetLookAtPos() { return _lookAtPos; }
-	void SetLookAtPos(Vec2 pos) { _lookAtPos = pos; }
 
 	// Scene에서 특정 좌표 클릭시 Dest Look at 설정하는 함수
 	const void SetDestLookAtPos(Vec2 pos);
@@ -54,6 +51,7 @@ public:
 	Vec2 GetCameraDestLookAtPos() { return _destLookAtPos; }
 	void SetCameraDestLookAtPos(Vec2 pos) { _destLookAtPos = pos; }
 
+	// 현재 카메라 위치 반환 (현재 보고 있는 정중앙 위치 반환)
 	Vec2 GetCameraCurrentLookAtPos() { return _curLookAtPos; }
 	void SetCameraCurrentLookAtPos(Vec2 pos) { _curLookAtPos = pos; }
 

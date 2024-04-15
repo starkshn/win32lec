@@ -15,7 +15,6 @@ Camera::~Camera()
 void Camera::Init()
 {
 	auto res = GET_RESOLUTION;
-	SetLookAtPos(res / 2.f);
 	SetCameraCurrentLookAtPos(res / 2.f);
 	SetCameraPrevLookAtPos(res / 2.f);
 	SetCameraDestLookAtPos(res / 2.f);
@@ -77,7 +76,7 @@ void Camera::FollowTarget()
 		}
 		else
 		{
-			SetLookAtPos(targetObject->GetPos());
+			SetCameraCurrentLookAtPos(targetObject->GetPos());
 		}
 	}
 }

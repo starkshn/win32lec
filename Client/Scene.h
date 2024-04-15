@@ -23,11 +23,12 @@ public:
 
 public:
 	void CreateTile(uint32 tileXCount, uint32 tileYCount);
+	void CheckTileIdx();
 
 public:
 	void SetCameraLookAtPos(Vec2 pos)
 	{
-		CAMERA->SetLookAtPos(pos);
+		CAMERA->SetCameraCurrentLookAtPos(pos);
 	}
 
 public:
@@ -39,7 +40,8 @@ public:
 
 public:
 	// 타입에 따라 오브젝트'들'을 반환하는 함수
-	const vector<Object*>& GetObjectsByType(OBJECT_TYPE type) { return _sceneObjects[(uint32)type]; }
+	vector<Object*>& GetObjectsByType(OBJECT_TYPE type) { return _sceneObjects[(uint32)type]; }
+
 
 	Object* GetObjectByTypeAndIndex(OBJECT_TYPE type, uint32 idx)
 	{

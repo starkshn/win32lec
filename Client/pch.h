@@ -7,6 +7,8 @@
 #include <array>
 #include <vector>
 #include <list>
+#include <deque>
+#include <queue>
 #include <map>
 #include <unordered_map>
 #include <string>
@@ -38,6 +40,8 @@ using namespace std;
 #include "CollisionManager.h"
 #include "EventManager.h"
 // #include "Camera.h" // <- 여기 선언하면 안된다.
+#include "UIManager.h"
+#include "BoardManager.h"
 
 
 // Utils

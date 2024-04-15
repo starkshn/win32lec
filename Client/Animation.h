@@ -70,9 +70,9 @@ private:
 	uint32	_frameCount		= 0;
 	vector<FrameInfo> _vecFrameInfo;
 
-	uint32 _curFrame	= 0;		// 현재 애니매이션 프레임 (몇 번째 애니매이션 인지)
-	float _accTime		= 0.f;		// 시간을 누적할 변수
-	bool _animLoop		= false;	// 애니매이션 루프 재생 여부
-	bool _animEnd		= false;	// 전체 프레임을 돌아서 애니매이션 재생이 끝났다는 것을 알리는 멤버 변수
+	uint32	_curFrame		= 0;		// 현재 애니매이션 프레임 (몇 번째 애니매이션 인지)
+	float	_accTime		= 0.f;		// 시간을 누적할 변수
+	bool	_animLoop		= false;	// 애니매이션 루프 재생 여부
+	bool	_animEnd		= false;	// 전체 프레임을 돌아서 애니매이션 재생이 끝났다는 것을 알리는 멤버 변수
 };
 

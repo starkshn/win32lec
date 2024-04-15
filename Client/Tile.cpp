@@ -2,9 +2,12 @@
 #include "Tile.h"
 #include "Texture.h"
 
+int32 Tile::g_tileObjectID = 0;
+
 Tile::Tile()
 {
-
+    // 고유한 Tile 오브젝트 ID
+    SetTileID(g_tileObjectID++);
 }
 
 Tile::~Tile()
@@ -68,8 +71,8 @@ void Tile::Render()
 
 void Tile::Init()
 {
-   // TODO...
-    _tileIdx = 0;
+    // TODO...
+    // _tileIdx = 0;
 }
 
 void Tile::Begin()

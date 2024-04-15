@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "StartScene.h"
 #include "Monster.h"
+#include "Tile.h"
 
 StartScene::StartScene()
 {
@@ -19,12 +20,12 @@ void StartScene::InitScene()
 
 void StartScene::Update()
 {
-	Scene::Update();
-
-	/*if (KEY_PRESSED(KEYES::UP))
+	if (KEY_PRESSED(KEYES::LBTN))
 	{
-		ChnageScene_EV(SCENE_TYPE::MAIN_MENU);
-	}*/
+		CheckTileIdx();
+	}
+
+	Scene::Update();
 }
 
 void StartScene::Render()
@@ -36,23 +37,14 @@ void StartScene::BeginScene()
 {
 	auto res = GET_RESOLUTION;
 
-	// Player
-	CreatePlayer();
-
-	Vec2 scale = DEFAULT_SCALE;
-	float patrolDist = DEFAULT_PATROL_DISTANCE;
-	int spawnCnt = 5;
-
-	Object* obj = CreateAndAppendToScene<Monster>(OBJECT_TYPE::MONSTER);
-	obj->SetPos(Vec2(100.f, 100.f));
+	// Create Player
+	Player* player = static_cast<Player*>(CreatePlayer());
+	player->SetScale(Vec2(50.f, 50.f));
 
 	// 스폰된 오브젝트들 Init 작업
 	InitObjects();
 
-	COLLISION->SetObjectCollisionByType(OBJECT_TYPE::PLAYER, OBJECT_TYPE::MONSTER);
-
-	COLLISION->SetObjectCollisionByType(OBJECT_TYPE::PROJ_PLAYER, OBJECT_TYPE::MONSTER);
-
+	// Call Objects Begin
 	for (int i = 0; i < (uint32)OBJECT_TYPE::END; ++i)
 	{
 		for (Object* obj : _sceneObjects[i])

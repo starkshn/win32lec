@@ -67,6 +67,7 @@ public:
 	void UpdateMousePos();
 	void UpdateMouseWheel(int16 upDownValue);
 
+	// 현재 윈도우 기준 렌더링 좌표를 반환
 	Vec2 GetMousePos() { return _curMousePos; }
 	void SetMousePos(Vec2 pos) { _curMousePos = pos; }
 	

@@ -20,6 +20,9 @@ public:
 	virtual void End() override;
 
 public:
+	TILE_TYPE GetTileType() { return _tileTYpe; }
+	void SetTileType(TILE_TYPE type) { _tileTYpe = type; }
+
 	Vec2 GetOffSet() { return _offset; }
 	void SetOffSet(Vec2 offset) { _offset = offset; }
 
@@ -29,9 +32,17 @@ public:
 	}
 	uint32 GetTileIdx() { return _tileIdx; }
 
+	int32 GetTileID() { return _tileObjectID; }
+	void SetTileID(int32 id) { _tileObjectID = id; }
+
 private:
 	Texture*	_tileTexture	= nullptr;
+	TILE_TYPE	_tileTYpe		= TILE_TYPE::EMPTY;
 	int32		_tileIdx		= 0;
+	int32		_tileObjectID	= 0;
 	Vec2		_offset			= Vec2{0.f, 0.f};
+
+private:
+	static	int32 g_tileObjectID;
 };
 

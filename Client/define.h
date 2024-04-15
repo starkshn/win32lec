@@ -27,6 +27,8 @@ public:										\
 #define CORE		GET_SINGLE(Core)
 #define GDI			GET_SINGLE(SelectGDI)
 #define CAMERA		GET_SINGLE(Camera)
+#define UI_MANAGER	GET_SINGLE(UIManager)
+#define BOARD		GET_SINGLE(BoardManager)
 
 // 0 ~ 100
 #define MAX_LENGH 32
@@ -57,12 +59,13 @@ public:										\
 #define KEY_HOLD(key) KEY_CMP(key, KEY_STATE::HOLD)
 #define KEY_PRESSED(key) KEY_CMP(key, KEY_STATE::PRESSED)
 #define KEY_RELEASED(key) KEY_CMP(key, KEY_STATE::RELEASED)
-#define GET_MOUSE_POS KEY->GetMousePos()
 
-// Camera
+// Mouse Pos
+#define GET_MOUSE_POS KEY->GetMousePos() // <= ·»´õ¸µ ÁÂÇ¥±âÁØ ¸¶¿ì½º ÁÂÇ¥ ¹ÝÈ¯
 #define GET_WINDOW_MOUSE_POS(renderMousePos) CAMERA->GetWindowActualPosFromRenderPos(renderMousePos)
-
 #define GET_RENDER_MOUSE_POS(windowMousePos) CAMERA->GetRenderPosFromWindowActualPos(windowMousePos)
+#define WINDOW_MOUSE_POS CAMERA->GetWindowActualPosFromRenderPos(GET_MOUSE_POS)
+#define RENDER_MOUSE_POS CAMERA->GetRenderPosFromWindowActualPos(WINDOW_MOUSE_POS)
 
 // Resource
 #define GET_C_PATH PATH->GetContentDirPath()
@@ -77,13 +80,13 @@ public:										\
 #define DEFAULT_SPEED 50.f
 #define DEFAULT_PATROL_DISTANCE 100.f
 #define DEFAULT_DIR Vec2(1, 0)
+
+
 #define MAX_TILE_COUNT 9
 
 // Render
 #define DRAW_RECT() Rectangle(GET_MEMDC, this->GetLeft(), this->GetTop(), this->GetRight(), this->GetBottom());
-
 #define DRAW_CIRCLE() Ellipse(GET_MEMDC, this->GetLeft(), this->GetTop(), this->GetRight(), this->GetBottom());
-
 #define DRAW_RECT_COLLIDER(left, top, right, bottom) Rectangle(GET_MEMDC, left, top, right, bottom);
 
 // projectile
@@ -111,11 +114,19 @@ if(angle > 360.f)									\
 #define RAD(angle) angle * PI / 180
 #define ANGLE(rad) rad * 180 / PI
 
-
 // Animation Test
 #define Z_WALK_FRONT L"Walk_Front"
 
 // Tile
 #define TILE_SIZE 64
 
+// check nullptr
+#define NULL_PTR_CHECK(ptr)		\
+if (nullptr == ptr)				\
+{								\
+	assert(ptr);				\
+}								\
+								\
+// check valid idx
+#define IS_VALID_IDX(arr, idx) assert(arr.size() > idx)
 

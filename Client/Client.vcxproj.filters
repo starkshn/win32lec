@@ -141,6 +141,15 @@
     <Filter Include="Engine\04.Object\UI_Object\GameUI">
       <UniqueIdentifier>{1ff3530d-63e6-4c45-8026-85c3a989e869}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03.Manager\UIManager">
+      <UniqueIdentifier>{e62655b9-70cb-4a48-aaa2-701ea3583b6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03.Manager\BoardManager">
+      <UniqueIdentifier>{28b209cb-a525-41c1-8162-a26c4f43e1ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03.Manager\BoardManager\DisjointSet">
+      <UniqueIdentifier>{6244863b-395d-476b-9e6c-27604a48c970}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -297,6 +306,18 @@
     <ClInclude Include="UI.h">
       <Filter>Engine\04.Object\UI_Object</Filter>
     </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>Engine\03.Manager\UIManager</Filter>
+    </ClInclude>
+    <ClInclude Include="BoardManager.h">
+      <Filter>Engine\03.Manager\BoardManager</Filter>
+    </ClInclude>
+    <ClInclude Include="DisjointSet.h">
+      <Filter>Engine\03.Manager\BoardManager\DisjointSet</Filter>
+    </ClInclude>
+    <ClInclude Include="structs.h">
+      <Filter>Engine\01.Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -433,6 +454,15 @@
     </ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>Engine\04.Object\UI_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>Engine\03.Manager\UIManager</Filter>
+    </ClCompile>
+    <ClCompile Include="BoardManager.cpp">
+      <Filter>Engine\03.Manager\BoardManager</Filter>
+    </ClCompile>
+    <ClCompile Include="DisjointSet.cpp">
+      <Filter>Engine\03.Manager\BoardManager\DisjointSet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

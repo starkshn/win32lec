@@ -64,6 +64,7 @@ void Core::UpdateManager()
 	KEY->Update();
 	SCENE->Update();
 	COLLISION->Update();
+	UI_MANAGER->Update();
 
 	// 아래는 각 매니저에 구현 만되어 있고 사용하지 않는다.
 	PATH->Update();
@@ -75,6 +76,8 @@ void Core::UpdateManager()
 	CAMERA->Update();
 
 	// EventManager의 경우 RenderEnd에서 진행
+
+	BOARD->Update();
 }
 
 void Core::RenderBegin()
@@ -120,7 +123,7 @@ void Core::InitWindow()
 	int cx = rc.right - rc.left;
 	int cy = rc.bottom - rc.top;
 
-	SetWindowPos(_hwnd, nullptr, 300, 100, cx, cy, 0);
+	SetWindowPos(_hwnd, nullptr, 100, 100, cx, cy, 0);
 
 	// get device context
 	_hdc = GetDC(_hwnd);
@@ -136,6 +139,7 @@ void Core::InitManager()
 	COLLISION->Init();
 	CAMERA->Init();
 	EVENT->Init();
+	BOARD->Init();
 }
 
 void Core::InitBitMap()
