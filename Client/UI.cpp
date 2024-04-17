@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "UI.h"
 #include "Texture.h"
+#include "Object.h"
+#include "Scene.h"
 
 UI::UI()
 {
@@ -9,13 +11,38 @@ UI::UI()
 
 UI::~UI()
 {
-    // TODO Delete UI
-    // DeleteObjectsSafe(_vecInnerUI);
+    
 }
 
-Object* UI::Clone()
+UI::UI(const UI& origin)
+    :
+    Object(origin),
+    _outerUI(nullptr),
+    _offset(origin._offset),
+    _finalPos(origin._finalPos),
+    _affectByCameraPos(origin._affectByCameraPos),
+    _mouseHoverOn(false),
+    _lbtnDownOnThisUI(false)
 {
-    return nullptr;
+    SetOuterScene(const_cast<UI&>(origin).GetOuterScene());
+    SetOuterSceneType(const_cast<UI&>(origin).GetOuterSceneType());
+    SetTexture(nullptr);
+    SetObjectName(const_cast<UI&>(origin).GetObjectName());
+    SetScale(const_cast<UI&>(origin).GetScale());
+    SetPos(const_cast<UI&>(origin).GetPos() + Vec2(100.f, 100.f));
+
+    // _vecInnerUI
+    for (int32 i = 0; i < origin._vecInnerUI.size(); ++i)
+    {
+        UI* innerUI = origin._vecInnerUI[i]->Clone();
+        NULL_PTR_CHECK(innerUI);
+        this->SetInnerUI(innerUI);
+    }
+}
+
+UI* UI::Clone()
+{
+    return new UI(*this);
 }
 
 void UI::Update()
@@ -40,6 +67,9 @@ void UI::FinalUpdate()
         // outer UI없는 경우 현재 offset이 최종 위치가 된다.
         SetUIFinalPos(GetPos() + GetUIOffSet());
     }
+
+    // 마우스 호버체크
+    CheckMouseHoverOnUI();
     
     // Final Update InnerUI
     FinalUpdateInnerUI();
@@ -47,10 +77,6 @@ void UI::FinalUpdate()
 
 void UI::Render()
 {
-    // 마우스 호버체크
-    CheckMouseHoverOnUI();
-
-    // TODO My job
     Vec2 pos    = GetUIFinalPos();
     Vec2 scale  = GetScale();
 
@@ -66,9 +92,10 @@ void UI::Render()
         Rectangle
         (
             GET_MEMDC,
-            int32(pos.x), int32(pos.y),
-            int32(pos.x + scale.x),
-            int32(pos.y + scale.y)
+            int32(pos.x),               // left
+            int32(pos.y),               // top
+            int32(pos.x + scale.x),     // right
+            int32(pos.y + scale.y)      // bottom
         );
 
         GDI->ReleasePen();
@@ -78,7 +105,8 @@ void UI::Render()
         Rectangle
         (
             GET_MEMDC,
-            int32(pos.x), int32(pos.y),
+            int32(pos.x), 
+            int32(pos.y),
             int32(pos.x + scale.x),
             int32(pos.y + scale.y)
         );
@@ -107,17 +135,11 @@ void UI::Render()
     
     // Render Inner UI
     RenderInnerUI();
-
-
 }
 
 void UI::Init()
 {
-    wstring objName = GetObjectName();
-    if (objName == L"innerUI_ObjectFaceUI")
-    {
-        SetTexture(static_cast<Texture*>(RESOURCE->LoadTexture(L"ObjectFace", L"texture\\Carrier_Test.bmp")));
-    }
+    
 }
 
 void UI::Begin()

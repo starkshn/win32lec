@@ -42,7 +42,6 @@ public:
 	// 타입에 따라 오브젝트'들'을 반환하는 함수
 	vector<Object*>& GetObjectsByType(OBJECT_TYPE type) { return _sceneObjects[(uint32)type]; }
 
-
 	Object* GetObjectByTypeAndIndex(OBJECT_TYPE type, uint32 idx)
 	{
 		auto vec = GetObjectsByType(type);
@@ -52,6 +51,11 @@ public:
 		assert(idx < vecSize);
 
 		return vec[idx];
+	}
+
+	void PushBackObjectByType(Object* obj, OBJECT_TYPE type)
+	{
+		_sceneObjects[(uint32)type].push_back(obj);
 	}
 
 	Vec2 GetMouseRenderPos() { return _mouseRenderPos; }

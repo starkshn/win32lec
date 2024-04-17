@@ -25,6 +25,11 @@ Object::Object(const Object& other)
 	_texture(other._texture),
 	_objName(other._objName)
 {
+	// 위의 _texture의 경우 그냥 얕은 복사를 수행하는데 왜 이렇게 두었을까?
+	// Texture클래스는 ResourceManager에서 관리를 하기때문에 얼마든지 얕은 복사를 해도 괜찮다.
+	// 깊은 복사를 하는 경우가 더블프리나, 댕글링 포인터 때문에 하는 것인데
+	// 메모리 해제를 ResourceManager에서 담당하기 때문에 같은 _texture를 써도 무방하다.
+
 	// Collider 깊은 복사
 	if (other.CheckCompIsValid(COMP_TYPE::COLLIDER))
 	{
@@ -49,7 +54,7 @@ void Object::FinalUpdate()
 	// 모든 컴포넌트 파이널 업데이트
 	for (uint32 i = 0; i < (uint32)COMP_TYPE::END; ++i)
 	{
-		if (nullptr != _vecComponents[i])
+		if (0 < _vecComponents.size() && nullptr != _vecComponents[i])
 		{
 			_vecComponents[i]->Update();
 		}

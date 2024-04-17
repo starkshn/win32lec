@@ -150,6 +150,12 @@
     <Filter Include="Engine\03.Manager\BoardManager\DisjointSet">
       <UniqueIdentifier>{6244863b-395d-476b-9e6c-27604a48c970}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04.Object\UI_Object\PanelUI">
+      <UniqueIdentifier>{a16c640d-fa42-4a28-88fb-f8bdef72922d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\UI_Object\ButtonUI">
+      <UniqueIdentifier>{41af03c7-ea7d-47d5-b394-40bfa0ab14ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -318,6 +324,12 @@
     <ClInclude Include="structs.h">
       <Filter>Engine\01.Header</Filter>
     </ClInclude>
+    <ClInclude Include="PanelUI.h">
+      <Filter>Engine\04.Object\UI_Object\PanelUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonUI.h">
+      <Filter>Engine\04.Object\UI_Object\ButtonUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -463,6 +475,12 @@
     </ClCompile>
     <ClCompile Include="DisjointSet.cpp">
       <Filter>Engine\03.Manager\BoardManager\DisjointSet</Filter>
+    </ClCompile>
+    <ClCompile Include="PanelUI.cpp">
+      <Filter>Engine\04.Object\UI_Object\PanelUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonUI.cpp">
+      <Filter>Engine\04.Object\UI_Object\ButtonUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -9,7 +9,8 @@ class UI : public Object
 public:
 	UI();
 	virtual ~UI() override;
-	Object* Clone() override;
+	UI(const UI& origin);
+	virtual UI* Clone() override;
 
 public:
 	virtual void Update() override;
@@ -80,8 +81,6 @@ private:
 
 	// 현재 UI에서 lbtn이 down되었는지에 대한 여부
 	bool		_lbtnDownOnThisUI	= false;
-
-	Texture* _UITexture = nullptr;
 	
 	friend class UIManager;
 };

@@ -111,7 +111,7 @@ private:
 	// Get Set
 public:
 	// scene
-	const Scene* GetOuterScene() { return _outerScene; }
+	Scene* GetOuterScene() { return _outerScene; }
 	void SetOuterScene(Scene* outetScene) { _outerScene = outetScene; }
 	const SCENE_TYPE GetOuterSceneType() { return _outerSceneType; }
 	void SetOuterSceneType(SCENE_TYPE type) { _outerSceneType = type; }
@@ -245,11 +245,11 @@ private:
 		float(GET_RESOLUTION.y / 2)
 	};
 
-	Vec2		_dir			= DEFAULT_DIR;
-	Vec2		_centerPos		= Vec2(0.f, 0.f);
-	OBJECT_TYPE	_type			= DEFAULT_OBJECT_TYPE;
-	Vec2		_renderPos		= Vec2(0.f, 0.f);
-	float		_speed			= DEFAULT_SPEED;
+	Vec2		_dir				= DEFAULT_DIR;
+	Vec2		_centerPos			= Vec2(0.f, 0.f);
+	OBJECT_TYPE	_type				= DEFAULT_OBJECT_TYPE;
+	Vec2		_renderPos			= Vec2(0.f, 0.f);
+	float		_speed				= DEFAULT_SPEED;
 
 private:
 	// 모든 컴포넌트 클래스 관리하는 벡터 (Collider 포험)

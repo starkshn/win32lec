@@ -3,7 +3,9 @@
 #include "Tile.h"
 #include "Texture.h"
 #include "TimeManager.h"
-#include "UI.h"
+#include "PanelUI.h"
+#include "ButtonUI.h"
+
 
 ToolScene::ToolScene()
 {
@@ -30,7 +32,6 @@ void ToolScene::Update()
 void ToolScene::Render()
 {
 	Scene::Render();
-
 }
 
 void ToolScene::BeginScene()
@@ -38,60 +39,28 @@ void ToolScene::BeginScene()
 	Player* player = static_cast<Player*>(CreatePlayer());
 	player->SetScale(Vec2(50.f, 50.f));
 	player->SetPos(Vec2(GET_RESOLUTION.x / 2.f, GET_RESOLUTION.y / 2.f));
-	
 
 	// Set Camera
 	Vec2 res = GET_RESOLUTION;
 	CAMERA->SetCameraCurrentLookAtPos(Vec2(res.x / 2.f, res.y / 2.f));
 	
-	UI* outerUI = static_cast<UI*>(CreateAndAppendToScene<UI>(OBJECT_TYPE::UI));
-	outerUI->SetObjectName(L"OuterUI");
-	outerUI->SetScale(Vec2(res.x, 300.f));
-	outerUI->SetPos(Vec2(0, res.y - outerUI->GetScale().y));
-	outerUI->SetUIOffSet(Vec2(0.f, 0.f));
+	// 패널 UI
+	UI* outer_PanelUI = static_cast<UI*>(CreateAndAppendToScene<PanelUI>(OBJECT_TYPE::UI));
+	outer_PanelUI->SetObjectName(L"PanelUI");
+	outer_PanelUI->SetScale(Vec2(500.f, 300.f));
+	outer_PanelUI->SetPos(Vec2(300.f, 300.f));
+	outer_PanelUI->SetUIOffSet(Vec2(0.f, 0.f));
 
-	// MiniMap
-	UI* innerUI_MiniMap = static_cast<UI*>(CreateAndAppendToScene<UI>(OBJECT_TYPE::UI));
-	innerUI_MiniMap->SetScale(Vec2(300.f, 300.f));
-	innerUI_MiniMap->SetUIOffSet(Vec2(0.f, 0.f));
-	innerUI_MiniMap->SetObjectName(L"InnerUI_MiniMap");
+	// 버튼 UI
+	UI* inner_ButtonUI = static_cast<UI*>(CreateAndAppendToScene<ButtonUI>(OBJECT_TYPE::UI));
+	inner_ButtonUI->SetScale(Vec2(100.f, 100.f));
+	inner_ButtonUI->SetUIOffSet(Vec2(0.f, 0.f));
+	inner_ButtonUI->SetObjectName(L"ButtonUI");
+	
+	outer_PanelUI->SetInnerUI(inner_ButtonUI);
 
-	// ObjectUI
-	UI* innerUI_ObjectUI = static_cast<UI*>(CreateAndAppendToScene<UI>(OBJECT_TYPE::UI));
-	innerUI_ObjectUI->SetScale(Vec2(300.f, 300.f));
-	Vec2 offsetPos = Vec2(res.x - 300.f, 0.f);
-	innerUI_ObjectUI->SetUIOffSet(Vec2(offsetPos));
-	innerUI_ObjectUI->SetObjectName(L"InnerUI_ObjectUI");
-
-
-	{
-		for (int32 i = 0; i < 3; ++i)
-		{
-			for (int32 j = 0; j < 3; ++j)
-			{
-				UI* innerUI_obj = static_cast<UI*>(CreateAndAppendToScene<UI>(OBJECT_TYPE::UI));
-				innerUI_obj->SetScale(Vec2(100.f, 100.f));
-				Vec2 offset = Vec2(innerUI_obj->GetScale().x * i, innerUI_obj->GetScale().y * j);
-				innerUI_obj->SetUIOffSet(offset);
-				innerUI_ObjectUI->SetInnerUI(innerUI_obj);
-			}
-		}
-	}
-
-
-	// ObjectUI
-	UI* innerUI_ObjectFaceUI = static_cast<UI*>(CreateAndAppendToScene<UI>(OBJECT_TYPE::UI));
-	innerUI_ObjectFaceUI->SetScale(Vec2(200.f, 200.f));
-	offsetPos = Vec2(res.x - innerUI_ObjectUI->GetScale().x - innerUI_ObjectFaceUI->GetScale().x, 100.f);
-	innerUI_ObjectFaceUI->SetUIOffSet(Vec2(offsetPos));
-	innerUI_ObjectFaceUI->SetObjectName(L"innerUI_ObjectFaceUI");
-
-	outerUI->SetInnerUI(innerUI_MiniMap);
-	outerUI->SetInnerUI(innerUI_ObjectUI);
-	outerUI->SetInnerUI(innerUI_ObjectFaceUI);
-
-	// 스폰된 오브젝트들 Init 작업
-	InitObjects();
+	UI* ClonePanel = outer_PanelUI->Clone();
+	ClonePanel->SetPos(outer_PanelUI->GetPos() + Vec2(200.f, 0.f));
 }
 
 void ToolScene::EndScene()

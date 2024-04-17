@@ -235,7 +235,7 @@ void Player::AStar()
 	assert(curTileObj->GetTileID() == curTileID);
 
 	// 부모 추적
-	map<int32, int32> parent;
+	static map<int32, int32> parent;
 	parent[curTileID] = curTileID;
 
 	// 최적의 값 벡터 초기화

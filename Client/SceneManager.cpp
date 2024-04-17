@@ -14,7 +14,7 @@ SceneManager::~SceneManager()
 	for_each
 	(
 		_scenes.begin(), _scenes.end(),
-		[&](Scene* scene)
+		[](Scene* scene)
 		{
 			if (scene != nullptr)
 			{
@@ -31,8 +31,8 @@ void SceneManager::Init()
 	InitScene();
 
 	// set first scene.
-	SetGameFirstScene(SCENE_TYPE::TOOL);
-
+	SetGameFirstScene(SCENE_TYPE::START);
+	
 	_curScene->BeginScene();
 }
 

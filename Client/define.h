@@ -66,6 +66,8 @@ public:										\
 #define GET_RENDER_MOUSE_POS(windowMousePos) CAMERA->GetRenderPosFromWindowActualPos(windowMousePos)
 #define WINDOW_MOUSE_POS CAMERA->GetWindowActualPosFromRenderPos(GET_MOUSE_POS)
 #define RENDER_MOUSE_POS CAMERA->GetRenderPosFromWindowActualPos(WINDOW_MOUSE_POS)
+#define WINDOW_POS(pos) CAMERA->GetWindowActualPosFromRenderPos(pos)
+#define RENDER_POS(pos) CAMERA->GetRenderPosPosFromWindowActualPos(pos)
 
 // Resource
 #define GET_C_PATH PATH->GetContentDirPath()
