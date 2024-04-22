@@ -51,7 +51,10 @@ void UI::Update()
     UpdateInnerUI();
 
     // 마우스 호버체크
-    CheckMouseHoverOnUI();
+    UpdateMouseInteraction();
+
+    // UI의 경우 아래 함수를 사용하지 않고 위의 함수를 사용한다.
+    // CheckMouseHoverOnThisObject();
 }
 
 void UI::FinalUpdate()
@@ -71,8 +74,6 @@ void UI::FinalUpdate()
         SetUIFinalPos(GetPos() + GetUIOffSet());
     }
 
-    
-    
     // Final Update InnerUI
     FinalUpdateInnerUI();
 }
@@ -185,29 +186,30 @@ void UI::FinalUpdateInnerUI()
     }
 }
 
-void UI::CheckMouseHoverOnUI()
+void UI::UpdateMouseInteraction()
 {
     Vec2 curMousePos = GET_MOUSE_POS;
     if (GetThisUIAffectByCamera())
     {
         curMousePos = CAMERA->GetWindowActualPosFromRenderPos(curMousePos);
     }
-    
+
     Vec2 UIFinalPos = GetUIFinalPos();
     Vec2 UIScale = GetScale();
 
     if ((UIFinalPos.x <= curMousePos.x && curMousePos.x <= UIFinalPos.x + UIScale.x) &&
         (UIFinalPos.y <= curMousePos.y && curMousePos.y <= UIFinalPos.y + UIScale.y))
     {
-        SetMouseHoverOnThisUI(true);
-        GetOuterScene()->SetCurObject(this);
-        GetOuterScene()->SetCurObjectName();
+        // SetMouseHoverOnThisUI(true);
+        SetMouseHoverOnThisObject(true);
+
+        GetOuterScene()->SetCurMouseHoverObject(this);
+        GetOuterScene()->SetCurMouseHoverObjectName(GetObjectName().c_str());
     }
     else
     {
-        SetMouseHoverOnThisUI(false);
-        GetOuterScene()->SetCurObject(nullptr);
-        GetOuterScene()->SetCurObjectName();
+        // SetMouseHoverOnThisUI(false);
+        SetMouseHoverOnThisObject(false);
     }
 }
 
@@ -229,6 +231,16 @@ void UI::EVENT_MOUSE_LBTN_UP_UI()
 void UI::EVENT_MOUSE_LBTN_CLICK_UI()
 {
     int a = 10;
+}
+
+bool UI::GetMouseHoverOnThisObject()
+{
+    return GetMouseHoverOnThisUI();
+}
+
+void UI::SetMouseHoverOnThisObject(bool hoverOn)
+{
+    SetMouseHoverOnThisUI(hoverOn);
 }
 
 void UI::SetVisible(bool visible)

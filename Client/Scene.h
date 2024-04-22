@@ -63,28 +63,33 @@ public:
 		_sceneObjects[(uint32)type].push_back(obj);
 	}
 
-	Object* GetCurObject() { return _curHoverOnObject; }
-	void	SetCurObject(Object* obj) { _curHoverOnObject = obj; }
-
-	wstring GetCurObjectName() { return _curHoverOnObjectName; }
-	void	SetCurObjectName() 
-	{
-		if (GetCurObject() == nullptr)
-		{
-			_curHoverOnObjectName = L"None";
-		}
-		else
-		{
-			_curHoverOnObjectName = GetCurObject()->GetObjectName();
-		}
+	// Object <-> Mouse
+public:
+	Object* GetCurMouseHoverObject() 
+	{ 
+		return _curHoverOnObject;
+	}
+	void SetCurMouseHoverObject(Object* obj) 
+	{ 
+		_curHoverOnObject = obj;
 	}
 
+	wstring GetCurMouseHoverObjectName() { return _curHoverOnObjectName; }
+	void	SetCurMouseHoverObjectName(const WCHAR* objName) 
+	{
+		_curHoverOnObjectName = objName;
+	}
+
+	// Mouse RenderPos
+public:
 	Vec2 GetMouseRenderPos() { return _mouseRenderPos; }
 	void SetMouseRenderPos(Vec2 renderPos) { _mouseRenderPos = renderPos; }
 
 	Vec2 GetMouseWindowPos() { return _mouseWindowPos; }
 	void SetMouseWindowPos(Vec2 windowPos) { _mouseWindowPos = windowPos; }
 
+	// Add Object To cur Scene
+public:
 	// 오브젝트를 씬에 추가해주는 함수
 	void AddObjectToCurrentScene(Object* obj, OBJECT_TYPE type)
 	{
@@ -130,10 +135,18 @@ public:
 		uint32 count = 0;
 		for (uint32 i = 0; i < MAX_LENGH; ++i)
 		{
-			count += _sceneObjects[i].size();
+			count += uint32(_sceneObjects[i].size());
 		}
 		return count;
 	}
+
+	// Object <-> Mouse
+public:
+	Object* GetMouseHoverOnObject() { return _curMouseHoverOnObject; }
+	void SetMouseHoverOnObject(Object* obj) { _curMouseHoverOnObject = obj; }
+	
+	Object* GetMouseLBTNDownObject() { return _curMouseLBTNDownObject; }
+	void SetMouseLBTNDownObject(Object* obj) { _curMouseLBTNDownObject = obj; }
 
 protected:
 	// Scene Begin호출후 오브젝트 초기값 셋팅들
@@ -168,5 +181,10 @@ private:
 private:
 	Object*				_curHoverOnObject;
 	wstring				_curHoverOnObjectName;
+
+	// Object <-> Mouse
+private:
+	Object* _curMouseHoverOnObject	= nullptr;
+	Object* _curMouseLBTNDownObject = nullptr;
 };	
 

@@ -20,7 +20,7 @@ UnitObject* UnitObject::Clone()
 
 void UnitObject::Update()
 {
-
+	GameObject::Update();
 }
 
 void UnitObject::Render()

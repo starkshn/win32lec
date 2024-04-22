@@ -22,7 +22,7 @@ Tile* Tile::Clone()
 
 void Tile::Update()
 {
-
+    GameObject::Update();
 }
 
 void Tile::Render()

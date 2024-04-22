@@ -26,7 +26,7 @@ public:
 	void FinalUpdateInnerUI();
 
 	// FinalUpdate시점에서 마우스가 현재 위에 있는지 여부
-	void CheckMouseHoverOnUI();
+	virtual void UpdateMouseInteraction() override;
 
 public:
 	// Mouse EVENT
@@ -64,6 +64,13 @@ public:
 	// Affected By Camera
 	bool GetThisUIAffectByCamera() { return _affectByCameraPos; }
 	void SetThisUIAffectByCamera(bool abc) { _affectByCameraPos = abc; }
+
+
+	// UI <-> Mouse
+public:
+	// Object로 부터 상속받은 함수
+	virtual bool GetMouseHoverOnThisObject() override;
+	virtual void SetMouseHoverOnThisObject(bool hoverOn) override;
 
 	bool GetMouseHoverOnThisUI() { return _mouseHoverOn; }
 	void SetMouseHoverOnThisUI(bool hover) { _mouseHoverOn = hover; }

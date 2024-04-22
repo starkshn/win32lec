@@ -79,6 +79,36 @@ void Object::ComponentRender()
 	}
 }
 
+void Object::CheckMouseHoverOnThisObject()
+{
+	// Get Mouse Render Pos
+	Vec2 curMouseRenderPos = RENDER_MOUSE_POS; // current mouse render pos
+	Vec2 objRenderPos = GetRenderPos(); // obj render pos
+
+	Vec2 scale = GetScale();
+	float objMinX = objRenderPos.x - scale.x / 2.f;
+	float objMaxX = objRenderPos.x + scale.x / 2.f;
+	float objMinY = objRenderPos.y - scale.y / 2.f;
+	float objMaxY = objRenderPos.y + scale.y / 2.f;
+
+	if ((objMinX <= curMouseRenderPos.x && objMaxX >= curMouseRenderPos.x) && (objMinY <= curMouseRenderPos.y && objMaxY >= curMouseRenderPos.y))
+	{
+		SetMouseHoverOnThisObject(true);
+
+		GetOuterScene()->SetCurMouseHoverObject(this);
+		GetOuterScene()->SetCurMouseHoverObjectName(GetObjectName().c_str());
+	}
+	else
+	{
+		SetMouseHoverOnThisObject(false);
+	}
+}
+
+void Object::UpdateMouseInteraction()
+{
+	CheckMouseHoverOnThisObject();
+}
+
 void Object::Rotate(float radius)
 {
 	auto pos = GetPos();

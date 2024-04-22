@@ -5,6 +5,7 @@
 #include "TimeManager.h"
 #include "PanelUI.h"
 #include "ButtonUI.h"
+#include "Monster.h"
 
 void SaveTileData(DWORD_PTR, DWORD_PTR)
 {
@@ -95,7 +96,7 @@ void ToolScene::InitScene()
 void ToolScene::Update()
 {
 	Scene::Update();
-
+	UpdateTextOfGameInfo();
 	ChangeTileIndex();
 
 	if (KEY_PRESSED(KEYES::O))
@@ -116,14 +117,11 @@ void ToolScene::Update()
 			UI_MANAGER->SetForceFocusingUI(nullptr);
 		}
 	}
-
-	UpdateTextOfGameInfo();
 }
 
 void ToolScene::Render()
 {
 	Scene::Render();
-
 
 	RenderTextOfSceneInfo();
 	RenderTextOfGameInfo();
@@ -140,25 +138,37 @@ void ToolScene::BeginScene()
 	// Set Camera
 	Vec2 res = GET_RESOLUTION;
 	CAMERA->SetCameraCurrentLookAtPos(Vec2(res.x / 2.f, res.y / 2.f));
+
+	// Create Player
+	Player* player = static_cast<Player*>(CreatePlayer());
+	player->SetScale(Vec2(50.f, 50.f));
+	
+	// Create Monster
+	Object* monster = CreateAndAppendToScene<Monster>(OBJECT_TYPE::MONSTER);
+	monster->SetPos(Vec2(player->GetPos().x, player->GetPos().y - 200.f));
+
+	// 스폰된 오브젝트들 Init 작업
+	InitObjects();
 	
 	// 패널 UI
 	UI* outer_PanelUI = static_cast<UI*>(CreateAndAppendToScene<PanelUI>(OBJECT_TYPE::UI));
 	outer_PanelUI->SetObjectName(L"PanelUI_Origin");
 	outer_PanelUI->SetScale(Vec2(500.f, 300.f));
-	outer_PanelUI->SetPos(Vec2(300.f, 300.f));
+	outer_PanelUI->SetPos(Vec2(0.f, 300.f));
 	outer_PanelUI->SetUIOffSet(Vec2(0.f, 0.f));
 
 	// 버튼 UI
-	UI* inner_ButtonUI = static_cast<UI*>(CreateAndAppendToScene<ButtonUI>(OBJECT_TYPE::UI));
+	ButtonUI* inner_ButtonUI = static_cast<ButtonUI*>(CreateAndAppendToScene<ButtonUI>(OBJECT_TYPE::UI));
 	inner_ButtonUI->SetScale(Vec2(100.f, 100.f));
 	inner_ButtonUI->SetUIOffSet(Vec2(0.f, 0.f));
 	inner_ButtonUI->SetObjectName(L"ButtonUI");
-	static_cast<ButtonUI*>(inner_ButtonUI)->SetClickFunc(ChangScene, 0, 0); // call back 임시구현
+	inner_ButtonUI->SetClickFunc(ChangScene, 0, 0); // call back 임시구현
 	
 	outer_PanelUI->SetInnerUI(inner_ButtonUI);
 
+	// Deep Copy Contstructor Test
 	UI* ClonePanel = outer_PanelUI->Clone();
-	ClonePanel->SetPos(outer_PanelUI->GetPos() + Vec2(200.f, 0.f));
+	ClonePanel->SetPos(outer_PanelUI->GetPos() + Vec2(100.f, 0.f));
 	ClonePanel->SetObjectName(L"PanelUI_Copy");
 
 	_temp = ClonePanel;
@@ -170,20 +180,23 @@ void ToolScene::BeginScene()
 	_toolUI->SetPos(Vec2(res.x / 2, res.y / 2));
 	_toolUI->SetUIOffSet(Vec2(-250.f, -350.f));
 	
-	UI* toolUI_SaveButton = static_cast<UI*>(CreateAndAppendToScene<ButtonUI>(OBJECT_TYPE::UI));
+	// toolUI의 저장 버튼 UI
+	ButtonUI* toolUI_SaveButton = static_cast<ButtonUI*>(CreateAndAppendToScene<ButtonUI>(OBJECT_TYPE::UI));
 	toolUI_SaveButton->SetScale(Vec2(300.f, 100.f));
 	toolUI_SaveButton->SetUIOffSet(Vec2(100.f, 100.f));
 	toolUI_SaveButton->SetObjectName(L"toolUI_SaveButton");
-	static_cast<ButtonUI*>(toolUI_SaveButton)->SetClickFunc(&SaveTileData, 0, 0);
-	static_cast<ButtonUI*>(toolUI_SaveButton)->SetButtonText(L"SaveTile");
+	toolUI_SaveButton->SetClickFunc(&SaveTileData, 0, 0);
+	toolUI_SaveButton->SetButtonText(L"SaveTile");
 
-	UI* toolUI_LoadButton = static_cast<UI*>(CreateAndAppendToScene<ButtonUI>(OBJECT_TYPE::UI));
+	// toolUI의 로드 버튼 UI
+	ButtonUI* toolUI_LoadButton = static_cast<ButtonUI*>(CreateAndAppendToScene<ButtonUI>(OBJECT_TYPE::UI));
 	toolUI_LoadButton->SetScale(Vec2(300.f, 100.f));
 	toolUI_LoadButton->SetUIOffSet(Vec2(100.f, 400.f));
 	toolUI_LoadButton->SetObjectName(L"toolUI_LoadButton");
-	static_cast<ButtonUI*>(toolUI_LoadButton)->SetClickFunc(&LoadTileData, 0, 0);
-	static_cast<ButtonUI*>(toolUI_LoadButton)->SetButtonText(L"LoadTile");
+	toolUI_LoadButton->SetClickFunc(&LoadTileData, 0, 0);
+	toolUI_LoadButton->SetButtonText(L"LoadTile");
 
+	// InnerClass들 등록
 	_toolUI->SetInnerUI(toolUI_SaveButton);
 	_toolUI->SetInnerUI(toolUI_LoadButton);
 	_toolUI->SetVisible(false);
@@ -213,8 +226,17 @@ void ToolScene::UpdateTextOfGameInfo()
 	uint32 objCount = GetSceneAllObjectCount();
 	_vecGameInfoTexts[uint32(GAME_INFO::GAMEINFO_OBJECT_COUNT)] = L"Objet Count : " + to_wstring(objCount);
 
-	wstring curobjName = GetCurObjectName();
-	_vecGameInfoTexts[uint32(GAME_INFO::GAMEINFO_CUR_OBJECT)] = L"Objet Name : " + curobjName;
+	Object* curObject = GetCurMouseHoverObject();
+	wstring curObjectName = L"None";
+	if (nullptr != curObject)
+	{
+		if (curObject->GetMouseHoverOnThisObject())
+		{
+			curObjectName = curObject->GetObjectName();
+		}
+	}
+
+	_vecGameInfoTexts[uint32(GAME_INFO::GAMEINFO_CUR_OBJECT)] = L"Objet Name : " + curObjectName;
 }
 
 void ToolScene::RenderTextOfGameInfo()
@@ -223,7 +245,7 @@ void ToolScene::RenderTextOfGameInfo()
 	{
 		if (_vecGameInfoTexts[i] != L"")
 		{
-			TextOut(GET_MEMDC, 10.f, 50.f + i * 20.f, _vecGameInfoTexts[i].c_str(), _vecGameInfoTexts[i].length());
+			TextOut(GET_MEMDC, 10, int32(50.f + i * 20.f), _vecGameInfoTexts[i].c_str(), int32(_vecGameInfoTexts[i].length()));
 		}
 	}
 }
@@ -231,20 +253,16 @@ void ToolScene::RenderTextOfGameInfo()
 void ToolScene::RenderTextOfSceneInfo()
 {
 	wstring toolUI = L"ESC : ToolUI";
-	TextOut(GET_MEMDC, 10.f, 10.f, toolUI.c_str(), toolUI.length());
+	TextOut(GET_MEMDC, 10, 10, toolUI.c_str(), int32(toolUI.length()));
 
 	wstring btnUI = L"Click BTN : Goto START SCENE";
-	TextOut(GET_MEMDC, 10.f, 30.f, btnUI.c_str(), btnUI.length());
+	TextOut(GET_MEMDC, 10, 30, btnUI.c_str(), int32(btnUI.length()));
 }
 
 void ToolScene::ChangeTileIndex()
 {
 	if (KEY_PRESSED(KEYES::LBTN))
 	{
-		// render pos -> window pos
-		/*Vec2 renderMousePos = KEY->GetMousePos();
-		Vec2 windowMousePos = GET_WINDOW_MOUSE_POS(renderMousePos);*/
-
 		// 현재 윈도우 렌더링 마우스 좌표
 		Vec2 renderMousePos = RENDER_MOUSE_POS;
 

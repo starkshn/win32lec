@@ -28,11 +28,16 @@ Player* Player::Clone()
 
 void Player::Update()
 {
+	UnitObject::Update();
+
 	_accTime += DT_F;
 
-	if (KEY_PRESSED(KEYES::LBTN))
+	if (GetOuterSceneType() != SCENE_TYPE::TOOL)
 	{
-		AStar();
+		if (KEY_PRESSED(KEYES::LBTN))
+		{
+			AStar();
+		}
 	}
 
 	if (_accTime >= 0.5f)
@@ -48,7 +53,6 @@ void Player::Update()
 		Vec2 tilePos = tile->GetPos();
 		SetPos(Vec2(tilePos.x + 30.f, tilePos.y + 30.f));
 		SetPlayerCurTileID(tile->GetTileID());
-
 		_accTime = 0.f;
 	}
 
@@ -67,11 +71,6 @@ void Player::Init()
 
 	// set name
 	SetObjectName(L"Player");
-
-	// set pos and scale
-	// SetPos(Vec2(res.x / 2.f, 500.f));
-	// SetScale(Vec2(50.f, 50.f));
-	
 
 	// Create Collider
 	{

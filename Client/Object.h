@@ -44,6 +44,7 @@ public:
 
 public:
 	Object* GetThis() { return this; }
+	void	CheckMouseHoverOnThisObject();
 
 public:
 	template <typename T>
@@ -224,6 +225,16 @@ public:
 	int GetRight() { return int(_pos.x + _scale.x / 2); };
 	int GetBottom() { return int(_pos.y + _scale.y / 2); };
 
+public:
+	virtual void UpdateMouseInteraction();
+
+	// UI 만 따로 기능을 정의해야 하기때문에 가상함수로 만듦
+	virtual bool GetMouseHoverOnThisObject() { return _mouseHoverOnThisObject; }
+	virtual void SetMouseHoverOnThisObject(bool hoverOn) { _mouseHoverOnThisObject = hoverOn; }
+
+	bool GetMouseLBTNDownOnThisObject() { return _mouseLBTNDownOnThisObject; }
+	void SetMouseLBTNDownOnThisObject(bool lbtnDown) { _mouseLBTNDownOnThisObject = lbtnDown; }
+
 private:
 	// delete 여부
 	bool deleteObject = false;
@@ -274,5 +285,10 @@ private:
 	// pTexture의 경우 이제 애니매이션이 있기 때문에 멤버 변수로 들고 있을 필요는 없다.
 	Texture*	_texture			= nullptr;
 	wstring		_objName			= L"";
+
+	// mouse 
+private:
+	bool _mouseHoverOnThisObject	= false;
+	bool _mouseLBTNDownOnThisObject = false;
 };			
 

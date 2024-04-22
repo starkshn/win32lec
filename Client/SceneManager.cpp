@@ -39,7 +39,6 @@ void SceneManager::Init()
 void SceneManager::Update()
 {
 	_curScene->Update();
-
 	_curScene->FinalUpdate();
 }
 

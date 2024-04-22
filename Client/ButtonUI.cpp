@@ -33,7 +33,7 @@ void ButtonUI::Render()
     Vec2 pos = GetUIFinalPos();
     wstring text = GetButtonText();
 
-    TextOut(GET_MEMDC, pos.x + GetScale().x / 2 - 10, pos.y + GetScale().y / 2 - 10, text.c_str(), text.length());
+    TextOut(GET_MEMDC, int32(pos.x + GetScale().x / 2 - 10), int32(pos.y + GetScale().y / 2.f - 10.f), text.c_str(), uint32(text.length()));
 }
 
 void ButtonUI::EVENT_MOUSE_HOVERON_UI()

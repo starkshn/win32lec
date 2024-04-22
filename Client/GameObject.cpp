@@ -19,7 +19,7 @@ GameObject* GameObject::Clone()
 
 void GameObject::Update()
 {
-    
+	UpdateMouseInteraction();
 }
 
 void GameObject::Render()
