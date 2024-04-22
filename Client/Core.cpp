@@ -75,9 +75,9 @@ void Core::UpdateManager()
 	// 이후 Comp 에서는 이곳의 RenderPos를 쓴다.
 	CAMERA->Update();
 
-	// EventManager의 경우 RenderEnd에서 진행
-
 	BOARD->Update();
+
+	// EventManager의 경우 RenderEnd에서 진행
 }
 
 void Core::RenderBegin()

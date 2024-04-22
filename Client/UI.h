@@ -70,6 +70,9 @@ public:
 
 	bool GetLBTNDownOnThisUI() { return _lbtnDownOnThisUI; }
 	void SetLBTNDownOnThisUI(bool lbtnDown) { _lbtnDownOnThisUI = lbtnDown; }
+
+	bool GetVisible() { return _visible; }
+	void SetVisible(bool visible);
 	
 private:
 	vector<UI*> _vecInnerUI;
@@ -81,6 +84,7 @@ private:
 
 	// 현재 UI에서 lbtn이 down되었는지에 대한 여부
 	bool		_lbtnDownOnThisUI	= false;
+	bool		_visible			= true;
 	
 	friend class UIManager;
 };

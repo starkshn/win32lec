@@ -16,7 +16,10 @@ void DeleteObjectsSafe(vector<T>& vec)
 	for (uint32 i = 0; i < vec.size(); ++i)
 	{
 		if (nullptr != vec[i])
+		{
 			delete vec[i];
+			vec[i] = nullptr;
+		}
 	}
 	vec.clear();
 }

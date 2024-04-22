@@ -44,8 +44,7 @@ void EventManager::Execute(const EVENT_INFO& _event)
 			
 			Object* obj = (Object*)(_event._lParam);
 			OBJECT_TYPE type = (OBJECT_TYPE)(_event._rParam);
-			
-			 SCENE->GetCurrentScene()->AddObjectToCurrentScene(obj, type);
+			SCENE->GetCurrentScene()->AddObjectToCurrentScene(obj, type);
 		}
 		break;
 		case EVENT_TYPE::DELETE_OBJECT:
@@ -58,6 +57,12 @@ void EventManager::Execute(const EVENT_INFO& _event)
 		break;
 		case EVENT_TYPE::SCENE_CHANGE:
 		{
+			// Collision Info Reset
+			COLLISION->ResetObjectCollision();
+			
+			// UI Focusing UI reset
+			UI_MANAGER->SetFocusingUI(nullptr);
+
 			// lParam : Next Scene
 			(SCENE_TYPE)_event._lParam;
 			SCENE->ChangeScene((SCENE_TYPE)_event._lParam);

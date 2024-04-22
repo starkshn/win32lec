@@ -20,6 +20,10 @@ public:
 	virtual void End() override;
 
 public:
+	virtual void Save(FILE* file);
+	virtual void Load(FILE* file);
+
+public:
 	TILE_TYPE GetTileType() { return _tileTYpe; }
 	void SetTileType(TILE_TYPE type) { _tileTYpe = type; }
 

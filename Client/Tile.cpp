@@ -84,3 +84,13 @@ void Tile::End()
 {
     Object::End();
 }
+
+void Tile::Save(FILE* file)
+{
+    fwrite(&_tileIdx, sizeof(int32), 1, file);
+}
+
+void Tile::Load(FILE* file)
+{
+    fread(&_tileIdx, sizeof(int32), 1, file);
+}

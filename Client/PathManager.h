@@ -13,7 +13,11 @@ public:
 		return _contentDirPath;
 	}
 
+	wstring GetRelativePathFromAbsolutePath(const WCHAR* path);
+
 public:
-	WCHAR _contentDirPath[255];
+	WCHAR _contentDirPath[256];
+	WCHAR _ralativePath[256];
 };
 
+//

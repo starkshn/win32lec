@@ -40,7 +40,12 @@ public:
 
 public:
 	// 타입에 따라 오브젝트'들'을 반환하는 함수
-	vector<Object*>& GetObjectsByType(OBJECT_TYPE type) { return _sceneObjects[(uint32)type]; }
+	const vector<Object*>& GetObjectsByType(OBJECT_TYPE type) { return _sceneObjects[(uint32)type]; }
+	
+	vector<Object*>& GetUIObjects() 
+	{ 
+		return _sceneObjects[(uint32)OBJECT_TYPE::UI];
+	}
 
 	Object* GetObjectByTypeAndIndex(OBJECT_TYPE type, uint32 idx)
 	{
@@ -56,6 +61,22 @@ public:
 	void PushBackObjectByType(Object* obj, OBJECT_TYPE type)
 	{
 		_sceneObjects[(uint32)type].push_back(obj);
+	}
+
+	Object* GetCurObject() { return _curHoverOnObject; }
+	void	SetCurObject(Object* obj) { _curHoverOnObject = obj; }
+
+	wstring GetCurObjectName() { return _curHoverOnObjectName; }
+	void	SetCurObjectName() 
+	{
+		if (GetCurObject() == nullptr)
+		{
+			_curHoverOnObjectName = L"None";
+		}
+		else
+		{
+			_curHoverOnObjectName = GetCurObject()->GetObjectName();
+		}
 	}
 
 	Vec2 GetMouseRenderPos() { return _mouseRenderPos; }
@@ -104,6 +125,16 @@ public:
 		_tileYCount = uint32(count.y);
 	}
 
+	uint32 GetSceneAllObjectCount()
+	{
+		uint32 count = 0;
+		for (uint32 i = 0; i < MAX_LENGH; ++i)
+		{
+			count += _sceneObjects[i].size();
+		}
+		return count;
+	}
+
 protected:
 	// Scene Begin호출후 오브젝트 초기값 셋팅들
 	void InitObjects();
@@ -117,6 +148,10 @@ public:
 protected:
 	void DeleteAllObjects();
 
+	// FILE
+public:
+	void LoadTile(const wstring& relativePath);
+
 protected:
 	vector<Object*>		_sceneObjects[MAX_LENGH];
 	wstring				_sceneName = L"";
@@ -129,5 +164,9 @@ protected:
 private:
 	Vec2				_mouseRenderPos = Vec2();
 	Vec2				_mouseWindowPos = Vec2();
+
+private:
+	Object*				_curHoverOnObject;
+	wstring				_curHoverOnObjectName;
 };	
 

@@ -81,6 +81,8 @@ void Scene::Render()
 
 void Scene::CreateTile(uint32 tileXCount, uint32 tileYCount)
 {
+	DeleteAllObjectsByType(OBJECT_TYPE::DEFAULT_TILE);
+
 	Texture* tileTex = static_cast<Texture*>(RESOURCE->LoadTexture(L"Tile", L"texture\\tile.bmp"));
 
 	// Set Tile Pos
@@ -201,6 +203,11 @@ void Scene::DeleteAllObjects()
 	{
 		DeleteAllObjectsByType((OBJECT_TYPE)i);
 	}
+}
+
+void Scene::LoadTile(const wstring& relativePath)
+{
+
 }
 
 

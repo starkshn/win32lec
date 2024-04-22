@@ -48,7 +48,7 @@ Tile* BoardManager::GetTileObjectByTileID(int32 id)
 	Scene* curScene = SCENE->GetCurrentScene();
 	NULL_PTR_CHECK(curScene);
 
-	vector<Object*>& vecTiles = curScene->GetObjectsByType(OBJECT_TYPE::DEFAULT_TILE);
+	vector<Object*>& vecTiles = const_cast<vector<Object*>&>(curScene->GetObjectsByType(OBJECT_TYPE::DEFAULT_TILE));
 
 	IS_VALID_IDX(vecTiles, id);
 	NULL_PTR_CHECK(vecTiles[id]);
@@ -60,7 +60,7 @@ void BoardManager::GenerateBoard_Kruskal()
 {
 	::srand(unsigned(time(nullptr)));
 
-	vector<Object*>& vecTiles = _curScene->GetObjectsByType(OBJECT_TYPE::DEFAULT_TILE);
+	vector<Object*>& vecTiles = const_cast<vector<Object*>&>(_curScene->GetObjectsByType(OBJECT_TYPE::DEFAULT_TILE));
 
 	// 현재 씬 타일 X Y 개수 가져오기
 	Vec2 counts = _curScene->GetCurrentTileXYCount();
@@ -155,7 +155,7 @@ void BoardManager::GenerateBoard_Prim()
 {
 	::srand(unsigned(time(nullptr)));
 
-	vector<Object*>& vecTiles = _curScene->GetObjectsByType(OBJECT_TYPE::DEFAULT_TILE);
+	vector<Object*>& vecTiles = const_cast<vector<Object*>&>(_curScene->GetObjectsByType(OBJECT_TYPE::DEFAULT_TILE));
 
 	// 현재 씬 타일 X Y 개수 가져오기
 	Vec2 counts = _curScene->GetCurrentTileXYCount();

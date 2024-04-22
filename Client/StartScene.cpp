@@ -25,6 +25,11 @@ void StartScene::Update()
 		CheckTileIdx();
 	}
 
+	if (KEY_PRESSED(KEYES::DOWN))
+	{
+		ChnageScene_EV(SCENE_TYPE::TOOL);
+	}
+
 	Scene::Update();
 }
 
@@ -55,6 +60,10 @@ void StartScene::BeginScene()
 			}
 		}
 	}
+	
+
+	// FILE IO(1) TODO
+	// LoadTile(L"Tile\\StartTile.tile");
 }
 
 void StartScene::EndScene()

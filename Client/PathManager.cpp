@@ -48,8 +48,21 @@ void PathManager::Init()
 
 void PathManager::Update()
 {
-	// temp
-	/*wchar_t buffer[255] = {};
-	swprintf_s(buffer, L"Path : %s", _contentDirPath);
-	SetWindowText(GET_WINDOW_HANDLE(), buffer);*/
+	
+}
+
+wstring PathManager::GetRelativePathFromAbsolutePath(const WCHAR* path)
+{
+	wstring tempPath = path;
+
+	// content 폴더 까지의 경로
+	size_t contentDirPathLen = wcslen(GetContentDirPath());
+
+	// 인자로 받아온 절대 경로
+	size_t fullPathLen = tempPath.length();
+
+	// 잘라낼 시작 위치, 잘라낼 크기(길이)
+	wstring relativePath = tempPath.substr(contentDirPathLen, fullPathLen - contentDirPathLen);
+
+	return relativePath;
 }

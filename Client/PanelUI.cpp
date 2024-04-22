@@ -27,16 +27,19 @@ PanelUI* PanelUI::Clone()
 
 void PanelUI::Update()
 {
+	if (GetVisible() == false) return;
 	UI::Update();
 }
 
 void PanelUI::FinalUpdate()
 {
+	if (GetVisible() == false) return;
 	UI::FinalUpdate();
 }
 
 void PanelUI::Render()
 {
+	if (GetVisible() == false) return;
 	UI::Render();
 }
 
@@ -72,7 +75,6 @@ void PanelUI::EVENT_MOUSE_HOVERON_UI()
 void PanelUI::EVENT_MOUSE_LBTN_DOWN_UI()
 {
 	_dragStartPos = RENDER_MOUSE_POS;
-	
 }
 
 void PanelUI::EVENT_MOUSE_LBTN_UP_UI()

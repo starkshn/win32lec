@@ -20,46 +20,74 @@ void UIManager::Init()
 
 void UIManager::Update()
 {
-	Scene* curScene = SCENE->GetCurrentScene();
-	NULL_PTR_CHECK(curScene);
+	// 1. FocusedUI 확인(찾기)
+	UI* focusingUI = FindFocusingUI();
 
-	const vector<Object*>& vecUIObjs = curScene->GetObjectsByType(OBJECT_TYPE::UI);
+	// 포커싱된 UI가 없다면 바로 Update종료
+	if (focusingUI == nullptr) return;
+	SetFocusingUI(focusingUI);
 	
+	// 2. outer UI 포함, 자식 UI들중 실제 타겟팅 UI가져온다.
+	UI* targetUI = GetTargetUI(focusingUI);
+
 	bool pressedLBTN = KEY_PRESSED(KEYES::LBTN);
 	bool releaseLBTN = KEY_RELEASED(KEYES::LBTN);
-	
-	for (uint32 i = 0; i < vecUIObjs.size(); ++i)
+
+	if (nullptr != targetUI)
 	{
-		UI* ui = dynamic_cast<UI*>(vecUIObjs[i]);
-		NULL_PTR_CHECK(ui);
+		targetUI->EVENT_MOUSE_HOVERON_UI();
 
-		// outer UI 포함, 자식 UI들중 실제 타겟팅 UI가져온다.
-		ui = GetTargetUI(ui);
-		
-		if (nullptr != ui)
+		if (pressedLBTN)
 		{
-			ui->EVENT_MOUSE_HOVERON_UI();
+			targetUI->EVENT_MOUSE_LBTN_DOWN_UI();
+			targetUI->SetLBTNDownOnThisUI(true);
+		}
+		else if (releaseLBTN)
+		{
+			targetUI->EVENT_MOUSE_LBTN_UP_UI();
 
-			if (pressedLBTN)
+			// hover된 상태에서 ui를 눌린적도 있고 땐적도 있기 때문에
+			if (targetUI->GetLBTNDownOnThisUI())
 			{
-				ui->EVENT_MOUSE_LBTN_DOWN_UI();
-				ui->SetLBTNDownOnThisUI(true);
+				targetUI->EVENT_MOUSE_LBTN_CLICK_UI();
 			}
-			else if (releaseLBTN)
-			{
-				ui->EVENT_MOUSE_LBTN_UP_UI();
 
-				// hover된 상태에서 ui를 눌린적도 있고 땐적도 있기 때문에
-				if (ui->GetLBTNDownOnThisUI())
-				{
-					ui->EVENT_MOUSE_LBTN_CLICK_UI();
-				}
-
-				// 왼쪽 버튼 때면, 눌렀던 체크를 다시 해제한다.
-				ui->SetLBTNDownOnThisUI(false);
-			}
+			// 왼쪽 버튼 때면, 눌렀던 체크를 다시 해제한다.
+			targetUI->SetLBTNDownOnThisUI(false);
 		}
 	}
+}
+
+void UIManager::SetForceFocusingUI(UI* outerUI)
+{
+	// 이미 포커싱 중인 경우이거나 nullptr들어오는 경우(포커싱을 다 해제 해달라고 하는경우
+	if (GetFocusingUI() == outerUI || nullptr == outerUI)
+	{
+		SetFocusingUI(outerUI);
+		return;
+	}
+
+	SetFocusingUI(outerUI);
+	
+	Scene* curScene = SCENE->GetCurrentScene();
+	vector<Object*>& vecUI = curScene->GetUIObjects();
+
+	// 왼쪽 버튼 누르는 상황 발생했다.
+	vector<Object*>::iterator iter = vecUI.begin();
+
+	for (; iter != vecUI.end(); ++iter)
+	{
+		bool hoverOn = static_cast<UI*>(*iter)->GetMouseHoverOnThisUI();
+
+		if (GetFocusingUI() == static_cast<UI*>(*iter))
+		{
+			break;
+		}
+	}
+
+	// 가장 뒤로 보내서 렌더링 순서상 가장 앞쪽에 위치하도록 수정해준다.
+	vecUI.erase(iter);
+	vecUI.push_back(GetFocusingUI());
 }
 
 UI* UIManager::GetTargetUI(UI* outerUI)
@@ -86,7 +114,6 @@ UI* UIManager::GetTargetUI(UI* outerUI)
 		// TODO : 검사
 		// 조건이 맞다면 targetUI 변경
 		bool hoverOn = curUI->GetMouseHoverOnThisUI();
-
 		if (hoverOn)
 		{
 			if (nullptr != targetUI)
@@ -120,4 +147,49 @@ UI* UIManager::GetTargetUI(UI* outerUI)
 
 	// nullptr 반환 가능하다. (아무런 타겟이 없는 경우)
 	return targetUI;
+}
+
+UI* UIManager::FindFocusingUI()
+{
+	bool pressedLBTN = KEY_PRESSED(KEYES::LBTN);
+
+	Scene* curScene = SCENE->GetCurrentScene();
+	vector<Object*>& vecUI = curScene->GetUIObjects();
+
+	// 기존 포커싱 UI를 받아두고 변경되었는지 확인한다.
+	UI* focusedUI = GetFocusingUI();
+
+	if (!pressedLBTN)
+	{
+		return focusedUI;
+	}
+
+	// 왼쪽 버튼 누르는 상황 발생했다.
+	vector<Object*>::iterator targetIter = vecUI.end();
+	vector<Object*>::iterator iter = vecUI.begin();
+
+	for (; iter != vecUI.end(); ++iter)
+	{
+		bool hoverOn = static_cast<UI*>(*iter)->GetMouseHoverOnThisUI();
+
+		if (pressedLBTN && hoverOn)
+		{
+			focusedUI = static_cast<UI*>(*iter);
+			targetIter = iter;
+		}
+	}
+
+	// 타겟을 못 찾은 경우
+	if (targetIter == vecUI.end())
+	{
+		return nullptr;
+	}
+
+	// 가장 뒤로 보내서 렌더링 순서상 가장 앞쪽에 위치하도록 수정해준다.
+	// 햇갈리면 안되는게 벡터의 원소를 iterator로 지우는 것 뿐이지 실제 포인터를 지우는게 아니다.
+	// 실제 해제는 씬의 소멸자에서 진행한다.
+	focusedUI = static_cast<UI*>(*targetIter);
+	vecUI.erase(targetIter);
+	vecUI.push_back(focusedUI);
+	return focusedUI;
 }

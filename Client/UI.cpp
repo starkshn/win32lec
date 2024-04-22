@@ -49,6 +49,9 @@ void UI::Update()
 {
     // TODO My job
     UpdateInnerUI();
+
+    // 마우스 호버체크
+    CheckMouseHoverOnUI();
 }
 
 void UI::FinalUpdate()
@@ -68,8 +71,7 @@ void UI::FinalUpdate()
         SetUIFinalPos(GetPos() + GetUIOffSet());
     }
 
-    // 마우스 호버체크
-    CheckMouseHoverOnUI();
+    
     
     // Final Update InnerUI
     FinalUpdateInnerUI();
@@ -77,6 +79,9 @@ void UI::FinalUpdate()
 
 void UI::Render()
 {
+    // visile == false라면 그리지 않는다.
+    if (GetVisible() == false) return;
+
     Vec2 pos    = GetUIFinalPos();
     Vec2 scale  = GetScale();
 
@@ -144,10 +149,13 @@ void UI::Init()
 
 void UI::Begin()
 {
+
 }
 
 void UI::End()
 {
+    _vecInnerUI.clear();
+    _outerUI = nullptr;
 }
 
 void UI::UpdateInnerUI()
@@ -192,10 +200,14 @@ void UI::CheckMouseHoverOnUI()
         (UIFinalPos.y <= curMousePos.y && curMousePos.y <= UIFinalPos.y + UIScale.y))
     {
         SetMouseHoverOnThisUI(true);
+        GetOuterScene()->SetCurObject(this);
+        GetOuterScene()->SetCurObjectName();
     }
     else
     {
         SetMouseHoverOnThisUI(false);
+        GetOuterScene()->SetCurObject(nullptr);
+        GetOuterScene()->SetCurObjectName();
     }
 }
 
@@ -217,4 +229,17 @@ void UI::EVENT_MOUSE_LBTN_UP_UI()
 void UI::EVENT_MOUSE_LBTN_CLICK_UI()
 {
     int a = 10;
+}
+
+void UI::SetVisible(bool visible)
+{
+    _visible = visible;
+
+    for (UI* innerUI : _vecInnerUI)
+    {
+        if (innerUI)
+        {
+            innerUI->SetVisible(visible);
+        }
+    }
 }
