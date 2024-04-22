@@ -19,5 +19,3 @@ public:
 	WCHAR _contentDirPath[256];
 	WCHAR _ralativePath[256];
 };
-
-//
