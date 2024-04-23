@@ -26,6 +26,7 @@ public:
 	static void SaveTileAbsolutPath(const wstring& absolutePath);
 	static void LoadTileRelativePath(const wstring& relativePath);
 	static void LoadTileAbsolutePath(const wstring& relativePath);
+
 	
 // test
 public:

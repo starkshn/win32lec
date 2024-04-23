@@ -23,9 +23,3 @@ Button_CloseUI* Button_CloseUI::Clone()
 {
 	return new Button_CloseUI(*this);
 }
-
-void Button_CloseUI::CloseThisUI()
-{
-	this->SetVisible(false);
-	this->SetMouseHoverOnThisObject(false);
-}

@@ -40,6 +40,10 @@ public:
 	wstring GetButtonText() { return _text; }
 	void SetButtonText(wstring text) { _text = text; }
 
+public:
+	void OpenThisUI();
+	void CloseThisUI();
+
 protected:
 	Object* _objectWhoCallMemFunc	= nullptr;
 	OBJECT_MEM_FUNC	_objectMemFunc	= nullptr;

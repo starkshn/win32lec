@@ -131,6 +131,7 @@ void ToolScene::Render()
 // TEMP
 void ChangScene(DWORD_PTR, DWORD_PTR)
 {
+	// Register EventManager
 	ChnageScene_EV(SCENE_TYPE::START);
 }
 
@@ -148,83 +149,141 @@ void ToolScene::BeginScene()
 	Object* monster = CreateAndAppendToScene<Monster>(OBJECT_TYPE::MONSTER);
 	monster->SetPos(Vec2(player->GetPos().x, player->GetPos().y - 200.f));
 	
-	// =============================================
-	// UI
-	// =============================================
-	// 패널 UI
-	UI* outer_PanelUI = static_cast<UI*>(CreateAndAppendToScene<PanelUI>(OBJECT_TYPE::UI));
-	outer_PanelUI->SetObjectName(L"Origin_PanelUI");
-	outer_PanelUI->SetScale(Vec2(500.f, 300.f));
-	outer_PanelUI->SetPos(Vec2(0.f, 300.f));
-	outer_PanelUI->SetUIOffSet(Vec2(0.f, 0.f));
+	// 패널 UI Test
+	{
+		UI* outer_PanelUI = static_cast<UI*>(CreateAndAppendToScene<PanelUI>(OBJECT_TYPE::UI));
+		outer_PanelUI->SetObjectName(L"Origin_PanelUI");
+		outer_PanelUI->SetScale(Vec2(500.f, 300.f));
+		outer_PanelUI->SetPos(Vec2(0.f, 300.f));
+		outer_PanelUI->SetUIOffSet(Vec2(0.f, 0.f));
 
-	// 버튼 UI
-	ButtonUI* inner_ButtonUI = static_cast<ButtonUI*>(CreateAndAppendToScene<ButtonUI>(OBJECT_TYPE::UI));
-	inner_ButtonUI->SetScale(Vec2(100.f, 100.f));
-	inner_ButtonUI->SetUIOffSet(Vec2(0.f, 0.f));
-	inner_ButtonUI->SetObjectName(L"Origin_Test_ButtonUI");
-	inner_ButtonUI->SetClickFunc(ChangScene, 0, 0); // call back 임시구현
+		// 버튼 UI
+		ButtonUI* inner_ButtonUI = static_cast<ButtonUI*>(CreateAndAppendToScene<ButtonUI>(OBJECT_TYPE::UI));
+		inner_ButtonUI->SetScale(Vec2(100.f, 100.f));
+		inner_ButtonUI->SetUIOffSet(Vec2(0.f, 0.f));
+		inner_ButtonUI->SetObjectName(L"Origin_Test_ButtonUI");
+		inner_ButtonUI->SetClickFunc(&ChangScene, 0, 0); // call back 임시구현
 
-	// Close BTN UI
-	ButtonUI* closeButtonUI = static_cast<ButtonUI*>(CreateAndAppendToScene<Button_CloseUI>(OBJECT_TYPE::UI));
-	closeButtonUI->SetObjectName(L"Origin_CancleBTN");
-	closeButtonUI->SetScale(Vec2(30.f, 30.f));
-	closeButtonUI->SetPos(outer_PanelUI->GetPos());
-	closeButtonUI->SetUIOffSet(Vec2(outer_PanelUI->GetScale().x - 30.f, 0.f));
-	closeButtonUI->SetTexture(RESOURCE->GetTexture(L"CloseUI", L"CloseUI.bmp"));
-	closeButtonUI->SetClickFunc(closeButtonUI, static_cast<OBJECT_MEM_FUNC>(&Button_CloseUI::CloseThisUI)); // 호출할 함수 바인딩
+		// Close BTN UI
+		ButtonUI* closeButtonUI = static_cast<ButtonUI*>(CreateAndAppendToScene<Button_CloseUI>(OBJECT_TYPE::UI));
+		closeButtonUI->SetObjectName(L"Origin_CancleBTN");
+		closeButtonUI->SetScale(Vec2(30.f, 30.f));
+		closeButtonUI->SetPos(outer_PanelUI->GetPos());
+		closeButtonUI->SetUIOffSet(Vec2(outer_PanelUI->GetScale().x - 30.f, 0.f));
+		closeButtonUI->SetTexture(RESOURCE->GetTexture(L"CloseUI", L"CloseUI.bmp"));
+		closeButtonUI->SetClickFunc(closeButtonUI, static_cast<OBJECT_MEM_FUNC>(&ButtonUI::CloseThisUI)); // 호출할 함수 바인딩
+
+		// Inner Class 등록
+		outer_PanelUI->SetInnerUI(inner_ButtonUI);
+		outer_PanelUI->SetInnerUI(closeButtonUI);
+
+		// Deep Copy Contstructor Test
+		UI* ClonePanel = outer_PanelUI->Clone();
+		ClonePanel->SetPos(outer_PanelUI->GetPos() + Vec2(700.f, 0.f));
+
+		_temp = ClonePanel;
+	}
 	
-	// Inner Class 등록
-	outer_PanelUI->SetInnerUI(inner_ButtonUI);
-	outer_PanelUI->SetInnerUI(closeButtonUI);
-
-	// Deep Copy Contstructor Test
-	UI* ClonePanel = outer_PanelUI->Clone();
-	ClonePanel->SetPos(outer_PanelUI->GetPos() + Vec2(700.f, 0.f));
-
-	_temp = ClonePanel;
 
 	// ESC 누르면 발생하는 Tool UI
-	_toolUI = static_cast<UI*>(CreateAndAppendToScene<PanelUI>(OBJECT_TYPE::UI));
-	_toolUI->SetObjectName(L"ToolUIPanel");
-	_toolUI->SetScale(Vec2(300.f, 700.f));
-	_toolUI->SetPos(Vec2(res.x - _toolUI->GetScale().x, 0.f));
-	_toolUI->SetUIOffSet(Vec2(0.f, 0.f));
-	static_cast<PanelUI*>(_toolUI)->SetCanDrag(false);
+	{
+		_toolUI = static_cast<UI*>(CreateAndAppendToScene<PanelUI>(OBJECT_TYPE::UI));
+		_toolUI->SetObjectName(L"ToolUIPanel");
+		_toolUI->SetScale(Vec2(300.f, 700.f));
+		_toolUI->SetPos(Vec2(res.x - _toolUI->GetScale().x, 0.f));
+		_toolUI->SetUIOffSet(Vec2(0.f, 0.f));
+		static_cast<PanelUI*>(_toolUI)->SetCanDrag(false);
+
+		// toolUI의 저장 버튼 UI
+		ButtonUI* toolUI_SaveButton = static_cast<ButtonUI*>(CreateAndAppendToScene<ButtonUI>(OBJECT_TYPE::UI));
+		toolUI_SaveButton->SetScale(Vec2(100.f, 50.f));
+		toolUI_SaveButton->SetUIOffSet(Vec2(50.f, 50.f));
+		toolUI_SaveButton->SetObjectName(L"toolUI_SaveButton");
+		toolUI_SaveButton->SetClickFunc(&SaveTileData, 0, 0); // 호출할 함수 바인딩
+		toolUI_SaveButton->SetButtonText(L"SaveTile");
+
+		// toolUI의 로드 버튼 UI
+		ButtonUI* toolUI_LoadButton = static_cast<ButtonUI*>(CreateAndAppendToScene<ButtonUI>(OBJECT_TYPE::UI));
+		toolUI_LoadButton->SetScale(Vec2(100.f, 50.f));
+		toolUI_LoadButton->SetUIOffSet(Vec2(175.f, 50.f));
+		toolUI_LoadButton->SetObjectName(L"toolUI_LoadButton");
+		toolUI_LoadButton->SetClickFunc(&LoadTileData, 0, 0); // 호출할 함수 바인딩
+		toolUI_LoadButton->SetButtonText(L"LoadTile");
+
+		// toolUI의 타일 UI 생성버튼
+		ButtonUI* toolUI_SelectTileBTN = static_cast<ButtonUI*>(CreateAndAppendToScene<ButtonUI>(OBJECT_TYPE::UI));
+		toolUI_SelectTileBTN->SetScale(Vec2(100.f, 50.f));
+		toolUI_SelectTileBTN->SetUIOffSet(Vec2(50.f, 150.f));
+		toolUI_SelectTileBTN->SetObjectName(L"toolUI_SelectTileBTN");
+		toolUI_SelectTileBTN->SetButtonText(L"Select Tile BTN");
+
+		// InnerClass들 등록
+		_toolUI->SetInnerUI(toolUI_SaveButton);
+		_toolUI->SetInnerUI(toolUI_LoadButton);
+		_toolUI->SetInnerUI(toolUI_SelectTileBTN);
+		_toolUI->SetVisible(false);
+
+		// Select Tile UI
+		{
+			UI* selectTilePanel = static_cast<UI*>(CreateAndAppendToScene<PanelUI>(OBJECT_TYPE::UI));
+			selectTilePanel->SetObjectName(L"TileSelectPanel");
+			selectTilePanel->SetScale(Vec2(500.f, 500.f));
+			selectTilePanel->SetPos(Vec2(res.x - selectTilePanel->GetScale().x, res.y - selectTilePanel->GetScale().y));
+
+			// TODO
+			ButtonUI* closeSelectTilePanel = static_cast<ButtonUI*>(CreateAndAppendToScene<Button_CloseUI>(OBJECT_TYPE::UI));
+			closeSelectTilePanel->SetObjectName(L"CloseSelectTilePanel");
+			closeSelectTilePanel->SetScale(Vec2(30.f, 30.f));
+			closeSelectTilePanel->SetPos(selectTilePanel->GetPos());
+			closeSelectTilePanel->SetUIOffSet(Vec2(selectTilePanel->GetScale().x - 30.f, 0.f));
+			closeSelectTilePanel->SetTexture(RESOURCE->GetTexture(L"CloseUI", L"CloseUI.bmp"));
+			closeSelectTilePanel->SetClickFunc(closeSelectTilePanel, static_cast<OBJECT_MEM_FUNC>(&ButtonUI::CloseThisUI)); // 호출할 함수 바인딩
+
+			// Tile Button
+			{
+				int32 scaleX = int32(selectTilePanel->GetScale().x);
+				int32 scaleY = int32(selectTilePanel->GetScale().y - 100.f);
+				int32 countX = scaleX / TILE_SIZE;
+				int32 countY = scaleY / TILE_SIZE;
+
+				for (uint32 i = 0; i < MAX_TILE_COUNT; ++i)
+				{
+					int32 x = i % countX;
+					int32 y = i / countX;
+					
+					ButtonUI* tileSelectBTN = static_cast<ButtonUI*>(CreateAndAppendToScene<Button_CloseUI>(OBJECT_TYPE::UI));
+					tileSelectBTN->SetObjectName(L"tileSelectBTN_" + to_wstring(i));
+					tileSelectBTN->SetScale(Vec2(TILE_SIZE, TILE_SIZE));
+					tileSelectBTN->SetPos(Vec2(0.f, 0.f));
+					tileSelectBTN->SetUIOffSet(Vec2(TILE_SIZE * x, TILE_SIZE * y));
+
+					// Set Inner UI
+					selectTilePanel->SetInnerUI(tileSelectBTN);
+				}
+			}
+
+			selectTilePanel->SetInnerUI(closeSelectTilePanel);
+			selectTilePanel->SetVisible(false);
+			toolUI_SelectTileBTN->SetClickFunc(selectTilePanel, static_cast<OBJECT_MEM_FUNC>(&ButtonUI::OpenThisUI));
+		}
+	}
+
+	// Test UI
+	{
+		// TODO
+		// toolUI의 로드 버튼 UI
+		_testBTN = static_cast<UI*>(CreateAndAppendToScene<ButtonUI>(OBJECT_TYPE::UI));
+		_testBTN->SetScale(Vec2(100.f, 100.f));
+		_testBTN->SetPos(Vec2(res.x - _testBTN->GetScale().x, 0.f));
+		_testBTN->SetUIOffSet(Vec2(0.f, 0.f));
+		_testBTN->SetObjectName(L"testBTN");
+
+		// 아래 멤버 함수를 바인딩하는 경우 
+		// 특정 클래스 캐스팅(네임스페이스::멤버함수) 이런식으로 전달해주어야 한다.
+		static_cast<ButtonUI*>(_testBTN)->SetClickFunc(this, static_cast<SCENE_MEM_FUNC>(&ToolScene::Test)); // 호출할 함수 바인딩
+		static_cast<ButtonUI*>(_testBTN)->SetButtonText(L"testBTN");
+	}
 	
-	// toolUI의 저장 버튼 UI
-	ButtonUI* toolUI_SaveButton = static_cast<ButtonUI*>(CreateAndAppendToScene<ButtonUI>(OBJECT_TYPE::UI));
-	toolUI_SaveButton->SetScale(Vec2(100.f, 50.f));
-	toolUI_SaveButton->SetUIOffSet(Vec2(50.f, 50.f));
-	toolUI_SaveButton->SetObjectName(L"toolUI_SaveButton");
-	toolUI_SaveButton->SetClickFunc(&SaveTileData, 0, 0); // 호출할 함수 바인딩
-	toolUI_SaveButton->SetButtonText(L"SaveTile");
-
-	// toolUI의 로드 버튼 UI
-	ButtonUI* toolUI_LoadButton = static_cast<ButtonUI*>(CreateAndAppendToScene<ButtonUI>(OBJECT_TYPE::UI));
-	toolUI_LoadButton->SetScale(Vec2(100.f, 50.f));
-	toolUI_LoadButton->SetUIOffSet(Vec2(175.f, 50.f));
-	toolUI_LoadButton->SetObjectName(L"toolUI_LoadButton");
-	toolUI_LoadButton->SetClickFunc(&LoadTileData, 0, 0); // 호출할 함수 바인딩
-	toolUI_LoadButton->SetButtonText(L"LoadTile");
-
-	// InnerClass들 등록
-	_toolUI->SetInnerUI(toolUI_SaveButton);
-	_toolUI->SetInnerUI(toolUI_LoadButton);
-	_toolUI->SetVisible(false);
-
-	// TODO
-	 // toolUI의 로드 버튼 UI
-	_testBTN = static_cast<UI*>(CreateAndAppendToScene<ButtonUI>(OBJECT_TYPE::UI));
-	_testBTN->SetScale(Vec2(100.f, 100.f));
-	_testBTN->SetPos(Vec2(res.x - _testBTN->GetScale().x, 0.f));
-	_testBTN->SetUIOffSet(Vec2(0.f, 0.f));
-	_testBTN->SetObjectName(L"testBTN");
-
-	// 아래 멤버 함수를 바인딩하는 경우 
-	// 특정 클래스 캐스팅(네임스페이스::멤버함수) 이런식으로 전달해주어야 한다.
-	static_cast<ButtonUI*>(_testBTN)->SetClickFunc(this, static_cast<SCENE_MEM_FUNC>(&ToolScene::Test)); // 호출할 함수 바인딩
-	static_cast<ButtonUI*>(_testBTN)->SetButtonText(L"testBTN");
 
 	// 스폰된 오브젝트들 Init 작업
 	InitObjects();

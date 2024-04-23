@@ -83,7 +83,7 @@ public:										\
 #define DEFAULT_PATROL_DISTANCE 100.f
 #define DEFAULT_DIR Vec2(1, 0)
 
-
+// 임시 타일 개수
 #define MAX_TILE_COUNT 9
 
 // Render

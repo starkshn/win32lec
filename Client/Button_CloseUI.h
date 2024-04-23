@@ -9,7 +9,5 @@ public:
 	virtual ~Button_CloseUI() override;
 	virtual Button_CloseUI* Clone() override;
 
-public:
-	void CloseThisUI();
 };
 

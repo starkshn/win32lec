@@ -87,3 +87,14 @@ void ButtonUI::EVENT_MOUSE_LBTN_CLICK_UI()
         ((*_sceneWhoCallMemFunc).*_sceneMemFunc)();
     }
 }
+
+void ButtonUI::OpenThisUI()
+{
+    this->SetVisible(true);
+}
+
+void ButtonUI::CloseThisUI()
+{
+    this->SetVisible(false);
+    this->SetMouseHoverOnThisObject(false);
+}
