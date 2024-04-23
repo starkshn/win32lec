@@ -30,24 +30,11 @@ using namespace std;
 #include "Core.h"
 #include "Camera.h"
 
-// Manager
-#include "Manager.h"
-#include "KeyManager.h"
-#include "TimeManager.h"
-#include "SceneManager.h"
-#include "PathManager.h"
-#include "ResourceManager.h"
-#include "CollisionManager.h"
-#include "EventManager.h"
-// #include "Camera.h" // <- 여기 선언하면 안된다.
-#include "UIManager.h"
-#include "BoardManager.h"
+// Managers
+#include "ManagerHeader.h"
 
-
-// Utils
-#include "SelectGDI.h"
-#include "Func.h"
-#include "WMath.h"
+// Untils
+#include "Utils.h"
 
 
 // lib

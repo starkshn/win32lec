@@ -79,6 +79,11 @@ void Object::ComponentRender()
 	}
 }
 
+void Object::UpdateMouseInteraction()
+{
+	CheckMouseHoverOnThisObject();
+}
+
 void Object::CheckMouseHoverOnThisObject()
 {
 	// Get Mouse Render Pos
@@ -102,11 +107,6 @@ void Object::CheckMouseHoverOnThisObject()
 	{
 		SetMouseHoverOnThisObject(false);
 	}
-}
-
-void Object::UpdateMouseInteraction()
-{
-	CheckMouseHoverOnThisObject();
 }
 
 void Object::Rotate(float radius)

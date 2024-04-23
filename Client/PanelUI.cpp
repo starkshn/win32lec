@@ -13,6 +13,7 @@ PanelUI::PanelUI(const PanelUI& origin)
 {
 	Scene* curScene = SCENE->GetCurrentScene();
 	curScene->PushBackObjectByType(this, OBJECT_TYPE::UI);
+	SetObjectName(L"Copy_PanelUI");
 }
 
 PanelUI::~PanelUI()
@@ -60,6 +61,7 @@ void PanelUI::End()
 
 void PanelUI::EVENT_MOUSE_HOVERON_UI()
 {
+	if (GetVisible() == false || GetCanDrag() == false) return;
 	if (GetLBTNDownOnThisUI())
 	{
 		Vec2 diffDistance = RENDER_MOUSE_POS - _dragStartPos;
@@ -74,15 +76,16 @@ void PanelUI::EVENT_MOUSE_HOVERON_UI()
 
 void PanelUI::EVENT_MOUSE_LBTN_DOWN_UI()
 {
+	if (GetVisible() == false) return;
 	_dragStartPos = RENDER_MOUSE_POS;
 }
 
 void PanelUI::EVENT_MOUSE_LBTN_UP_UI()
 {
-
+	if (GetVisible() == false) return;
 }
 
 void PanelUI::EVENT_MOUSE_LBTN_CLICK_UI()
 {
-
+	if (GetVisible() == false) return;
 }

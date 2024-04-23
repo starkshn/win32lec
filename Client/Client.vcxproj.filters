@@ -156,6 +156,9 @@
     <Filter Include="Engine\04.Object\UI_Object\ButtonUI">
       <UniqueIdentifier>{41af03c7-ea7d-47d5-b394-40bfa0ab14ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04.Object\UI_Object\ButtonUI\Button_Cancle">
+      <UniqueIdentifier>{bcd9d0ea-801d-4ab6-b30e-03688fd6ef77}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -330,6 +333,12 @@
     <ClInclude Include="ButtonUI.h">
       <Filter>Engine\04.Object\UI_Object\ButtonUI</Filter>
     </ClInclude>
+    <ClInclude Include="ManagerHeader.h">
+      <Filter>Engine\01.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Button_CloseUI.h">
+      <Filter>Engine\04.Object\UI_Object\ButtonUI\Button_Cancle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -481,6 +490,12 @@
     </ClCompile>
     <ClCompile Include="ButtonUI.cpp">
       <Filter>Engine\04.Object\UI_Object\ButtonUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.h">
+      <Filter>Engine\01.Header</Filter>
+    </ClCompile>
+    <ClCompile Include="Button_CloseUI.cpp">
+      <Filter>Engine\04.Object\UI_Object\ButtonUI\Button_Cancle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -55,3 +55,8 @@ Resources* ResourceManager::CheckResource(const wstring& key)
 		return iter->second;
 	}
 }
+
+Texture* ResourceManager::GetTexture(const wstring& key, const wstring& fileName)
+{
+	return static_cast<Texture*>(LoadTexture(key, L"texture\\" + fileName));
+}

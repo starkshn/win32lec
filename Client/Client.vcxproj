@@ -171,6 +171,7 @@
     <ClInclude Include="BoardManager.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="ButtonUI.h" />
+    <ClInclude Include="Button_CloseUI.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ChildComponent.h" />
     <ClInclude Include="Client.h" />
@@ -191,6 +192,7 @@
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="MainMenuScene.h" />
     <ClInclude Include="Manager.h" />
+    <ClInclude Include="ManagerHeader.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Movement.h" />
     <ClInclude Include="Object.h" />
@@ -231,6 +233,7 @@
     <ClCompile Include="BoardManager.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="ButtonUI.cpp" />
+    <ClCompile Include="Button_CloseUI.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ChildComponent.cpp" />
     <ClCompile Include="Collider.cpp" />
@@ -275,6 +278,7 @@
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="UnitObject.cpp" />
+    <ClCompile Include="Utils.h" />
     <ClCompile Include="WMath.cpp" />
   </ItemGroup>
   <ItemGroup>

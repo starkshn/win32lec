@@ -23,6 +23,9 @@ public:
 	// 오브젝트들에 대한 업데이트 (좌표, 상태)
 	virtual void Update() {};
 
+	// Mouse Hover Update
+	virtual void UpdateMouseInteraction();
+
 	// Component들에 대한 업데이트
 	virtual void FinalUpdate();
 
@@ -226,8 +229,6 @@ public:
 	int GetBottom() { return int(_pos.y + _scale.y / 2); };
 
 public:
-	virtual void UpdateMouseInteraction();
-
 	// UI 만 따로 기능을 정의해야 하기때문에 가상함수로 만듦
 	virtual bool GetMouseHoverOnThisObject() { return _mouseHoverOnThisObject; }
 	virtual void SetMouseHoverOnThisObject(bool hoverOn) { _mouseHoverOnThisObject = hoverOn; }
@@ -236,6 +237,7 @@ public:
 	void SetMouseLBTNDownOnThisObject(bool lbtnDown) { _mouseLBTNDownOnThisObject = lbtnDown; }
 
 private:
+	wstring		_objName = L"";
 	// delete 여부
 	bool deleteObject = false;
 
@@ -284,7 +286,6 @@ private:
 
 	// pTexture의 경우 이제 애니매이션이 있기 때문에 멤버 변수로 들고 있을 필요는 없다.
 	Texture*	_texture			= nullptr;
-	wstring		_objName			= L"";
 
 	// mouse 
 private:

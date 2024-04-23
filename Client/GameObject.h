@@ -1,12 +1,11 @@
 #pragma once
 #include "Object.h"
 
-
 class GameObject : public Object
 {
 public:
 	GameObject();
-	~GameObject() override;
+	virtual ~GameObject() override;
 
 	virtual GameObject* Clone() override;
 

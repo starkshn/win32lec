@@ -1,9 +1,6 @@
 #pragma once
 #include "Object.h"
 
-
-class Texutre;
-
 class UI : public Object
 {
 public:
@@ -52,7 +49,11 @@ public:
 		else assert(nullptr);
 	}
 
-	UI* GetOuterUI() { return _outerUI; }
+	UI* GetOuterUI() 
+	{
+		if (nullptr != _outerUI) return _outerUI; 
+		return nullptr;
+	}
 	void SetOuterUI(UI* outerUI) { _outerUI = outerUI; }
 
 	Vec2 GetUIOffSet() { return _offset; }
@@ -80,6 +81,11 @@ public:
 
 	bool GetVisible() { return _visible; }
 	void SetVisible(bool visible);
+
+private:
+	void SetOuterVisible(bool visible);
+	void SetInnerVisible(bool visible);
+	UI* GetRootUI();
 	
 private:
 	vector<UI*> _vecInnerUI;

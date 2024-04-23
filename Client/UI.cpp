@@ -47,14 +47,11 @@ UI* UI::Clone()
 
 void UI::Update()
 {
-    // TODO My job
-    UpdateInnerUI();
-
-    // 마우스 호버체크
+    // RootUI에 대해서 Hover 체크를 먼저 진행하면 안된다
     UpdateMouseInteraction();
 
-    // UI의 경우 아래 함수를 사용하지 않고 위의 함수를 사용한다.
-    // CheckMouseHoverOnThisObject();
+    // TODO My job
+    UpdateInnerUI();
 }
 
 void UI::FinalUpdate()
@@ -188,6 +185,9 @@ void UI::FinalUpdateInnerUI()
 
 void UI::UpdateMouseInteraction()
 {
+    bool visible = GetVisible();
+    if (GetVisible() == false) return;
+
     Vec2 curMousePos = GET_MOUSE_POS;
     if (GetThisUIAffectByCamera())
     {
@@ -200,7 +200,6 @@ void UI::UpdateMouseInteraction()
     if ((UIFinalPos.x <= curMousePos.x && curMousePos.x <= UIFinalPos.x + UIScale.x) &&
         (UIFinalPos.y <= curMousePos.y && curMousePos.y <= UIFinalPos.y + UIScale.y))
     {
-        // SetMouseHoverOnThisUI(true);
         SetMouseHoverOnThisObject(true);
 
         GetOuterScene()->SetCurMouseHoverObject(this);
@@ -208,29 +207,28 @@ void UI::UpdateMouseInteraction()
     }
     else
     {
-        // SetMouseHoverOnThisUI(false);
         SetMouseHoverOnThisObject(false);
     }
 }
 
 void UI::EVENT_MOUSE_HOVERON_UI()
 {
-    int a = 10;
+    
 }
 
 void UI::EVENT_MOUSE_LBTN_DOWN_UI()
 {
-    int a = 10;
+    
 }
 
 void UI::EVENT_MOUSE_LBTN_UP_UI()
 {
-    int a = 10;
+    
 }
 
 void UI::EVENT_MOUSE_LBTN_CLICK_UI()
 {
-    int a = 10;
+    
 }
 
 bool UI::GetMouseHoverOnThisObject()
@@ -245,13 +243,35 @@ void UI::SetMouseHoverOnThisObject(bool hoverOn)
 
 void UI::SetVisible(bool visible)
 {
-    _visible = visible;
+    UI* rootUI = GetRootUI();
+    rootUI->SetInnerVisible(visible);
+}
 
+void UI::SetOuterVisible(bool visible)
+{
+    _visible = visible;
+    UI* outerUI = GetOuterUI();
+    if (nullptr != outerUI)
+    {
+        outerUI->SetOuterVisible(false);
+    }
+}
+
+void UI::SetInnerVisible(bool visible)
+{
+    _visible = visible;
     for (UI* innerUI : _vecInnerUI)
     {
         if (innerUI)
         {
-            innerUI->SetVisible(visible);
+            innerUI->SetInnerVisible(visible);
         }
-    }
+    }   
+}
+
+UI* UI::GetRootUI()
+{
+    UI* targetUI = GetOuterUI();
+    if (nullptr == targetUI) return this;
+    else targetUI->GetRootUI();
 }

@@ -25,7 +25,12 @@ public:
 	virtual void EVENT_MOUSE_LBTN_UP_UI() override;
 	virtual void EVENT_MOUSE_LBTN_CLICK_UI() override;
 
+public:
+	bool GetCanDrag() { return _canDrag; }
+	void SetCanDrag(bool drag) { _canDrag = drag; }
+
 private:
-	Vec2 _dragStartPos = Vec2(0.f, 0.f);
+	Vec2 _dragStartPos	= Vec2(0.f, 0.f);
+	bool _canDrag		= true;
 };
 
