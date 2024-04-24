@@ -96,5 +96,4 @@ void ButtonUI::OpenThisUI()
 void ButtonUI::CloseThisUI()
 {
     this->SetVisible(false);
-    this->SetMouseHoverOnThisObject(false);
 }

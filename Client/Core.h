@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Texture.h"
+
 class Core
 {
 public:
@@ -12,7 +14,11 @@ public:
 
 public:
 	const HWND GetHwnd() { return _hwnd; }
-	const HDC GetMemDC() { return _memdc; }
+	const HDC GetMemDC() 
+	{ 
+		return _memdc; 
+		// return _backBufferTexture->GetDC();
+	}
 	const HDC GetMainDC() { return _hdc; }
 	const Vec2 GetResolution() { return Vec2(float(_resolution.x), float(_resolution.y)); }
 	
@@ -32,7 +38,7 @@ private:
 	void InitResolution(POINT resol);
 	void InitWindow();
 	void InitManager();
-	void InitBitMap();
+	void InitBitMap();		// Create Bitmap
 	void InitGDI();
 
 public:
@@ -44,11 +50,15 @@ private:
 	
 private:
 	HWND	_hwnd = 0;
-	POINT	_resolution = {};
 	HDC		_hdc = 0;
+	POINT	_resolution = {};
 	
+	// 이제 이런식이 아니라
 	HBITMAP _hbit = 0;
 	HDC		_memdc = 0;
+
+	// 아래처럼 texture를 하나 들고 있는것과 같다.
+	Texture* _backBufferTexture = nullptr;
 
 private:
 	// brush, pen

@@ -202,6 +202,7 @@ void UI::UpdateMouseInteraction()
     {
         SetMouseHoverOnThisObject(true);
 
+        // Current Scene에 정보 텍스쳐로 띄우기 위한 부분
         GetOuterScene()->SetCurMouseHoverObject(this);
         GetOuterScene()->SetCurMouseHoverObjectName(GetObjectName().c_str());
     }
@@ -244,7 +245,14 @@ void UI::SetMouseHoverOnThisObject(bool hoverOn)
 void UI::SetVisible(bool visible)
 {
     UI* rootUI = GetRootUI();
+    NULL_PTR_CHECK(rootUI);
     rootUI->SetInnerVisible(visible);
+
+    // Non-Visible인 경우 모든 값을 초기값으로 설정한다.
+    if (false == visible)
+    {
+        rootUI->ResetUICondition();
+    }
 }
 
 void UI::SetOuterVisible(bool visible)
@@ -269,9 +277,32 @@ void UI::SetInnerVisible(bool visible)
     }   
 }
 
+void UI::ResetUICondition()
+{
+    // 여기서 nullptr로 밀어버린다 해도 hover를 false로 되돌려 놓지 않으면 의미가 없다.
+    // 차피 UIManager의 FindFocusingUI함수에서 hover된 UI찾아서 반환한다.
+    UI_MANAGER->SetFocusingUI(nullptr);
+    SetLBTNDownOnThisUI(false);
+    SetMouseHoverOnThisObject(false);
+      
+    for (uint32 i = 0; i < _vecInnerUI.size(); ++i)
+    {
+        _vecInnerUI[i]->Reset();
+    }
+}
+
+void UI::Reset()
+{
+    SetMouseHoverOnThisObject(false);
+    for (uint32 i = 0; i < _vecInnerUI.size(); ++i)
+    {
+        _vecInnerUI[i]->Reset();
+    }
+}
+
 UI* UI::GetRootUI()
 {
     UI* targetUI = GetOuterUI();
     if (nullptr == targetUI) return this;
-    else targetUI->GetRootUI();
+    return targetUI->GetRootUI();
 }

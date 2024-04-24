@@ -18,6 +18,9 @@ void Camera::Init()
 	SetCameraCurrentLookAtPos(res / 2.f);
 	SetCameraPrevLookAtPos(res / 2.f);
 	SetCameraDestLookAtPos(res / 2.f);
+	
+	// BLACK : 0, 0, 0 (RGB) 초기값은 이렇게 설정된다.
+	SetCameraTex(RESOURCE->CreateTexture(L"CameraTexture", uint32(res.x), uint32(res.y)));
 }
 
 void Camera::Update()
@@ -33,11 +36,84 @@ void Camera::Update()
 		CalDiff_LBTN();
 }
 
+void Camera::Render()
+{
+	/*if (_cameraEffectQueue.empty() == false)
+	{
+		_nowCameraEffecting = true;
+
+		CameraEffectInfo curCamInfo = _cameraEffectQueue.front();
+
+		SetCurCameraEffectType(curCamInfo._effect);
+		SetCurCameraEffectDuration(curCamInfo._duration);
+		SetCurCameraEffectAccTime(curCamInfo._accTime);
+	}
+	else return;*/
+
+	// Exception
+	if (GetCurCameraEffectType() == CAMERA_EFFECT::NONE) return;
+
+	if (GetCurCameraEffectType() == CAMERA_EFFECT::FADE_OUT)
+	{
+		// 카메라 효과 시간 누적
+		SetCurCameraEffectAccTime(GetCurCameraEffectAccTime() + DT_F);
+		
+		// 지속시간을 넘어선 경우 효과를 종료 시킴.
+		if (GetCurCameraEffectAccTime() >= GetCurCameraEffectDuration())
+		{
+			ResetCamEF();
+			return;
+		}
+		else
+		{
+			// effect alpha 0 ~> 255 로 가야한다.
+			// 시간에 따른 비율값을 구해야한다.
+			SetCurCameraEffectRatio(GetCurCameraEffectAccTime() / GetCurCameraEffectDuration()); // zero division check
+
+			// 알파값 설정
+			SetCurAlpha(int32(255.f * GetCurCameraEffectRatio()));
+		}
+	}
+
+	if (GetCurCameraEffectType() == CAMERA_EFFECT::FADE_IN)
+	{
+		SetCurCameraEffectAccTime(GetCurCameraEffectAccTime() + DT_F);
+		if (GetCurCameraEffectAccTime() >= GetCurCameraEffectDuration())
+		{
+			ResetCamEF();
+			return;
+		}
+		else
+		{
+			SetCurCameraEffectRatio(GetCurCameraEffectAccTime() / GetCurCameraEffectDuration()); // zero division check
+			SetCurAlpha(int32(255.f * (1.f - GetCurCameraEffectRatio())));
+		}
+	}
+	
+	int32 width = _cameraTexture->GetTexWidth();
+	int32 height = _cameraTexture->GetTexHeight();
+
+	BLENDFUNCTION bf = {};
+	bf.BlendOp = AC_SRC_OVER;
+	bf.BlendFlags = 0;
+	bf.AlphaFormat = 0;
+	bf.SourceConstantAlpha = GetCurAlpha();
+	
+	AlphaBlend
+	(
+		GET_MEMDC,
+		int32(0), int32(0), int32(width), int32(height),
+		GetCameraTex()->GetDC(),
+		int32(0), int32(0), int32(width), int32(height),
+		bf
+	);
+}
+
 void Camera::CalDiff_LBTN()
 {
-	_cameraAccTime += DT_F;
+	_cameraEffectAccTime += DT_F;
 	
-	if (_cameraAccTime >= _cameraFollowTime)
+	if (_cameraEffectAccTime >= _cameraFollowTime)
 	{
 		SetCameraCurrentLookAtPos(GetCameraCurrentLookAtPos());
 		_triggerLBTN = false;
@@ -45,7 +121,7 @@ void Camera::CalDiff_LBTN()
 	else
 	{
 		// 등가속도 운동 움직임
-		MoveCameraAcceleratedMotion(_cameraAccTime);
+		MoveCameraAcceleratedMotion(_cameraEffectAccTime);
 
 		// 일반 선형? 움직임
 		// MoveCameraStaticMotion(_cameraAccTime);
@@ -122,6 +198,28 @@ void Camera::ZoomOut()
 
 }
 
+void Camera::FadeOut(float duration)
+{
+	_cameraEffectQueue.push(CameraEffectInfo{CAMERA_EFFECT::FADE_OUT, duration, 0.f});
+	SetCurCameraEffectType(CAMERA_EFFECT::FADE_OUT);
+	SetCurCameraEffectAccTime(0.f);
+	SetCurCameraEffectDuration(duration);
+	SetCurCameraEffectRatio(0.f);
+}
+
+void Camera::FadeIn(float duration)
+{
+	_cameraEffectQueue.push(CameraEffectInfo{ CAMERA_EFFECT::FADE_IN, duration, 0.f });
+}
+
+void Camera::ResetCamEF()
+{
+	SetCurCameraEffectType(CAMERA_EFFECT::NONE);
+	SetCurCameraEffectAccTime(0.f);
+	SetCurCameraEffectDuration(0.0000001f);
+	SetCurCameraEffectRatio(0.f);
+}
+
 const void Camera::SetDestLookAtPos(Vec2 pos)
 {
 	// 카메라가 봐야할 목표 좌표 설정
@@ -146,7 +244,7 @@ const void Camera::SetDestLookAtPos(Vec2 pos)
 	float cameraSpeed = GetCameraFollowSpeed();
 
 	// 카메라 누적 시간 초기화
-	_cameraAccTime = 0.f;
+	_cameraEffectAccTime = 0.f;
 
 	// 초기 속도 설정
 	_v0 = cameraSpeed;

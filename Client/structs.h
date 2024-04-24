@@ -72,12 +72,12 @@ struct DIR_BOARD
 	Vec2 RightDown() { return _rightDown; }
 	Vec2 RightUp() { return _rightUp; }
 
-	
+
 	// ID
 	int32 GetLeftIdx(int32 idx) { return idx - 1; }
 	int32 GetRightIdx(int32 idx) { return idx + 1; }
 	int32 GetDownIdx(int32 idx, int32 boardMaxX, int32 boardMaxY)
-	{ 
+	{
 		int32 curY = idx / boardMaxX;
 		int32 curX = idx % boardMaxX;
 		return (boardMaxX * (curY + 1) + curX);
@@ -86,7 +86,7 @@ struct DIR_BOARD
 	{
 		int32 curY = idx / boardMaxX;
 		int32 curX = idx % boardMaxX;
-		return (boardMaxX * (curY -1 ) + curX);
+		return (boardMaxX * (curY - 1) + curX);
 	}
 
 	int32 GetDirIdx(int32 dir, int32 curIdx, int32 boardX, int32 boardY)
@@ -109,5 +109,3 @@ private:
 	Vec2 _rightDown = Vec2{ 1, -1 };
 	Vec2 _rightUp = Vec2{ 1, 1 };
 };
-
-

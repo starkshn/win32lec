@@ -87,11 +87,9 @@ void Core::RenderBegin()
 }
 
 void Core::Rendering()
-{
-	// render objects
-	
-	// TODO
-	GET_SINGLE(SceneManager)->Render();
+{	
+	SCENE->Render();	// 모든 씬의 오브젝트들 렌더링을 끝내고
+	CAMERA->Render();	// 마지막으로 카메라의 효과들을 적용해준다.
 }
 
 void Core::RenderEnd()
@@ -152,6 +150,10 @@ void Core::InitBitMap()
 	// 교체
 	HBITMAP prevBit = (HBITMAP)SelectObject(_memdc, _hbit);
 	DeleteObject(prevBit);
+
+	// 위의 방식이 아니라 아래와 같은 방식이여도 된다.
+	/*Vec2 res = GET_RESOLUTION;
+	_backBufferTexture = RESOURCE->CreateTexture(L"backBuffer", uint32(res.x), uint32(res.y));*/
 }
 
 void Core::InitGDI()
@@ -167,5 +169,4 @@ void Core::CreateBrushesAndPen()
 	_pens[(UINT)PEN_TYPE::RED] = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
 	_pens[(UINT)PEN_TYPE::GREEN] = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
 	_pens[(UINT)PEN_TYPE::BLUE] = CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
-
 }

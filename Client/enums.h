@@ -103,3 +103,10 @@ enum class GAME_INFO
 	
 	END = 5,
 };
+
+enum class CAMERA_EFFECT
+{
+	FADE_IN,
+	FADE_OUT,
+	NONE,
+};

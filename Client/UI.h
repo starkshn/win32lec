@@ -83,10 +83,14 @@ public:
 	void SetVisible(bool visible);
 
 private:
+	UI* GetRootUI();
 	void SetOuterVisible(bool visible);
 	void SetInnerVisible(bool visible);
-	UI* GetRootUI();
-	
+
+	// SetVisible(false) 호출시 호출될 함수
+	void ResetUICondition();
+	void Reset();
+
 private:
 	vector<UI*> _vecInnerUI;
 	UI*			_outerUI			= nullptr;

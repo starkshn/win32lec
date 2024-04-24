@@ -50,11 +50,9 @@ private:
 	wstring _resKey = L"";			// res key
 	wstring _resRelativePath = L"";	// 상대 경로
 
-private:
+protected:
 	HDC		_dc = 0;			// DC
 	HBITMAP _bitMap = 0;		// 비트맵
-
-private:
 	BITMAP _bitMapInfo;
 };
 

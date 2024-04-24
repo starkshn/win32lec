@@ -12,13 +12,15 @@ public:
 	void Update() override;
 
 public:
+	Texture* CreateTexture(const wstring& key, uint32 width, uint32 height);
 	Resources* LoadTexture(const wstring& key, const wstring& path);
 	Resources* CheckResource(const wstring& key);
 
 public:
 	Texture* GetTexture(const wstring& key, const wstring& fileName);
+	Texture* FindTexture(const wstring& key);
 
 private:
-	map<wstring, Resources*> _resources;
+	map<wstring, Resources*> _mapResources;
 };
 

@@ -132,3 +132,10 @@ if (nullptr == ptr)				\
 // check valid idx
 #define IS_VALID_IDX(arr, idx) assert(arr.size() > idx)
 
+
+#define ZERO_DIVISION(val) assert(val)
+
+
+#define ALPHA 255
+#define ALPHA_F 255.f
+

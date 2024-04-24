@@ -255,7 +255,7 @@ void ToolScene::BeginScene()
 					tileSelectBTN->SetObjectName(L"tileSelectBTN_" + to_wstring(i));
 					tileSelectBTN->SetScale(Vec2(TILE_SIZE, TILE_SIZE));
 					tileSelectBTN->SetPos(Vec2(0.f, 0.f));
-					tileSelectBTN->SetUIOffSet(Vec2(TILE_SIZE * x, TILE_SIZE * y));
+					tileSelectBTN->SetUIOffSet(Vec2(float(TILE_SIZE* x), float(TILE_SIZE* y)));
 
 					// Set Inner UI
 					selectTilePanel->SetInnerUI(tileSelectBTN);
@@ -284,6 +284,8 @@ void ToolScene::BeginScene()
 		static_cast<ButtonUI*>(_testBTN)->SetButtonText(L"testBTN");
 	}
 	
+	CAMERA->FadeOut(1.f);
+	// CAMERA->FadeIn(1.f);
 
 	// 스폰된 오브젝트들 Init 작업
 	InitObjects();

@@ -152,13 +152,13 @@ UI* UIManager::GetTargetUI(UI* outerUI)
 UI* UIManager::FindFocusingUI()
 {
 	bool pressedLBTN = KEY_PRESSED(KEYES::LBTN);
-
 	Scene* curScene = SCENE->GetCurrentScene();
 	vector<Object*>& vecUI = curScene->GetUIObjects();
 
 	// 기존 포커싱 UI를 받아두고 변경되었는지 확인한다.
 	UI* focusedUI = GetFocusingUI();
 
+	// 눌린적이 없다 == 포커싱된게 없다 return.
 	if (!pressedLBTN)
 	{
 		return focusedUI;
@@ -168,6 +168,8 @@ UI* UIManager::FindFocusingUI()
 	vector<Object*>::iterator targetIter = vecUI.end();
 	vector<Object*>::iterator iter = vecUI.begin();
 
+	// CloseThisUI 호출한 경우 RootUI부터 모든 UI에 대한 Hover를 false로 변경해야한다.
+	// 그렇지 않으면 hoverOn이 true로 변경되어 focusedUI 그대로 반환한다.
 	for (; iter != vecUI.end(); ++iter)
 	{
 		bool hoverOn = static_cast<UI*>(*iter)->GetMouseHoverOnThisUI();
