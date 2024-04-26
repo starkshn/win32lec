@@ -3,6 +3,9 @@
 #include "Texture.h"
 #include "Collider.h"
 #include "AI.h"
+#include "State.h"
+#include "State_Idle.h"
+#include "State_Trace.h"
 
 Monster::Monster()
 {
@@ -17,7 +20,6 @@ Monster::~Monster()
 void Monster::Update()
 {
 	UnitObject::Update();
-	NULL_PTR_CHECK(GetModuleAI());
 	GetModuleAI()->Update();
 }
 
@@ -30,8 +32,6 @@ void Monster::Render()
 
 	Vec2 pos = GetPos();
 	Vec2 renderPos = GetRenderPos();
-	/*int lx = int(pos.x - float(w / 2.f));
-	int ly = int(pos.y - float(h / 2.f));*/
 
 	int lx = int(renderPos.x - float(w / 2.f));
 	int ly = int(renderPos.y - float(h / 2.f));
@@ -61,7 +61,16 @@ void Monster::Init()
 	comp->SetScale(Vec2(GetScale().x - 10.f, GetScale().y - 10.f));
 	comp->SetOffset(Vec2(0, 0));
 
-
+	// Add AI
+	{
+		AI* ai = new AI();
+		State_Idle* idleState = new State_Idle();
+		State_Trace* traceState = new State_Trace();
+		ai->AddState(idleState);
+		ai->AddState(traceState);
+		ai->SetCurState(ai->FindState(MONSTER_STATE::IDLE));
+		SetModuleAI(ai);
+	}
 }
 
 void Monster::Begin()

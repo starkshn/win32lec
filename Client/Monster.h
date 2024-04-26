@@ -31,7 +31,11 @@ public:
 	virtual void	OnCollisionExit(Collider* otherCollider) override;
 
 public:
-	AI*				GetModuleAI()		{ return _moduleAI; }
+	AI*				GetModuleAI()		
+	{ 
+		if (nullptr != _moduleAI) return _moduleAI;
+		return nullptr;
+	}
 	void			SetModuleAI(AI* ai);
 
 private:

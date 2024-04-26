@@ -16,15 +16,23 @@ public:
 	void		Update();
 	void		AddState(State* state);
 
+public:
+	State*		GetCurState()				
+	{
+		if (nullptr != _curState) return _curState;
+		return nullptr;
+	}
+	void		SetCurState(State* state)	{ _curState = state; }
+
 private:
 	Monster*	GetOwner()					{ return _owner; }
 	void		SetOwner(Monster* mon)		{ _owner = mon; }
-	State*		GetCurState()				{ return _curState; }
-	void		SetCurState(State* state)	{ _curState = state; }
+
+public:
 	State*		FindState(MONSTER_STATE key)
 	{
 		auto iter = _mapState.find(key);
-		if (nullptr != (*iter).second)
+		if (iter != _mapState.end())
 		{
 			return (*iter).second;
 		}
