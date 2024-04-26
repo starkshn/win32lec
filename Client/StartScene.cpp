@@ -2,6 +2,9 @@
 #include "StartScene.h"
 #include "Monster.h"
 #include "Tile.h"
+#include "AI.h"
+#include "State_Idle.h"
+#include "State_Trace.h"
 
 StartScene::StartScene()
 {
@@ -40,6 +43,18 @@ void StartScene::BeginScene()
 	// Create Player
 	Player* player = static_cast<Player*>(CreatePlayer());
 	player->SetScale(Vec2(50.f, 50.f));
+
+	// Create Monster
+	{
+		Monster* monster = static_cast<Monster*>(CreateAndAppendToScene<Monster>(OBJECT_TYPE::MONSTER));
+		monster->SetObjectName(L"Mosnter_01");
+		monster->SetPos(Vec2(player->GetPos().x, player->GetPos().y - 200.f));
+
+		AI* ai = new AI();
+		ai->AddState(new State_Idle());
+		ai->AddState(new State_Trace());
+		monster->SetModuleAI(new AI());
+	}
 
 	// 스폰된 오브젝트들 Init 작업
 	InitObjects();

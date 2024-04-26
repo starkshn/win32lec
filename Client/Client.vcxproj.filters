@@ -159,6 +159,27 @@
     <Filter Include="Engine\04.Object\UI_Object\ButtonUI\Button_Cancle">
       <UniqueIdentifier>{bcd9d0ea-801d-4ab6-b30e-03688fd6ef77}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\09.Module">
+      <UniqueIdentifier>{93fcc58c-bad4-4daf-825b-5e04c428a31c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\09.Module\State">
+      <UniqueIdentifier>{bf653b58-a286-4ca6-b603-b50a7a7e749d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\09.Module\State\Idle">
+      <UniqueIdentifier>{e98f0b45-aec5-4b02-ad39-230fc185b53a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\09.Module\State\Move">
+      <UniqueIdentifier>{08bc297c-7117-4791-95a8-fa5fbff9f33d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\09.Module\State\Attack">
+      <UniqueIdentifier>{6ba1333c-9766-433f-a532-7d97b80016c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\09.Module\State\Dead">
+      <UniqueIdentifier>{69a1e982-8e78-41f8-bb6d-a416321c95f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\09.Module\State\Trace">
+      <UniqueIdentifier>{f780f6cd-1b18-4c11-b27d-bef2866d068f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -339,6 +360,27 @@
     <ClInclude Include="Button_CloseUI.h">
       <Filter>Engine\04.Object\UI_Object\ButtonUI\Button_Cancle</Filter>
     </ClInclude>
+    <ClInclude Include="AI.h">
+      <Filter>Engine\09.Module</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Engine\09.Module\State</Filter>
+    </ClInclude>
+    <ClInclude Include="State_Idle.h">
+      <Filter>Engine\09.Module\State\Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="State_Attack.h">
+      <Filter>Engine\09.Module\State\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="State_Dead.h">
+      <Filter>Engine\09.Module\State\Dead</Filter>
+    </ClInclude>
+    <ClInclude Include="State_Move.h">
+      <Filter>Engine\09.Module\State\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="State_Trace.h">
+      <Filter>Engine\09.Module\State\Trace</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -496,6 +538,30 @@
     </ClCompile>
     <ClCompile Include="Button_CloseUI.cpp">
       <Filter>Engine\04.Object\UI_Object\ButtonUI\Button_Cancle</Filter>
+    </ClCompile>
+    <ClCompile Include="AI.cpp">
+      <Filter>Engine\09.Module</Filter>
+    </ClCompile>
+    <ClCompile Include="STD_Headers.h">
+      <Filter>Engine\01.Header</Filter>
+    </ClCompile>
+    <ClCompile Include="State.cpp">
+      <Filter>Engine\09.Module\State</Filter>
+    </ClCompile>
+    <ClCompile Include="State_Idle.cpp">
+      <Filter>Engine\09.Module\State\Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="State_Attack.cpp">
+      <Filter>Engine\09.Module\State\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="State_Dead.cpp">
+      <Filter>Engine\09.Module\State\Dead</Filter>
+    </ClCompile>
+    <ClCompile Include="State_Move.cpp">
+      <Filter>Engine\09.Module\State\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="State_Trace.cpp">
+      <Filter>Engine\09.Module\State\Trace</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

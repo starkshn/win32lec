@@ -42,11 +42,18 @@ void DeleteResourcesSafe(map<T1, T2>& _reMap)
 	_reMap.clear();
 }
 
-
 template <typename T>
 T CLAMP(T min, T max, T& val)
 {
 	if (val <= min) val = min;
 	if (val >= max) val = max;
 	return val;
+}
+
+template <typename T>
+void DeleteObjectImmediately(T& obj)
+{
+	if (nullptr == obj) assert(nullptr);
+	delete obj;
+	obj = nullptr;
 }

@@ -31,7 +31,7 @@ void SceneManager::Init()
 	InitScene();
 
 	// set first scene.
-	SetGameFirstScene(SCENE_TYPE::TOOL);
+	SetGameFirstScene(SCENE_TYPE::START);
 	
 	_curScene->BeginScene();
 }

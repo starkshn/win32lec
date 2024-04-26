@@ -2,6 +2,7 @@
 #include "Monster.h"
 #include "Texture.h"
 #include "Collider.h"
+#include "AI.h"
 
 Monster::Monster()
 {
@@ -10,12 +11,14 @@ Monster::Monster()
 
 Monster::~Monster()
 {
-
+	DeleteObjectImmediately<AI*>(_moduleAI);
 }
 
 void Monster::Update()
 {
 	UnitObject::Update();
+	NULL_PTR_CHECK(GetModuleAI());
+	GetModuleAI()->Update();
 }
 
 void Monster::Render()
@@ -57,6 +60,8 @@ void Monster::Init()
 	int tw = GetTexture()->GetTexWidth();
 	comp->SetScale(Vec2(GetScale().x - 10.f, GetScale().y - 10.f));
 	comp->SetOffset(Vec2(0, 0));
+
+
 }
 
 void Monster::Begin()
@@ -87,4 +92,10 @@ void Monster::OnCollisionEnter(Collider* otherCollider)
 void Monster::OnCollisionExit(Collider* otherCollider)
 {
 
+}
+
+void Monster::SetModuleAI(AI* ai)
+{
+	_moduleAI = ai;
+	ai->SetOwner(this);
 }

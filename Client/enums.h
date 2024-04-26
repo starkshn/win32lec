@@ -1,5 +1,7 @@
 #pragma once
 
+#define MAX_END_LEGNTH 32
+
 enum class OBJECT_TYPE
 {
 	DEFAULT,
@@ -13,7 +15,7 @@ enum class OBJECT_TYPE
 	PLAYER,
 
 	UI,
-	END = MAX_LENGH,
+	END = MAX_END_LEGNTH,
 };
 
 enum class SCENE_TYPE
@@ -25,7 +27,7 @@ enum class SCENE_TYPE
 
 	TOOL = 31,
 
-	END = MAX_LENGH,
+	END = MAX_END_LEGNTH,
 };
 
 enum class RESOURCE_TYPE
@@ -34,7 +36,7 @@ enum class RESOURCE_TYPE
 	TEXTURE,
 	SOUND,
 
-	END = MAX_LENGH,
+	END = MAX_END_LEGNTH,
 };
 
 enum class FILE_TYPE
@@ -45,7 +47,7 @@ enum class FILE_TYPE
 	JPG,
 
 
-	END = MAX_LENGH,
+	END = MAX_END_LEGNTH,
 };
 
 enum class BRUSH_TYPE
@@ -53,7 +55,7 @@ enum class BRUSH_TYPE
 	HOLLOW,
 
 
-	END = MAX_LENGH,
+	END = MAX_END_LEGNTH,
 };
 
 enum class PEN_TYPE
@@ -63,7 +65,7 @@ enum class PEN_TYPE
 	BLUE,
 
 
-	END = MAX_LENGH,
+	END = MAX_END_LEGNTH,
 };
 
 enum class EVENT_TYPE
@@ -73,7 +75,7 @@ enum class EVENT_TYPE
 	SCENE_CHANGE,
 	
 
-	END = MAX_LENGH,
+	END = MAX_END_LEGNTH,
 };
 
 enum class COMP_TYPE
@@ -82,7 +84,7 @@ enum class COMP_TYPE
 	ANIMATOR = 2,
 	MOVEMENT = 3,
 
-	END = MAX_LENGH,
+	END = MAX_END_LEGNTH,
 };
 
 enum class TILE_TYPE
@@ -91,7 +93,7 @@ enum class TILE_TYPE
 	EMPTY,
 	WALL,
 
-	END = MAX_LENGH,
+	END = MAX_END_LEGNTH,
 };
 
 enum class GAME_INFO
@@ -109,4 +111,17 @@ enum class CAMERA_EFFECT
 	FADE_IN,
 	FADE_OUT,
 	NONE,
+};
+
+enum class MONSTER_STATE
+{
+	NONE,
+	IDLE,
+	MOVE,
+	TRACE,
+	PATROL,
+	ATTACK,
+	DEAD,
+
+	END = MAX_END_LEGNTH,
 };
