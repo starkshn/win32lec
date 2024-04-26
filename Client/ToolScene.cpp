@@ -91,40 +91,20 @@ ToolScene::~ToolScene()
 void ToolScene::InitScene()
 {
 	_resolution = GET_RESOLUTION;
-	_vecGameInfoTexts.resize(uint32(GAME_INFO::END), L"");
 }
 
 void ToolScene::Update()
 {
 	Scene::Update();
+	UpdateSceneKeyInput();
 	UpdateTextOfGameInfo();
 	ChangeTileIndex();
-
-	if (KEY_PRESSED(KEYES::O))
-	{
-		UI_MANAGER->SetForceFocusingUI(_temp);
-	}
-
-	if (KEY_PRESSED(KEYES::ESC))
-	{
-		if (_toolUI->GetVisible() == false)
-		{
-			_toolUI->SetVisible(true);
-			UI_MANAGER->SetForceFocusingUI(_toolUI);
-		}
-		else
-		{
-			_toolUI->SetVisible(false);
-			UI_MANAGER->SetForceFocusingUI(nullptr);
-		}
-	}
 }
 
 void ToolScene::Render()
 {
 	Scene::Render();
-
-	RenderTextOfSceneInfo();
+	RenderTextOfToolSceneInfo();
 	RenderTextOfGameInfo();
 }
 
@@ -137,6 +117,8 @@ void ChangScene(DWORD_PTR, DWORD_PTR)
 
 void ToolScene::BeginScene()
 {
+	_vecGameInfoTexts.resize(uint32(GAME_INFO::END), L"");
+
 	// Set Camera
 	Vec2 res = GET_RESOLUTION;
 	CAMERA->SetCameraCurrentLookAtPos(Vec2(res.x / 2.f, res.y / 2.f));
@@ -267,25 +249,9 @@ void ToolScene::BeginScene()
 			toolUI_SelectTileBTN->SetClickFunc(selectTilePanel, static_cast<OBJECT_MEM_FUNC>(&ButtonUI::OpenThisUI));
 		}
 	}
-
-	// Test UI
-	{
-		// TODO
-		// toolUI의 로드 버튼 UI
-		_testBTN = static_cast<UI*>(CreateAndAppendToScene<ButtonUI>(OBJECT_TYPE::UI));
-		_testBTN->SetScale(Vec2(100.f, 100.f));
-		_testBTN->SetPos(Vec2(res.x - _testBTN->GetScale().x, 0.f));
-		_testBTN->SetUIOffSet(Vec2(0.f, 0.f));
-		_testBTN->SetObjectName(L"testBTN");
-
-		// 아래 멤버 함수를 바인딩하는 경우 
-		// 특정 클래스 캐스팅(네임스페이스::멤버함수) 이런식으로 전달해주어야 한다.
-		static_cast<ButtonUI*>(_testBTN)->SetClickFunc(this, static_cast<SCENE_MEM_FUNC>(&ToolScene::Test)); // 호출할 함수 바인딩
-		static_cast<ButtonUI*>(_testBTN)->SetButtonText(L"testBTN");
-	}
 	
 	CAMERA->FadeOut(1.f);
-	// CAMERA->FadeIn(1.f);
+	CAMERA->FadeIn(1.f);
 
 	// 스폰된 오브젝트들 Init 작업
 	InitObjects();
@@ -304,42 +270,33 @@ void ToolScene::EndScene()
 		}
 	}
 
+	ResetSceneInfo();
 	DeleteAllObjects();
 }
 
-void ToolScene::UpdateTextOfGameInfo()
+void ToolScene::UpdateSceneKeyInput()
 {
-	_vecGameInfoTexts[uint32(GAME_INFO::GAMEINFO_FPS)] = L"FPS : " + to_wstring(FPS);
-	_vecGameInfoTexts[uint32(GAME_INFO::GAMEINFO_DT)] = L"DeltaTime : " + to_wstring(DT_F);
-
-	uint32 objCount = GetSceneAllObjectCount();
-	_vecGameInfoTexts[uint32(GAME_INFO::GAMEINFO_OBJECT_COUNT)] = L"Objet Count : " + to_wstring(objCount);
-
-	Object* curObject = GetCurMouseHoverObject();
-	wstring curObjectName = L"None";
-	if (nullptr != curObject)
+	if (KEY_PRESSED(KEYES::O))
 	{
-		if (curObject->GetMouseHoverOnThisObject())
-		{
-			curObjectName = curObject->GetObjectName();
-		}
+		UI_MANAGER->SetForceFocusingUI(_temp);
 	}
 
-	_vecGameInfoTexts[uint32(GAME_INFO::GAMEINFO_CUR_OBJECT)] = L"Objet Name : " + curObjectName;
-}
-
-void ToolScene::RenderTextOfGameInfo()
-{
-	for (uint32 i = 0; i < uint32(GAME_INFO::END); ++i)
+	if (KEY_PRESSED(KEYES::ESC))
 	{
-		if (_vecGameInfoTexts[i] != L"")
+		if (_toolUI->GetVisible() == false)
 		{
-			TextOut(GET_MEMDC, 10, int32(50.f + i * 20.f), _vecGameInfoTexts[i].c_str(), int32(_vecGameInfoTexts[i].length()));
+			_toolUI->SetVisible(true);
+			UI_MANAGER->SetForceFocusingUI(_toolUI);
+		}
+		else
+		{
+			_toolUI->SetVisible(false);
+			UI_MANAGER->SetForceFocusingUI(nullptr);
 		}
 	}
 }
 
-void ToolScene::RenderTextOfSceneInfo()
+void ToolScene::RenderTextOfToolSceneInfo()
 {
 	wstring toolUI = L"ESC : ToolUI";
 	TextOut(GET_MEMDC, 10, 10, toolUI.c_str(), int32(toolUI.length()));

@@ -139,3 +139,4 @@ if (nullptr == ptr)				\
 #define ALPHA 255
 #define ALPHA_F 255.f
 
+

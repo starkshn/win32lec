@@ -16,5 +16,8 @@ public:
 	virtual void BeginScene() override;
 	virtual void EndScene() override;
 	
+
+protected:
+	virtual void UpdateSceneKeyInput() override;
 };
 

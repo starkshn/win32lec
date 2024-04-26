@@ -15,31 +15,26 @@ StartScene::~StartScene()
 
 void StartScene::InitScene()
 {
-	
+	_vecGameInfoTexts.resize(uint32(GAME_INFO::END), L"");
 }
 
 void StartScene::Update()
 {
-	if (KEY_PRESSED(KEYES::LBTN))
-	{
-		CheckTileIdx();
-	}
-
-	if (KEY_PRESSED(KEYES::DOWN))
-	{
-		ChnageScene_EV(SCENE_TYPE::TOOL);
-	}
-
 	Scene::Update();
+	UpdateSceneKeyInput();
+	UpdateTextOfGameInfo();
 }
 
 void StartScene::Render()
 {
 	Scene::Render();
+	RenderTextOfGameInfo();
 }
 
 void StartScene::BeginScene()
 {
+	_vecGameInfoTexts.resize(uint32(GAME_INFO::END), L"");
+
 	auto res = GET_RESOLUTION;
 
 	// Create Player
@@ -60,10 +55,6 @@ void StartScene::BeginScene()
 			}
 		}
 	}
-	
-
-	// FILE IO(1) TODO
-	// LoadTile(L"Tile\\StartTile.tile");
 }
 
 void StartScene::EndScene()
@@ -80,6 +71,19 @@ void StartScene::EndScene()
 	}
 
 	COLLISION->ResetObjectCollision();
-
+	ResetSceneInfo();
 	DeleteAllObjects();
+}
+
+void StartScene::UpdateSceneKeyInput()
+{
+	if (KEY_PRESSED(KEYES::LBTN))
+	{
+		CheckTileIdx();
+	}
+
+	if (KEY_PRESSED(KEYES::DOWN))
+	{
+		ChnageScene_EV(SCENE_TYPE::TOOL);
+	}
 }

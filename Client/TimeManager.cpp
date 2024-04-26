@@ -48,12 +48,13 @@ void TimeManager::Update()
 		_accTime = 0;
 		_callCount = 0;
 	}
-
-#ifdef _DEBUG
-	if (_deltaTime > (1.f / 60))
-	{
-		_deltaTime = (1.f / 60);
-	}
-#endif
+	
+// 강제 60프레임 설정
+//#ifdef _DEBUG
+//	if (_deltaTime > (1.f / 60))
+//	{
+//		_deltaTime = (1.f / 60);
+//	}
+//#endif
 }
 

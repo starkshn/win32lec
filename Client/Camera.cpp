@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Camera.h"
 #include "Object.h"
+#include "Func.h"
 
 Camera::Camera()
 {
@@ -38,58 +39,65 @@ void Camera::Update()
 
 void Camera::Render()
 {
-	/*if (_cameraEffectQueue.empty() == false)
+	// 큐가 비어있거나 효과가 진행중인경우 return 
+	if (_cameraEffectQueue.empty()) return;
+	
+	if (_nowCameraEffecting == false)
 	{
 		_nowCameraEffecting = true;
-
 		CameraEffectInfo curCamInfo = _cameraEffectQueue.front();
-
 		SetCurCameraEffectType(curCamInfo._effect);
 		SetCurCameraEffectDuration(curCamInfo._duration);
-		SetCurCameraEffectAccTime(curCamInfo._accTime);
+		SetCurCameraEffectAccTime(0.f);
 	}
-	else return;*/
 
 	// Exception
-	if (GetCurCameraEffectType() == CAMERA_EFFECT::NONE) return;
-
-	if (GetCurCameraEffectType() == CAMERA_EFFECT::FADE_OUT)
+	if (GetCurCameraEffectType() == CAMERA_EFFECT::NONE)
 	{
-		// 카메라 효과 시간 누적
-		SetCurCameraEffectAccTime(GetCurCameraEffectAccTime() + DT_F);
-		
-		// 지속시간을 넘어선 경우 효과를 종료 시킴.
-		if (GetCurCameraEffectAccTime() >= GetCurCameraEffectDuration())
-		{
-			ResetCamEF();
-			return;
-		}
-		else
-		{
-			// effect alpha 0 ~> 255 로 가야한다.
-			// 시간에 따른 비율값을 구해야한다.
-			SetCurCameraEffectRatio(GetCurCameraEffectAccTime() / GetCurCameraEffectDuration()); // zero division check
-
-			// 알파값 설정
-			SetCurAlpha(int32(255.f * GetCurCameraEffectRatio()));
-		}
+		if (_cameraEffectQueue.size()) _cameraEffectQueue.pop();
+		return;
 	}
 
-	if (GetCurCameraEffectType() == CAMERA_EFFECT::FADE_IN)
+	// 카메라 효과 시간 누적
+	SetCurCameraEffectAccTime(GetCurCameraEffectAccTime() + DT_F);
+
+	// 지속시간을 넘어선 경우 효과를 종료 시킴.
+	if (GetCurCameraEffectAccTime() >= GetCurCameraEffectDuration())
 	{
-		SetCurCameraEffectAccTime(GetCurCameraEffectAccTime() + DT_F);
-		if (GetCurCameraEffectAccTime() >= GetCurCameraEffectDuration())
-		{
-			ResetCamEF();
-			return;
-		}
-		else
-		{
-			SetCurCameraEffectRatio(GetCurCameraEffectAccTime() / GetCurCameraEffectDuration()); // zero division check
-			SetCurAlpha(int32(255.f * (1.f - GetCurCameraEffectRatio())));
-		}
+		ResetCameraEffect();
+		return;
+	}
+	else
+	{
+		float duration = GetCurCameraEffectDuration();
+		ZERO_DIVISION(duration);
+
+		float ratio = GetCurCameraEffectAccTime() / duration;
+		ratio = CLAMP<float>(0.f, 1.f, ratio);
+		SetCurCameraEffectRatio(ratio); // zero division check
 	}
 	
+	// 효과 타입에 따른 이펙트 알파값 적용
+	switch (GetCurCameraEffectType())
+	{
+		case CAMERA_EFFECT::FADE_IN:
+		{
+			SetCurAlpha(int32(255.f * (1.f - GetCurCameraEffectRatio())));
+		}
+		break;
+		case CAMERA_EFFECT::FADE_OUT:
+		{
+			SetCurAlpha(int32(255.f * GetCurCameraEffectRatio()));
+		}
+		break;
+		default:
+		{
+			assert(0);
+		}
+		break;
+	}
+
+	// Render
 	int32 width = _cameraTexture->GetTexWidth();
 	int32 height = _cameraTexture->GetTexHeight();
 
@@ -200,23 +208,26 @@ void Camera::ZoomOut()
 
 void Camera::FadeOut(float duration)
 {
+	ZERO_DIVISION(duration);
 	_cameraEffectQueue.push(CameraEffectInfo{CAMERA_EFFECT::FADE_OUT, duration, 0.f});
-	SetCurCameraEffectType(CAMERA_EFFECT::FADE_OUT);
-	SetCurCameraEffectAccTime(0.f);
-	SetCurCameraEffectDuration(duration);
-	SetCurCameraEffectRatio(0.f);
 }
 
 void Camera::FadeIn(float duration)
 {
+	ZERO_DIVISION(duration);
 	_cameraEffectQueue.push(CameraEffectInfo{ CAMERA_EFFECT::FADE_IN, duration, 0.f });
 }
 
-void Camera::ResetCamEF()
+void Camera::ResetCameraEffect()
 {
+	if (_cameraEffectQueue.size()) _cameraEffectQueue.pop();
+	if (GetCurCameraEffectType() == CAMERA_EFFECT::FADE_OUT) SetCurAlpha(255);
+	if (GetCurCameraEffectType() == CAMERA_EFFECT::FADE_IN) SetCurAlpha(0);
+
+	_nowCameraEffecting = false;
 	SetCurCameraEffectType(CAMERA_EFFECT::NONE);
 	SetCurCameraEffectAccTime(0.f);
-	SetCurCameraEffectDuration(0.0000001f);
+	SetCurCameraEffectDuration(0.f);
 	SetCurCameraEffectRatio(0.f);
 }
 

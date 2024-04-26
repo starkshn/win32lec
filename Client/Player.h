@@ -42,17 +42,17 @@ public:
 	bool CanGo(int32 id, int32 boardX, int32 boardY);
 
 public:
-	int32 GetDestTileID() { return _destTileID.front(); }
-	void PushDestTileID(int32 id) { _destTileID.push(id); }
-	void PopFront() { _destTileID.pop(); }
-	bool QueueEmpty() { return _destTileID.empty(); }
-
-	int32 GetPlayerCurTileID() { return _curTileID; }
-	void SetPlayerCurTileID(int32 id) { _curTileID = id; }
+	int32	GetDestTileID()					{ return _destTileID.front(); }
+	void	PushDestTileID(int32 id)		{ _destTileID.push(id); }
+	void	PopFront()						{ _destTileID.pop(); }
+	bool	QueueEmpty()					{ return _destTileID.empty(); }
+	int32	GetPlayerCurTileID()			{ return _curTileID; }
+	void	SetPlayerCurTileID(int32 id)	{ _curTileID = id; }
 
 private:
 	queue<int32>	_destTileID;
 	int32			_curTileID = -1;
+	// 경로를 담을 자료구조를 list를 써도 될 듯하다.
 	vector<int32>	_pathTileID;
 
 	float			_accTime = 0.f;

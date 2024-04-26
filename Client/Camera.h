@@ -41,14 +41,8 @@ public:
 	// 방향키 이동 업데이트 함수
 	void KeyInput();
 
-	Vec2 GetRenderPosFromWindowActualPos(Vec2 windowPos)
-	{
-		return windowPos - _diff;
-	}
-	Vec2 GetWindowActualPosFromRenderPos(Vec2 renderPos)
-	{
-		return renderPos + _diff;
-	}
+	Vec2 GetRenderPosFromWindowActualPos(Vec2 windowPos) { return windowPos - _diff; }
+	Vec2 GetWindowActualPosFromRenderPos(Vec2 renderPos) { return renderPos + _diff; }
 	
 	// Camera Effect
 public:
@@ -59,48 +53,42 @@ public:
 	
 	// cam effect
 public:
-	Texture* GetCameraTex() { return _cameraTexture;}
-	void SetCameraTex(Texture* tx) { _cameraTexture = tx; }
-	
-	CAMERA_EFFECT GetCurCameraEffectType() { return _curCamEffect; }
-	void SetCurCameraEffectType(CAMERA_EFFECT effect) { _curCamEffect = effect; }
-
-	float GetCurCameraEffectDuration() { return _curCamDuration; }
-	void SetCurCameraEffectDuration(float duration) 
-	{
-		ZERO_DIVISION(duration);
-		_curCamDuration = duration;
-	}
-	
-	float GetCurCameraEffectAccTime() { return _curCamAccTime; }
-	void SetCurCameraEffectAccTime(float accTime) { _curCamAccTime = accTime; }
-	
-	float GetCurCameraEffectRatio() { return _curCamEffectRatio; }
-	void SetCurCameraEffectRatio(float ratio) { _curCamEffectRatio = ratio; }
-
-	int32 GetCurAlpha() { return _alphaValue; }
-	void SetCurAlpha(int32 value) { _alphaValue = value; }
+	Texture*		GetCameraTex()									{ return _cameraTexture;}
+	CAMERA_EFFECT	GetCurCameraEffectType()						{ return _curCamEffect; }
+	float			GetCurCameraEffectDuration()					{ return _curCamDuration; }
+	float			GetCurCameraEffectAccTime()						{ return _curCamAccTime; }
+	float			GetCurCameraEffectRatio()						{ return _curCamEffectRatio; }
+	int32			GetCurAlpha()									{ return _alphaValue; }
 
 private:
-	void ResetCamEF();
+	void			SetCameraTex(Texture* tx)						{ _cameraTexture = tx; }
+	void			SetCurCameraEffectType(CAMERA_EFFECT effect)	{ _curCamEffect = effect; }
+	void			SetCurCameraEffectDuration(float duration)		{ _curCamDuration = duration; }
+	void			SetCurCameraEffectAccTime(float accTime)		{ _curCamAccTime = accTime; }
+	void			SetCurCameraEffectRatio(float ratio)			{ _curCamEffectRatio = ratio; }
+	void			SetCurAlpha(int32 value)						{ _alphaValue = value; }
+
+private:
+	// 카메라 효과 종료시 호출(리셋)
+	void ResetCameraEffect();
 
 public:
 	// Scene에서 특정 좌표 클릭시 Dest Look at 설정하는 함수
 	const void SetDestLookAtPos(Vec2 pos);
 
 	// SetDestLookAtPos호출시 현재 카메라 LookAt <-> DestLookAt 거리
-	float GetCameraMoveDistance() { return _cameraMoveDistance; }
-	void SetCameraMoveDistance(float distance) { _cameraMoveDistance = distance; }
+	float		GetCameraMoveDistance()					{ return _cameraMoveDistance; }
+	void		SetCameraMoveDistance(float distance)	{ _cameraMoveDistance = distance; }
 
-	Vec2 GetCameraDestLookAtPos() { return _destLookAtPos; }
-	void SetCameraDestLookAtPos(Vec2 pos) { _destLookAtPos = pos; }
+	Vec2		GetCameraDestLookAtPos()				{ return _destLookAtPos; }
+	void		SetCameraDestLookAtPos(Vec2 pos)		{ _destLookAtPos = pos; }
 
-	// 현재 카메라 위치 반환 (현재 보고 있는 정중앙 위치 반환)
-	Vec2 GetCameraCurrentLookAtPos() { return _curLookAtPos; }
-	void SetCameraCurrentLookAtPos(Vec2 pos) { _curLookAtPos = pos; }
+	// 현재 카메라 위치 반환 (현재 보고 있는 정중앙 실제(윈도우) 위치 반환)
+	Vec2		GetCameraCurrentLookAtPos()				{ return _curLookAtPos; }
+	void		SetCameraCurrentLookAtPos(Vec2 pos)		{ _curLookAtPos = pos; }
 
-	const Vec2 GetCameraPrevLookAtPos() { return _prevLookAtPos; }
-	void SetCameraPrevLookAtPos(Vec2 pos) { _prevLookAtPos = pos; }
+	const Vec2	GetCameraPrevLookAtPos()				{ return _prevLookAtPos; }
+	void		SetCameraPrevLookAtPos(Vec2 pos)		{ _prevLookAtPos = pos; }
 
 	Object* GetTarget()
 	{
@@ -109,21 +97,21 @@ public:
 		else
 			return nullptr;
 	}
-	void SetTarget(Object* obj) { _targetObject = obj; }
+	void		SetTarget(Object* obj)				{ _targetObject = obj; }
 
-	Vec2 GetCameraDiff() { return _diff; }
-	Vec2 GetRenderPos(Vec2 objPos) { return objPos - _diff; }
+	Vec2		GetCameraDiff()						{ return _diff; }
+	Vec2		GetRenderPos(Vec2 objPos)			{ return objPos - _diff; }
 
-	const float GetCameraFollowSpeed() { return _cameraFollowSpeed; }
-	void SetCameraFollowSpeed(float speed) { _cameraFollowSpeed = speed; }
+	const float GetCameraFollowSpeed()				{ return _cameraFollowSpeed; }
+	void		SetCameraFollowSpeed(float speed)	{ _cameraFollowSpeed = speed; }
 
 	// 시간에 따른 속도를 구함
-	void MoveCameraAcceleratedMotion(float time);
+	void		MoveCameraAcceleratedMotion(float time);
 
 	// 시간에 따른 거리를 구함
-	void MoveCameraAcceleratedMotion2(float time);
+	void		MoveCameraAcceleratedMotion2(float time);
 
-	void MoveCameraStaticMotion(float time);
+	void		MoveCameraStaticMotion(float time);
 
 private:
 	Vec2				_lookAtPos				= Vec2(0.f, 0.f);		// 현재 프레임 카메라가 봐야할(목표로 두어야할) 좌표값

@@ -41,3 +41,12 @@ void DeleteResourcesSafe(map<T1, T2>& _reMap)
 	);
 	_reMap.clear();
 }
+
+
+template <typename T>
+T CLAMP(T min, T max, T& val)
+{
+	if (val <= min) val = min;
+	if (val >= max) val = max;
+	return val;
+}

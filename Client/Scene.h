@@ -23,8 +23,34 @@ public:
 	virtual void Render();
 
 public:
+	// 수업 랜더링 100~105 FPS
+	void RenderObject();
+
+	// 내가 만든 렌더링 90~100 FPS
+	void RenderObjectMy();
+
+protected:
+	virtual void UpdateTextOfGameInfo();
+	virtual void RenderTextOfGameInfo();
+
+protected:
+	virtual void UpdateSceneKeyInput() abstract;
+
+public:
 	void CreateTile(uint32 tileXCount, uint32 tileYCount);
 	void CheckTileIdx();
+
+
+	// Render Optimization
+private:
+	// 수업 때 만든 Tile Optimization
+	void RenderTile();
+
+	// 내가 만든 Tile Optimization (70~80 FPS정도)
+	bool TileRenderOptimization(Object& tile);
+
+	//	오브젝트용 Render Optimization
+	bool ObjectRenderOptimization(Object& object);
 
 public:
 	void SetCameraLookAtPos(Vec2 pos)
@@ -161,6 +187,7 @@ public:
 
 protected:
 	void DeleteAllObjects();
+	virtual void ResetSceneInfo();
 
 	// FILE
 public:
@@ -170,6 +197,9 @@ protected:
 	vector<Object*>		_sceneObjects[MAX_LENGH];
 	wstring				_sceneName = L"";
 	SCENE_TYPE			_sceneType = SCENE_TYPE::END;
+
+protected:
+	vector<wstring>		_vecGameInfoTexts;
 
 protected:
 	uint32				_tileXCount = 0;
@@ -185,7 +215,7 @@ private:
 
 	// Object <-> Mouse
 private:
-	Object* _curMouseHoverOnObject	= nullptr;
-	Object* _curMouseLBTNDownObject = nullptr;
+	Object*				_curMouseHoverOnObject	= nullptr;
+	Object*				_curMouseLBTNDownObject = nullptr;
 };	
 

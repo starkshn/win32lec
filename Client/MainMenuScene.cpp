@@ -25,20 +25,7 @@ void MainMenuScene::InitScene()
 void MainMenuScene::Update()
 {
 	Scene::Update();
-
-	/*if (KEY_PRESSED(KEYES::DOWN))
-	{
-		ChnageScene_EV(SCENE_TYPE::START);
-	}*/
-
-	if (KEY_PRESSED(KEYES::LBTN))
-	{
-		// 현재 GET_MOUSE_POS는 RenderPos기준 좌표이다.
-		// GetMousePos는 KEY의 Update에서 갱신된 렌더링 좌표이다.
-		// 이값을 GetWindowActualPosFromRenderPos에 넣어주어 reder좌표를 윈도우에 해당하는 실제 좌표로 변경해준다.
-		Vec2 winActualPos = CAMERA->GetWindowActualPosFromRenderPos(GET_MOUSE_POS);
-		CAMERA->SetDestLookAtPos(winActualPos);
-	}
+	UpdateSceneKeyInput();
 }
 
 void MainMenuScene::Render()
@@ -48,6 +35,8 @@ void MainMenuScene::Render()
 
 void MainMenuScene::BeginScene()
 {
+	_vecGameInfoTexts.resize(uint32(GAME_INFO::END), L"");
+
 	auto res = GET_RESOLUTION;
 
 	// Create Player
@@ -82,7 +71,22 @@ void MainMenuScene::EndScene()
 	}
 
 	COLLISION->ResetObjectCollision();
-
-	// EVENT에게 전달
+	ResetSceneInfo();
 	DeleteAllObjects();
+}
+
+void MainMenuScene::UpdateSceneKeyInput()
+{
+	/*if (KEY_PRESSED(KEYES::DOWN))
+	{
+		ChnageScene_EV(SCENE_TYPE::START);
+	}*/
+
+	if (KEY_PRESSED(KEYES::LBTN))
+	{
+		// GET_MOUSE_POS : RenderPos 좌표.
+		// 이값을 GetWindowActualPosFromRenderPos에 넣어주어 reder좌표를 윈도우에 해당하는 실제 좌표로 변경해준다.
+		Vec2 winActualPos = CAMERA->GetWindowActualPosFromRenderPos(GET_MOUSE_POS);
+		CAMERA->SetDestLookAtPos(winActualPos);
+	}
 }
